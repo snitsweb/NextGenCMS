@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [[ $* == *--build* ]]
+then
+  echo 'Building images ...'
+  docker compose up --build
+else
+  docker compose up
+fi
