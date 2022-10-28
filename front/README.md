@@ -2,6 +2,22 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Ideology
+Here you can read about good practise in this project
+
+## Sections
+We are using sections as a independent entity, in which we can use
+components from /src/components folder
+
+## Pages
+In /src/pages we create pages for our project. Extra folder was created for
+fast access to pages (not needed to search page in /src/components).
+
+## Assets
+In /src/assets/ we storage our assets, like reset.css, css-variables and so on.
+
+# React readme
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -13,11 +29,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 

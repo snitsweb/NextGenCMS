@@ -1,0 +1,13 @@
+@import "../../../utils/scss/index";
+
+.container {
+  @include use-media(xl) {
+    max-width: 1140px;
+    padding: 0 30px;
+    margin: 0 auto;
+  }
+
+  @include use-media(xxl) {
+    max-width: 1540px;
+  }
+}

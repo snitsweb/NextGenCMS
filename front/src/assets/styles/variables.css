@@ -1,0 +1,13 @@
+:root {
+
+    /*              Colors          */
+    --primary: #07004d;
+    --secondary: #333;
+    --primary-light: #2d82b7;
+    --theme-primary: #fff;
+    --theme-secondary: #333;
+
+    /*              Others          */
+
+    --base-radius: 1rem;
+}
