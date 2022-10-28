@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.scss'
 import {
@@ -7,6 +6,12 @@ import {
 } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import App from './App'
+import Application from './core/Application'
+
+
+const app = new Application()
+
+window.app = app
 
 const router = createBrowserRouter([
 	{
@@ -17,9 +22,8 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-	<React.StrictMode>
-		<App>
-			<RouterProvider router={router} />
-		</App>
-	</React.StrictMode>
+	<App>
+		<RouterProvider router={router} />
+	</App>
 )
+
