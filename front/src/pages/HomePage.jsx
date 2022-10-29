@@ -1,19 +1,13 @@
-import BaseContainer from '../components/atoms/BaseContainer/BaseContainer'
 import MultiSection from '../components/organisms/MultiSection/MultiSection'
 
 
 const HomePage = () => {
 
-	const sections = ['example_section']
-	console.log(sections)
+	const sections = ['example_section', 'slider_section'] //TODO: edit with request to db
 
 	return (
 		<div>
-			<BaseContainer>
-				Homepage
-			</BaseContainer>
 			<MultiSection sectionsAliases={sections} />
-
 		</div>
 	)
 }

@@ -1,5 +1,6 @@
 import {Section} from './Section'
-import ExampleSection from '../sections/ExampleSection'
+import ExampleSection from '../sections/ExampleSection/ExampleSection'
+import SliderSection from '../sections/SliderSection/SliderSection'
 
 class Application {
 	#_sections = []
@@ -23,6 +24,7 @@ class Application {
 
 	readyToAddSections () {
 		this.#_sections.push(new Section('example_section', ExampleSection))
+		this.#_sections.push(new Section('slider_section', SliderSection))
 	}
 
 	getSection (alias) {

@@ -1,0 +1,83 @@
+@import "../../../utils/scss/index.scss";
+
+h1 {
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: bold;
+  letter-spacing: 0.003em;
+  text-transform: uppercase;
+
+  &.default {
+    color: var(--primary)
+  }
+
+  @include use-media(lg) {
+    font-size: 48px;
+    line-height: 56px;
+  }
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 28px;
+  font-weight: bold;
+  letter-spacing: 0.003em;
+  text-transform: uppercase;
+
+  &.default {
+    color: var(--primary)
+  }
+
+  @include use-media(lg) {
+    font-size: 48px;
+    line-height: 56px;
+  }
+}
+
+h3 {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: bold;
+  letter-spacing: 0.003em;
+  text-transform: uppercase;
+
+  &.default {
+    color: var(--primary)
+  }
+
+  @include use-media(lg) {
+    font-size: 28px;
+    line-height: 32px;
+  }
+}
+
+h4 {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: bold;
+  letter-spacing: 0.003em;
+  text-transform: uppercase;
+
+  &.default {
+    color: var(--primary)
+  }
+
+  @include use-media(lg) {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
+
+p, span {
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.003em;
+}
+
+.default {
+  color: var(--secondary);
+}
+
+.inverted {
+  color: var(--primary);
+}
