@@ -1,6 +1,8 @@
 import {Section} from './Section'
 import ExampleSection from '../sections/ExampleSection/ExampleSection'
 import SliderSection from '../sections/SliderSection/SliderSection'
+import GallerySection from '../sections/GallerySection/GallerySection'
+import {getDatabase} from './database'
 
 class Application {
 	#_sections = []
@@ -20,22 +22,26 @@ class Application {
 
 	init() {
 		this.readyToAddSections()
+		this.getData()
 	}
 
 	readyToAddSections () {
 		this.#_sections.push(new Section('example_section', ExampleSection))
 		this.#_sections.push(new Section('slider_section', SliderSection))
+		this.#_sections.push(new Section('gallery_section', GallerySection))
 	}
 
-	getSection (alias) {
-		const section =  this.#_sections.find(section => section.alias === alias)
+	getData () {
+		this.db = getDatabase()
+	}
 
-		if (section) {
-			return section.component
-		} else {
-			console.error(`Can't find section with alias: ${alias}`)
-			return null
-		}
+	getSections () {
+		return this.db.sections.map(section => {
+			return {
+				value: section.value,
+				component: this.#_sections.find(entitySection => entitySection.alias === section.alias)?.component
+			}
+		})
 	}
 }
 

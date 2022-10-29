@@ -1,0 +1,31 @@
+.base_button {
+  cursor: pointer;
+  transition: var(--base-transition);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 40px;
+  border-radius: calc(var(--base-radius) / 2);
+  border: 1px solid #fff;
+
+  &.default {
+    background-color: var(--primary);
+
+    &:hover {
+      background-color: transparent;
+      border-color: #fff;
+    }
+  }
+}
+
+.base_button_text {
+  transition: var(--base-transition);
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0.03em;
+
+  &.default {
+    color: #fff;
+  }
+}

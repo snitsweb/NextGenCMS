@@ -2,7 +2,7 @@ import BaseContainer from '../../components/atoms/BaseContainer/BaseContainer'
 import s from './ExampleSection.module.scss'
 import BaseFont from '../../components/atoms/BaseFont/BaseFont'
 
-const ExampleSection = () => {
+const ExampleSection = ({value}) => {
 	return (
 		<section className={s.section}>
 			<BaseContainer>

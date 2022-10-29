@@ -1,24 +1,11 @@
-import {useEffect, useState} from 'react'
-
-const MultiSection = ({sectionsAliases}) => {
-
-	const [sections, setSections] = useState([])
-
-	useEffect(() => {
-		setSections(
-			sectionsAliases ?
-				sectionsAliases.map(sectionAlias => {
-					return window.app.getSection(sectionAlias)
-				})
-				: []
-		)
-	}, [sectionsAliases])
+const MultiSection = ({sections}) => {
 
 	return (
 		<>
 			{
-				sections.length ? sections.map((Section, i) => {
-					return <Section key={sections[i]} />
+				sections.length ? sections.map((section, i) => {
+					const Section = section.component
+					return <Section value={section.value} key={`${section.alias}-${i}`} />
 				}) : ''
 			}
 		</>

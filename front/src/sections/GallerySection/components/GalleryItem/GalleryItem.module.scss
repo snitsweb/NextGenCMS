@@ -1,0 +1,38 @@
+.gallery_item{
+
+}
+
+.gallery_item_inner {
+  transition: var(--base-transition);
+  position: relative;
+  border-radius: var(--base-radius);
+  overflow: hidden;
+}
+
+.gallery_item_overlay {
+  transition: var(--base-transition);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, .5);
+  }
+}
+
+.gallery_image {
+  height: 100%;
+}
+
+.gallery_modal_image {
+  width: 100%;
+}

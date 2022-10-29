@@ -1,0 +1,21 @@
+@import "src/utils/scss/index";
+
+.section {
+
+}
+
+.section__inner {
+
+}
+
+.gallery {
+  padding-top: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  @include use-media(lg) {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
