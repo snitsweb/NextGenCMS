@@ -9,11 +9,9 @@ import Application from './core/Application'
 
 
 const app = new Application()
-
 window.app = app
 
-const router = createBrowserRouter(app.getRoutes())
-
+const router = createBrowserRouter(app.reactRouterRoutes)
 app.setRouter(router)
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
