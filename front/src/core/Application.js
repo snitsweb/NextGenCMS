@@ -3,6 +3,7 @@ import ExampleSection from '../sections/ExampleSection/ExampleSection'
 import SliderSection from '../sections/SliderSection/SliderSection'
 import GallerySection from '../sections/GallerySection/GallerySection'
 import {getDatabase} from './database'
+import HomePage from '../pages/HomePage'
 
 class Application {
 	#_sections = []
@@ -35,11 +36,24 @@ class Application {
 		this.db = getDatabase()
 	}
 
-	getSections () {
-		return this.db.sections.map(section => {
+	setRouter (router) {
+		this.router = router
+	}
+
+	getSections (pagePath) {
+		return this.db.pages.find(page => page.meta.path === pagePath).value.sections.map(section => {
 			return {
 				value: section.value,
 				component: this.#_sections.find(entitySection => entitySection.alias === section.alias)?.component
+			}
+		})
+	}
+
+	getRoutes () {
+		return this.db.pages.map(page => {
+			return {
+				path: page.meta.path,
+				element: <HomePage sections={this.getSections(page.meta.path)} />
 			}
 		})
 	}

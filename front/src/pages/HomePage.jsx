@@ -2,14 +2,12 @@ import MultiSection from '../components/organisms/MultiSection/MultiSection'
 import ExampleSection from '../sections/ExampleSection/ExampleSection'
 
 
-const HomePage = () => {
-
-	const sections = window.app.getSections()
+const HomePage = ({sections}) => {
 
 	return (
 		<div>
 			<ExampleSection />
-			<MultiSection sections={sections} />
+			{sections && <MultiSection sections={sections} />}
 		</div>
 	)
 }

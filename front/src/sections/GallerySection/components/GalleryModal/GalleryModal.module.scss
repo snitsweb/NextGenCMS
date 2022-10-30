@@ -54,3 +54,11 @@
   right: 1rem;
   cursor: pointer;
 }
+
+.gallery_close_text {
+  transition: var(--base-transition);
+
+  &:hover {
+    transform: translateX(-1rem);
+  }
+}

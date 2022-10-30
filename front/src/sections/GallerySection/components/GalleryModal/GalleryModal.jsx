@@ -25,7 +25,7 @@ const GalleryModal = ({children, isVisible=false, closeHandler}) => {
 						className={s.gallery_close}
 						onClick={closeHandler}
 					>
-						<BaseFont tag="h4">Close</BaseFont>
+						<BaseFont className={s.gallery_close_text} tag="h4">Close</BaseFont>
 					</div>
 				</div>
 			)}
