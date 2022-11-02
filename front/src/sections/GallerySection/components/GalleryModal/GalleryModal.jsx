@@ -19,7 +19,7 @@ const GalleryModal = ({children, isVisible=false, closeHandler}) => {
 	return (
 		<div className={s.gallery_modal}>
 			{mounted && (
-				<div className={`${s.gallery_modal_inner} ${isVisible ? s.fadeIn : s.fadeOut}`}>
+				<div className={`${s.gallery_modal_inner} ${isVisible ? s.fadeIn : s.fadeOut} ${s[window.app.layout.alias]}`}>
 					{children}
 					<div
 						className={s.gallery_close}
