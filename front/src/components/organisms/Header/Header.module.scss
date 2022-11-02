@@ -3,7 +3,7 @@
   width: 100%;
   padding: 20px;
   display: flex;
-  background-color: #fff;
+  background-color: var(--theme-primary);
   justify-content: space-between;
   box-shadow: var(--base-shadow);
   z-index: var(--level-3);

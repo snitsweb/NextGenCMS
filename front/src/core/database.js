@@ -1,7 +1,7 @@
 export function getDatabase () {
 	return {
 		layout: {
-			alias: 'default'
+			alias: 'theme-default'
 		},
 		pages: [
 			{

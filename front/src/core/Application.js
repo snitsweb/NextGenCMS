@@ -53,8 +53,8 @@ class Application {
 	}
 
 	readyToAddLayouts () {
-		this.#layouts.push(new Layout('default', DefaultLayout))
-		this.#layouts.push(new Layout('dark', DarkLayout))
+		this.#layouts.push(new Layout('theme-default', DefaultLayout))
+		this.#layouts.push(new Layout('theme-dark', DarkLayout))
 	}
 
 	getData () {
@@ -90,7 +90,7 @@ class Application {
 
 	setLayout () {
 		const layout = this.#layouts.find(layout => layout.alias === this.#db.layout?.alias) ||
-			this.#layouts.find(layout => layout.alias === 'default')
+			this.#layouts.find(layout => layout.alias === 'theme-default')
 
 		if (!layout) throw new Error('Can not set layout!')
 

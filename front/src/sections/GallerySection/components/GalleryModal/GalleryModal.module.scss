@@ -24,7 +24,7 @@
 
 .gallery_modal_inner {
   transition: var(--base-transition);
-  background-color: rgba(255, 255, 255, .8);
+  background-color: var(--theme-primary-o50);
   backdrop-filter: blur(10px);
   z-index: var(--level-4);
   position: fixed;
@@ -45,10 +45,6 @@
   &.fadeOut {
     animation-name: fadeOut;
     animation-duration: .3s;
-  }
-
-  &.dark {
-    background-color: rgba(0, 0, 0, .5);
   }
 }
 
