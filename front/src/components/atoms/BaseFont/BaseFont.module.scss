@@ -72,6 +72,10 @@ p, span {
   font-size: 14px;
   line-height: 18px;
   letter-spacing: 0.003em;
+
+  &.dark {
+    color: #fff;
+  }
 }
 
 .default {

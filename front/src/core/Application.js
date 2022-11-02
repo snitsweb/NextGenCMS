@@ -5,13 +5,20 @@ import GallerySection from '../sections/GallerySection/GallerySection'
 import {getDatabase} from './database'
 import Page from '../components/organisms/Page/Page'
 import DefaultLayout from '../layouts/DefaultLayout/DefaultLayout'
+import {Layout} from './Layout'
+import DarkLayout from '../layouts/DarkLayout/DarkLayout'
 
 class Application {
 	#db
 	#sections = []
-	#pages = []
 	#routes = []
+	#layouts = []
+	#layout
 	#reactRouterRoutes = []
+
+	constructor () {
+		this.init()
+	}
 
 	get reactRouterRoutes () {
 		return this.#reactRouterRoutes
@@ -21,29 +28,33 @@ class Application {
 		return this.#routes
 	}
 
-	get sections () {
-		return this.#sections
+	get layout () {
+		return this.#layout
 	}
 
-	get pages () {
-		return this.#pages
-	}
-
-	constructor () {
-		this.init()
+	get currentRoute () {
+		return this.#routes.find(route => route.path === window.location.pathname)
 	}
 
 	init() {
 		this.readyToAddSections()
+		this.readyToAddLayouts()
 		this.getData()
+		this.setLayout()
 		this.setReactRouterRoutes()
 		this.setRoutes()
+		this.setMeta()
 	}
 
 	readyToAddSections () {
 		this.#sections.push(new Section('example_section', ExampleSection))
 		this.#sections.push(new Section('slider_section', SliderSection))
 		this.#sections.push(new Section('gallery_section', GallerySection))
+	}
+
+	readyToAddLayouts () {
+		this.#layouts.push(new Layout('default', DefaultLayout))
+		this.#layouts.push(new Layout('dark', DarkLayout))
 	}
 
 	getData () {
@@ -56,9 +67,10 @@ class Application {
 
 	setReactRouterRoutes () {
 		this.#reactRouterRoutes = this.#db.pages.map(page => {
+			const Layout = this.layout.component
 			return {
 				path: page.meta.path,
-				element: <DefaultLayout><Page sections={this.getSections(page.meta.path)} /></DefaultLayout>
+				element: <Layout><Page sections={this.getSections(page.meta.path)} /></Layout>
 			}
 		})
 	}
@@ -74,6 +86,20 @@ class Application {
 
 	setRoutes () {
 		this.#routes = this.#db.pages.map(page => page.meta)
+	}
+
+	setLayout () {
+		const layout = this.#layouts.find(layout => layout.alias === this.#db.layout?.alias) ||
+			this.#layouts.find(layout => layout.alias === 'default')
+
+		if (!layout) throw new Error('Can not set layout!')
+
+		this.#layout = layout
+	}
+
+	setMeta() {
+		document.title = this.currentRoute.title
+		document.querySelector('meta[name="description"]').setAttribute('content', this.currentRoute.description)
 	}
 }
 
