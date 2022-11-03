@@ -8,7 +8,7 @@ h1 {
   text-transform: uppercase;
 
   &.default {
-
+    color: var(--primary);
   }
 
   @include use-media(lg) {
