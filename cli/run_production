@@ -5,6 +5,6 @@ doctl registry login
 
 #Pushing image to registry
 docker compose -f docker-compose.production.yml pull
-docker-compose -f docker-compose.production.yml up
+docker compose -f docker-compose.production.yml up -d
 
 #For more details: https://docs.digitalocean.com/products/container-registry/quickstart/
