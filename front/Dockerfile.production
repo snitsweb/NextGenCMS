@@ -14,6 +14,7 @@ COPY . ./
 
 # Install dependencies
 RUN npm install
+RUN npm install -g serve
 
 #Build application
 RUN npm run build
