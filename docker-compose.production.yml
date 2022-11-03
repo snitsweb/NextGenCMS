@@ -1,0 +1,9 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+  frontend:
+    image: registry.digitalocean.com/zespolowe/programowanie_zespolowe-frontend
+    restart: always
+    ports:
+      - "3000:80"

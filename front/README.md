@@ -2,6 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Running front
+
+## Packages
+
+```shell
+sudo snap install doctl
+npm install -g serve
+```
+
 # Ideology
 Here you can read about good practise in this project
 

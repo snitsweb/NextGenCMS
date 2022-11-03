@@ -1,0 +1,9 @@
+# docker-compose.yml
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./front/
+      dockerfile: Dockerfile.production
+    image: registry.digitalocean.com/zespolowe/programowanie_zespolowe-frontend

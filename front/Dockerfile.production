@@ -1,0 +1,22 @@
+# Dockerfile
+
+# Pull the base image
+FROM node:16.17.0-alpine
+
+# Set the working directory
+WORKDIR /code/front
+
+# Add `/app/node_modules/.bin` to $PATH
+ENV PATH /code/front/node_modules/.bin:$PATH
+
+# Copy app to container
+COPY . ./
+
+# Install dependencies
+RUN npm install
+
+#Build application
+RUN npm run build
+
+# Start server
+CMD serve -s build -l 3000
