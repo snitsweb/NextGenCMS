@@ -1,0 +1,43 @@
+@import "src/common/utils/scss/index";
+
+.h1,
+.h2,
+.h3,
+.h4{
+  @include title-styles;
+}
+
+.h1 {
+  font-size: 48px;
+}
+
+.h2 {
+  display: block;
+  font-size: 36px;
+  @include title-styles;
+}
+
+.h3 {
+  font-size: 24px;
+}
+
+.h4 {
+  font-size: 16px;
+}
+
+.p {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 150.9%;
+  letter-spacing: 0.025em;
+  color: var(--secondary);
+}
+
+
+.color-primary {
+  color: var(--primary);
+}
+
+.color-secondary {
+  color: var(--secondary);
+}
