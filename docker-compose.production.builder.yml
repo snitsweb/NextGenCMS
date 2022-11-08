@@ -7,3 +7,8 @@ services:
       context: ./front/
       dockerfile: Dockerfile.production
     image: registry.digitalocean.com/zespolowe/programowanie_zespolowe-frontend
+  admin:
+    build:
+      context: ./admin/
+      dockerfile: Dockerfile.production
+    image: registry.digitalocean.com/zespolowe/programowanie_zespolowe-admin
