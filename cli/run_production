@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#Fetch and pull repo
+git checkout main
+git fetch
+git pull
+
 #Login to Registry
 doctl registry login
 
