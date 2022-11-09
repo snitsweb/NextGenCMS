@@ -21,9 +21,11 @@
     "jsx": "react-jsx",
     "plugins": [
       { "name": "typescript-plugin-css-modules" }
-    ]
+    ],
+    "baseUrl": "src"
   },
   "include": [
-    "src"
+    "src",
+    "src/Globals.d.ts"
   ]
 }

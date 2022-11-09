@@ -2,8 +2,7 @@ import React from 'react'
 import {IBaseFont} from './IBaseFont'
 import s from './BaseFont.module.scss'
 
-export const BaseFont: React.FC<IBaseFont> = props => {
-	const {tag, color = 'secondary', className, children} = props
+export const BaseFont: React.FC<IBaseFont> = ({tag, color='secondary', className, children}) => {
 	const Component = tag
 	const extendedClassNames = `${className ? className : ''} ${s[tag]} ${s['color-' + color]}`
 

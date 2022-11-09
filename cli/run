@@ -3,7 +3,7 @@
 if [[ $* == *--build* ]]
 then
   echo 'Building images ...'
-  docker compose up --build
+  docker compose up --build -d
 else
-  docker compose up
+  docker compose up -d
 fi
