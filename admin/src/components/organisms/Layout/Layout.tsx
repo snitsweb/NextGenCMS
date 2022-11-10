@@ -4,7 +4,7 @@ import s from './Layout.module.scss'
 import {Navbar} from '../Navbar/Navbar'
 import {Header} from '../Header/Header'
 import {BaseContainer} from 'components/atoms/BaseContainer/BaseContainer'
-export const Layout: React.FC<ILayout> = () => {
+export const Layout: React.FC<ILayout> = ({children}) => {
 	return (
 		<div className={s.layout}>
 			<Navbar className={s.navbar} />
@@ -12,7 +12,7 @@ export const Layout: React.FC<ILayout> = () => {
 				<Header />
 				<BaseContainer>
 					<div className="content">
-						Content
+						{children}
 					</div>
 				</BaseContainer>
 			</div>

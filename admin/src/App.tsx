@@ -1,10 +1,11 @@
 import React from 'react'
 import {Layout} from './components/organisms/Layout/Layout'
+import {IApp} from 'IApp'
 
-function App() {
+export const App: React.FC<IApp> = ({children}) => {
 	return (
-		<Layout />
+		<Layout>
+			{children}
+		</Layout>
 	)
 }
-
-export default App
