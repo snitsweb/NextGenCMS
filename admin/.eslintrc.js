@@ -8,8 +8,6 @@ module.exports = {
 		'plugin:react/recommended',
 		'plugin:@typescript-eslint/recommended'
 	],
-	'overrides': [
-	],
 	'parser': '@typescript-eslint/parser',
 	'parserOptions': {
 		'ecmaVersion': 'latest',
@@ -41,6 +39,9 @@ module.exports = {
 			{
 				'ignoreComments': true
 			}
+		],
+		'@typescript-eslint/no-empty-function': [
+			'warn'
 		]
 	}
 }

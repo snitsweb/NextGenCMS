@@ -6,7 +6,8 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import {Application} from 'core/Application'
 
 const app = new Application()
-const router = createBrowserRouter(app.getRoutes())
+window.app = app
+const router = createBrowserRouter(app.reactRoutes)
 
 
 const root = ReactDOM.createRoot(

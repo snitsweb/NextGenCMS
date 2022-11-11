@@ -1,38 +1,61 @@
-import {RouteObject} from 'react-router-dom'
+import React from 'react'
 import {Module} from 'common/core/Module/Module'
 import {OverviewModule} from 'modules/Overview/core/OverviewModule'
 import {IReactRoute} from 'core/IReactRoute'
+import {PhotosModule} from 'modules/Photos/core/PhotosModule'
+import {Layout} from 'components/organisms/Layout/Layout'
+import {IRoute} from 'core/IRoute'
 
 export class Application {
-	private modules: Module[] = []
-	private routes: IReactRoute[] = []
+	private _modules: Module[] = []
+	private _reactRoutes: IReactRoute[] = []
+	private _routes: IRoute[] = []
 
 	constructor() {
 		this.init()
 	}
 
+	get modules () {
+		return this._modules
+	}
+
+	get reactRoutes () {
+		return this._reactRoutes
+	}
+
+	get routes () {
+		return this._routes
+	}
+
 	init (): void {
 		this.registerModules()
+		this.createReactRoutes()
 		this.createRoutes()
-		console.log(this)
 	}
 
 	registerModules (): void {
 		this.modules.push(new OverviewModule())
+		this.modules.push(new PhotosModule())
 	}
 
-	createRoutes() {
+	createReactRoutes() {
 		this.modules.map(module => {
 			module.routes.map(moduleRoute => {
-				this.routes.push({
+				this._reactRoutes.push({
 					path: moduleRoute.path,
-					element: moduleRoute.element
+					element: <Layout>{moduleRoute.element}</Layout>
 				})
 			})
 		})
 	}
 
-	getRoutes (): RouteObject[] {
-		return this.routes
+	createRoutes() {
+		this.modules.map(module => {
+			this._routes.push({
+				path: Object.getPrototypeOf(module).constructor.defaultPath,
+				name: Object.getPrototypeOf(module).constructor.moduleName,
+				icon: Object.getPrototypeOf(module).constructor.icon,
+			})
+		})
 	}
 }
