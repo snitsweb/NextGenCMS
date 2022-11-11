@@ -1,0 +1,57 @@
+.button {
+  transition: var(--base-transition);
+  cursor: pointer;
+  width: fit-content;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 40px;
+  background-color: var(--primary);
+  color: var(--white);
+  border: 1px solid transparent;
+}
+
+.primary {
+  &:hover {
+    background-color: var(--primary-hover)
+  }
+}
+
+.bordered {
+  position: relative;
+  background-color: transparent;
+  border-color: var(--primary);
+
+  * {
+    color: var(--secondary);
+    transition: var(--base-transition);
+  }
+
+  &:after {
+    z-index: -1;
+    transition: var(--base-transition);
+    animation-duration: .3s;
+    animation-name: leftToRight;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 0;
+    height: 100%;
+    background-color: var(--primary);
+  }
+
+  &:hover {
+
+    * {
+      color: var(--white);
+    }
+
+    &:after {
+      width: 100%;
+    }
+  }
+}

@@ -1,6 +1,6 @@
-import s from './BaseContainer.module.scss'
+import s from 'common/components/BaseContainer/BaseContainer.module.scss'
 import React from 'react'
-import {IBaseContainer} from 'components/atoms/BaseContainer/IBaseContainer'
+import {IBaseContainer} from 'common/components/BaseContainer/IBaseContainer'
 
 export const BaseContainer: React.FC<IBaseContainer> = ({children}) => {
 	return (
