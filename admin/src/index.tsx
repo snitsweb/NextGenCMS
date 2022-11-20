@@ -8,6 +8,7 @@ import {Application} from 'core/Application'
 const app = new Application()
 window.app = app
 const router = createBrowserRouter(app.reactRoutes)
+console.log(app.reactRoutes)
 
 
 const root = ReactDOM.createRoot(

@@ -41,7 +41,10 @@ module.exports = {
 			}
 		],
 		'@typescript-eslint/no-empty-function': [
-			'warn'
+			'off'
+		],
+		'react/react-in-jsx-scope': [
+			'off'
 		]
 	}
 }

@@ -1,0 +1,17 @@
+.photos_page{
+  position: relative;
+  padding-top: 20px;
+
+  &_inner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  &_buttons_wrapper {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    gap: 10px;
+  }
+}
