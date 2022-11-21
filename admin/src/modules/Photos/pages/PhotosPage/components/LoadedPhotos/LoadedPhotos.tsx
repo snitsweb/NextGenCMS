@@ -1,10 +1,9 @@
-import {ILoadedPhotos} from 'modules/Photos/pages/PhotosPage/components/LoadedPhotos/ILoadedPhotos'
 import s from './LoadedPhotos.module.scss'
 import {useLoadedPhotos} from 'modules/Photos/hooks/useLoadedPhotos'
 import {LoadedPhotoSingle} from 'modules/Photos/pages/PhotosPage/components/LoadedPhotoSingle/LoadedPhotoSingle'
 import React from 'react'
 
-export const LoadedPhotos: React.FC<ILoadedPhotos> = () => {
+export const LoadedPhotos: React.FC = () => {
 	const {error, isLoading, loadedPhotos} = useLoadedPhotos()
 
 	if(error) return <p>Sorry, an error occurred</p>

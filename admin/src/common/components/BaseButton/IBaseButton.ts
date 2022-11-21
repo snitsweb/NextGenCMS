@@ -4,4 +4,5 @@ export interface IBaseButton {
 	className?: string
 	type?: 'primary' | 'bordered'
 	icon?: any
+	iconFill?: 'primary' | 'white' | 'dark'
 }

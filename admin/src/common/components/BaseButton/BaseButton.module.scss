@@ -14,6 +14,10 @@
   border: 1px solid transparent;
 }
 
+.text {
+  white-space: nowrap;
+}
+
 .primary {
   &:hover {
     background-color: var(--primary-hover)
@@ -53,6 +57,37 @@
 
     &:after {
       width: 100%;
+    }
+  }
+}
+
+.svg {
+  width: 30px;
+  max-width: 30px;
+  max-height: 30px;
+
+  &_primary {
+    fill: var(--primary);
+
+    path {
+      fill: var(--primary);
+    }
+  }
+
+  &_white {
+    fill: var(--white);
+
+
+    path {
+      fill: var(--white);
+    }
+  }
+
+  &_dark {
+    fill: var(--secondary);
+
+    path {
+      fill: var(--secondary);
     }
   }
 }

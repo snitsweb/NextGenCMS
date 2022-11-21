@@ -3,6 +3,7 @@ import {ReactComponent as Icon} from 'assets/svg/photo.svg'
 import React from 'react'
 import {PhotosPage} from 'modules/Photos/pages/PhotosPage/PhotosPage'
 import {PhotosController} from 'modules/Photos/core/PhotosController'
+import {AddPhotoPage} from 'modules/Photos/pages/AddPhotoPage/AddPhotoPage'
 
 export class PhotosModule extends Module {
 	static defaultPath = '/photos'
@@ -29,6 +30,13 @@ export class PhotosModule extends Module {
 				name: 'Photos page',
 				description: 'Photos page description',
 				title: 'Photos'
+			},
+			{
+				path: '/photos/add',
+				element: <AddPhotoPage />,
+				name: 'Add photo',
+				description: 'Photos page description',
+				title: 'Add photo'
 			}
 		)
 	}
