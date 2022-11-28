@@ -10,7 +10,7 @@ WORKDIR /code/admin
 COPY ./package*.json ./
 
 # Add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH /code/admin/node_modules/.bin:$PATH
 
 # Install dependencies
 RUN npm install

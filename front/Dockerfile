@@ -10,7 +10,7 @@ WORKDIR /code/front
 COPY ./package*.json ./
 
 # Add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH /code/front/node_modules/.bin:$PATH
 
 # Install dependencies
 RUN npm install
