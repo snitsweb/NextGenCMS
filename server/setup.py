@@ -3,8 +3,9 @@
 import sys
 from setuptools import setup, find_packages
 
-NAME = "photo_portfolio_project"
+NAME = "openapi_server"
 VERSION = "1.0.0"
+
 # To install the library, run the following
 #
 # python setup.py install
@@ -13,8 +14,9 @@ VERSION = "1.0.0"
 # http://pypi.python.org/pypi/setuptools
 
 REQUIRES = [
-    "connexion",
-    "swagger-ui-bundle>=0.0.2"
+    "connexion>=2.0.2",
+    "swagger-ui-bundle>=0.0.2",
+    "python_dateutil>=2.6.0"
 ]
 
 setup(
@@ -23,14 +25,15 @@ setup(
     description="Foto Portfolio Project",
     author_email="mateusz.teplicki@gmail.com",
     url="",
-    keywords=["Swagger", "Foto Portfolio Project"],
+    keywords=["OpenAPI", "Foto Portfolio Project"],
     install_requires=REQUIRES,
     packages=find_packages(),
-    package_data={'': ['swagger/swagger.yaml']},
+    package_data={'': ['openapi/openapi.yaml']},
     include_package_data=True,
     entry_points={
-        'console_scripts': ['photo_portfolio=photo_portfolio.__main__:main']},
+        'console_scripts': ['openapi_server=openapi_server.__main__:main']},
     long_description="""\
     Plik openapi definiujący RESTowe zapytania aplikacji do szybkiego tworzenia portfolio dla fotografów 
     """
 )
+
