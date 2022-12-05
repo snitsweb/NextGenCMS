@@ -63,7 +63,7 @@ def patch_image(id, body=None):  # noqa: E501
 def post_image(file=None, alt=None, title=None):  # noqa: E501
     """uploads an image
 
-    user sends image in binary, which is stored in database. Returns Image object with address and metadata (Photo object) # noqa: E501
+    user sends image in binary, which is stored on server. Returns Image object with address and metadata (Photo object) # noqa: E501
 
     :param file: 
     :type file: strstr
