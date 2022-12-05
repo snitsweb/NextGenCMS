@@ -4,9 +4,11 @@ from swagger_server.database import database
 
 from swagger_server.models.layout import Layout  # noqa: E501
 from swagger_server.models.meta_layout import MetaLayout  # noqa: E501
-from swagger_server import util
+from swagger_server import util, const
 
-
+"""
+testowy przykład, jak to działa
+"""
 def get_layout():  # noqa: E501
     """returns a layout assigned to a page
 
@@ -15,9 +17,8 @@ def get_layout():  # noqa: E501
 
     :rtype: List[Layout]
     """
-    print("test")
     cur = database.conn.cursor()
-    cur.execute("SELECT * FROM layout WHERE id = 1")
+    cur.execute(f'SELECT * FROM layout WHERE id = {const.DEFAULT_USER}')
     a = cur.fetchone()
     return [Layout(a[2],a[3],a[0],a[1])]
 
