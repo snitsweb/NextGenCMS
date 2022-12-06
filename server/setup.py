@@ -3,7 +3,7 @@
 import sys
 from setuptools import setup, find_packages
 
-NAME = "photo_portfolio_project"
+NAME = "swagger_server"
 VERSION = "1.0.0"
 # To install the library, run the following
 #
@@ -29,7 +29,7 @@ setup(
     package_data={'': ['swagger/swagger.yaml']},
     include_package_data=True,
     entry_points={
-        'console_scripts': ['photo_portfolio=photo_portfolio.__main__:main']},
+        'console_scripts': ['swagger_server=swagger_server.__main__:main']},
     long_description="""\
     Plik openapi definiujący RESTowe zapytania aplikacji do szybkiego tworzenia portfolio dla fotografów 
     """
