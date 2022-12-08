@@ -1,0 +1,15 @@
+.jumbotron_section {
+
+}
+
+.jumbotron_section_inner {
+
+}
+
+.content_wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
