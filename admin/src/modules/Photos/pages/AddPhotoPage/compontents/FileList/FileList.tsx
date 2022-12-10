@@ -1,5 +1,7 @@
 import type { FC } from 'react'
 import { useMemo } from 'react'
+import {BaseFont} from "../../../../../../common/components/BaseFont/BaseFont";
+import s from './Filelist.module.scss'
 
 export interface IFileList {
     files: File[]
@@ -13,7 +15,7 @@ function list(files: File[]) {
 
 export const FileList: FC<IFileList> = ({ files }) => {
 	if (files.length === 0) {
-		return <div>Nothing to display</div>
+		return <BaseFont className={s.filelist_list} tag={"span"}>Nothing to display</BaseFont>
 	}
 	const fileList = useMemo(() => list(files), [files])
 	return <div>{fileList}</div>

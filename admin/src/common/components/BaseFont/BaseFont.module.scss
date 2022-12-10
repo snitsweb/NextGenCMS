@@ -5,6 +5,7 @@
 .h3,
 .h4{
   @include title-styles;
+  display: inline-block;
 }
 
 .h1 {
@@ -25,12 +26,14 @@
   font-size: 16px;
 }
 
-.p {
+.p, .span
+p, span{
   font-size: 14px;
   font-weight: 300;
   line-height: 150.9%;
   letter-spacing: 0.025em;
   color: var(--secondary);
+  display: inline-block;
 }
 
 

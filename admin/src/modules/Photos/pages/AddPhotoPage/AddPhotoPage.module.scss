@@ -2,4 +2,13 @@
   &_inner {
 
   }
+
+  &_button {
+    svg {
+      fill: var(--white);
+      path {
+        fill: var(--white);
+      }
+    }
+  }
 }

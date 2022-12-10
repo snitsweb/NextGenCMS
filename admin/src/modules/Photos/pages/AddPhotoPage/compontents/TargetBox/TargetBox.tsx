@@ -3,6 +3,7 @@ import { useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 import React from 'react'
 import s from './TargetBox.module.scss'
+import {BaseFont} from "../../../../../../common/components/BaseFont/BaseFont";
 
 interface ITargetBox {
     onDrop: (item: { files: any[]}) => void
@@ -44,7 +45,7 @@ export const TargetBox: React.FC<ITargetBox> = ({onDrop}) => {
 
 	return (
 		<div ref={drop} className={s.target_box}>
-			{isActive ? 'Release to drop' : 'Drag file here'}
+			<BaseFont tag={'span'}>{isActive ? 'Release to drop' : 'Drag file here'}</BaseFont>
 		</div>
 	)
 }

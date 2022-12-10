@@ -3,6 +3,7 @@ import {Module} from 'common/core/Module/Module'
 import {OverviewModule} from 'modules/Overview/core/OverviewModule'
 import {IReactRoute} from 'core/IReactRoute'
 import {PhotosModule} from 'modules/Photos/core/PhotosModule'
+import {PagesModule} from "../modules/Pages/core/PagesModule";
 import {Layout} from 'components/organisms/Layout/Layout'
 import {IRoute} from 'core/IRoute'
 
@@ -36,6 +37,7 @@ export class Application {
 	registerModules (): void {
 		this.modules.push(new OverviewModule())
 		this.modules.push(new PhotosModule())
+		this.modules.push(new PagesModule())
 	}
 
 	createReactRoutes() {

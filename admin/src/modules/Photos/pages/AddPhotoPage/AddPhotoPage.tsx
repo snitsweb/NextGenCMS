@@ -8,6 +8,7 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import {TargetBox} from './compontents/TargetBox/TargetBox'
 import {FileList} from './compontents/FileList/FileList'
+import {ReactComponent as BackIcon} from '../../../../assets/svg/back-arrow.svg'
 
 export const AddPhotoPage: React.FC = () => {
 
@@ -36,7 +37,7 @@ export const AddPhotoPage: React.FC = () => {
 						</DndProvider>
 
 						<NavLink to='/photos'>
-							<BaseButton>Back to photos</BaseButton>
+							<BaseButton className={s.add_photo_page_button} icon={BackIcon}>Back to photos</BaseButton>
 						</NavLink>
 					</div>
 				</BaseContainer>

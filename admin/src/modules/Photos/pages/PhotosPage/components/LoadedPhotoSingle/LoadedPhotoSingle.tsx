@@ -12,11 +12,13 @@ export interface ILoadedPhotoSingle {
 export const LoadedPhotoSingle: React.FC<ILoadedPhotoSingle> = ({imageUri, name}) => {
 	return (
 		<div className={s.loaded_photo}>
-			<img src={imageUri} alt="Loaded photo"/>
-			<div className={s.loaded_photo_overlay}>
-				<BaseFont tag={'span'} color={'white'}>{name}</BaseFont>
-				<BaseButton type={'primary'} icon={DeleteIcon} iconFill={'white'}>Delete photo</BaseButton>
+			<div className={s.loaded_photo_image_wrapper}>
+				<img src={imageUri} alt="Loaded photo"/>
+				<div className={s.loaded_photo_overlay}>
+					<BaseButton type={'primary'} icon={DeleteIcon} iconFill={'white'}>Delete photo</BaseButton>
+				</div>
 			</div>
+			<BaseFont tag={'span'}>{name}</BaseFont>
 		</div>
 	)
 }
