@@ -16,6 +16,19 @@
       border-color: #fff;
     }
   }
+
+  &.secondary {
+    background-color: var(--primary);
+
+    &:hover {
+      background-color: transparent;
+      border-color: var(--primary);
+
+      span {
+        color: var(--primary);
+      }
+    }
+  }
 }
 
 .base_button_text {
@@ -26,6 +39,10 @@
   letter-spacing: 0.03em;
 
   &.default {
+    color: #fff;
+  }
+
+  &.secondary {
     color: #fff;
   }
 }

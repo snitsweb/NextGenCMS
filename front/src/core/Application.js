@@ -2,6 +2,7 @@ import {Section} from './Section'
 import ExampleSection from '../sections/ExampleSection/ExampleSection'
 import SliderSection from '../sections/SliderSection/SliderSection'
 import GallerySection from '../sections/GallerySection/GallerySection'
+import JumbotronSection from '../sections/JumbotronSection/JumbotronSection'
 import {getDatabase} from './database'
 import Page from '../components/organisms/Page/Page'
 import DefaultLayout from '../layouts/DefaultLayout/DefaultLayout'
@@ -50,6 +51,7 @@ class Application {
 		this.#sections.push(new Section('example_section', ExampleSection))
 		this.#sections.push(new Section('slider_section', SliderSection))
 		this.#sections.push(new Section('gallery_section', GallerySection))
+		this.#sections.push(new Section('jumbotron_section', JumbotronSection))
 	}
 
 	readyToAddLayouts () {
