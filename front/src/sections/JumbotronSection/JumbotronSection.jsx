@@ -9,14 +9,14 @@ const JumbotronSection = ({value}) => {
 			<BaseContainer>
 				<div className={s.jumbotron_section_inner}>
 					<div className={s.content_wrapper}>
-						<div>
+						<div className={s.content_wrapper_text_section}>
 							<BaseFont tag={'h1'}>
 								{value.header}
 							</BaseFont>
 							<BaseFont tag={'p'}>
 								{value.description}
 							</BaseFont>
-							<BaseButton className={s.jumbotron_section_button}
+							<BaseButton theme={'secondary'} className={s.jumbotron_section_button}
 								text="Show more"
 							/>
 						</div>
