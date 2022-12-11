@@ -1,5 +1,22 @@
 .page_list {
+  position: relative;
   &_inner {
+    position: relative;
 
+  }
+
+  &_items {
+    position: relative;
+  }
+
+  &_title {
+    margin-bottom: 20px;
+  }
+
+  &_table_header {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 30px;
   }
 }

@@ -3,7 +3,7 @@ import {Module} from 'common/core/Module/Module'
 import {OverviewModule} from 'modules/Overview/core/OverviewModule'
 import {IReactRoute} from 'core/IReactRoute'
 import {PhotosModule} from 'modules/Photos/core/PhotosModule'
-import {PagesModule} from "../modules/Pages/core/PagesModule";
+import {PagesModule} from '@modules/Pages/core/PagesModule'
 import {Layout} from 'components/organisms/Layout/Layout'
 import {IRoute} from 'core/IRoute'
 
@@ -16,25 +16,25 @@ export class Application {
 		this.init()
 	}
 
-	get modules () {
+	get modules() {
 		return this._modules
 	}
 
-	get reactRoutes () {
+	get reactRoutes() {
 		return this._reactRoutes
 	}
 
-	get routes () {
+	get routes() {
 		return this._routes
 	}
 
-	init (): void {
+	init(): void {
 		this.registerModules()
 		this.createReactRoutes()
 		this.createRoutes()
 	}
 
-	registerModules (): void {
+	registerModules(): void {
 		this.modules.push(new OverviewModule())
 		this.modules.push(new PhotosModule())
 		this.modules.push(new PagesModule())
@@ -56,7 +56,7 @@ export class Application {
 			this._routes.push({
 				path: Object.getPrototypeOf(module).constructor.defaultPath,
 				name: Object.getPrototypeOf(module).constructor.moduleName,
-				icon: Object.getPrototypeOf(module).constructor.icon,
+				icon: Object.getPrototypeOf(module).constructor.icon
 			})
 		})
 	}

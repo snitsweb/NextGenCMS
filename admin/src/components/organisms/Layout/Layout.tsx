@@ -10,7 +10,7 @@ export const Layout: React.FC<ILayout> = ({children}) => {
 			<Navbar className={s.navbar}/>
 			<div className={s.content}>
 				<Header/>
-				<div className="content">
+				<div className={s.page_content}>
 					{children}
 				</div>
 			</div>

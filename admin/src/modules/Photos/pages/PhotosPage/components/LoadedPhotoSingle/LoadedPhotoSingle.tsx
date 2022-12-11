@@ -2,7 +2,7 @@ import s from './LoadedPhotoSingle.module.scss'
 import {BaseButton} from 'common/components/BaseButton/BaseButton'
 import React from 'react'
 import {BaseFont} from 'common/components/BaseFont/BaseFont'
-import {ReactComponent as DeleteIcon} from '../../../../assets/svg/delete.svg'
+import {ReactComponent as DeleteIcon} from '../../../../../../assets/svg/delete.svg'
 
 export interface ILoadedPhotoSingle {
 	imageUri: string
