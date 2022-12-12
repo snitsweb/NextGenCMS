@@ -15,7 +15,7 @@ export const LoadedPhotoSingle: React.FC<ILoadedPhotoSingle> = ({imageUri, name}
 			<div className={s.loaded_photo_image_wrapper}>
 				<img src={imageUri} alt="Loaded photo"/>
 				<div className={s.loaded_photo_overlay}>
-					<BaseButton type={'primary'} icon={DeleteIcon} iconFill={'white'}>Delete photo</BaseButton>
+					<BaseButton type={'danger'} icon={DeleteIcon} iconFill={'white'}>Delete photo</BaseButton>
 				</div>
 			</div>
 			<BaseFont tag={'span'}>{name}</BaseFont>

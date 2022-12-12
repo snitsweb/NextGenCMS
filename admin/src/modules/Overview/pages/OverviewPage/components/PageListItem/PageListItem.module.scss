@@ -54,6 +54,8 @@
   background-color: rgba(255, 255, 255, .3);
   backdrop-filter: blur(10px);
   display: flex;
+  flex-direction: column;
+  gap: 30px;
   justify-content: center;
   align-items: center;
   opacity: 0;
@@ -62,5 +64,10 @@
   &_active {
     visibility: visible;
     opacity: 1;
+  }
+
+  &_buttons {
+    display: flex;
+    gap: 15px;
   }
 }

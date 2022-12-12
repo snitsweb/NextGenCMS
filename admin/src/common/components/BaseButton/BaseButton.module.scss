@@ -25,6 +25,13 @@
   }
 }
 
+.danger {
+  background-color: var(--red_light);
+  &:hover {
+    background-color: var(--red);
+  }
+}
+
 .bordered {
   position: relative;
   background-color: transparent;

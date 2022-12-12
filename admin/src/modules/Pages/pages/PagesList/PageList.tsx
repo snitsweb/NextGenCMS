@@ -1,9 +1,12 @@
 import React from 'react'
 import s from './PageList.module.scss'
-import {BaseContainer} from '../../../../common/components/BaseContainer/BaseContainer'
+import {BaseContainer} from '@common/components/BaseContainer/BaseContainer'
 import {useFetchPages} from '../../hooks/useFetchPages'
 import PageListItem from '../../../Overview/pages/OverviewPage/components/PageListItem/PageListItem'
-import {BaseFont} from '../../../../common/components/BaseFont/BaseFont'
+import {BaseFont} from '@common/components/BaseFont/BaseFont'
+import {BaseButton} from '@common/components/BaseButton/BaseButton'
+import {NavLink} from 'react-router-dom'
+import {ReactComponent as AddIcon} from '@assets/svg/add.svg'
 
 interface IPageList {
     classname?: string,
@@ -35,7 +38,9 @@ const PageList: React.FC<IPageList> = () => {
 					</div>
 				</div>
 			</BaseContainer>
-
+			<NavLink to={'/pages/create'} className={s.add_page_button}>
+				<BaseButton type={'primary'} iconFill={'white'} icon={AddIcon}>Add page</BaseButton>
+			</NavLink>
 		</section>
 	)
 }
