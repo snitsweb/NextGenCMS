@@ -30,7 +30,6 @@ def connect():
     try:
         # read connection parameters
         params = config()
-        print(params)
 
         # connect to the MySQL server
         print('Connecting to the MySQL database...')
