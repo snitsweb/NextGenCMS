@@ -1,6 +1,7 @@
 import connexion
 import six
 from swagger_server.database import database
+import json
 
 from swagger_server.models.layout import Layout  # noqa: E501
 from swagger_server.models.meta_layout import MetaLayout  # noqa: E501
@@ -18,9 +19,9 @@ def get_layout():  # noqa: E501
     :rtype: List[Layout]
     """
     cur = database.conn.cursor()
-    cur.execute(f'SELECT * FROM layout WHERE id = {const.DEFAULT_USER}')
+    cur.execute(f'SELECT * FROM Layout WHERE id = {const.DEFAULT_USER}')
     a = cur.fetchone()
-    return [Layout(a[2],a[3],a[0],a[1])]
+    return [Layout(alias=a[2],id=a[0],is_template=a[1],value=json.loads(a[3]))]
 
 
 def get_template_array():  # noqa: E501

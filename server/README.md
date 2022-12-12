@@ -9,6 +9,26 @@ This example uses the [Connexion](https://github.com/zalando/connexion) library 
 
 ## Requirements
 Python 3.5.2+
+MySQL Server 8.0+
+
+## Baza danych
+Nasza aplikacja korzysta z RDBMS MySQL. Aby uruchomić aplikacje, należy zainstalować lokalnie
+na komputerze serwer MySQL.
+```bash
+sudo apt update
+sudo apt install mysql-server
+```
+
+Potem należy uruchomić serwer:
+```bash
+sudo service mysql start
+```
+
+następnie należy zaimportować schemat bazy danych do serwera:
+```bash
+cd swagger_server/database
+sudo mysql < db_schema.sql
+```
 
 ## Usage
 To run the server, please execute the following from the root directory:
