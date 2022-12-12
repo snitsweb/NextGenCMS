@@ -22,10 +22,6 @@ module.exports = {
 			'error',
 			'tab'
 		],
-		'linebreak-style': [
-			'error',
-			'unix'
-		],
 		'quotes': [
 			'error',
 			'single'
@@ -45,6 +41,9 @@ module.exports = {
 		],
 		'react/react-in-jsx-scope': [
 			'off'
-		]
+		],
+		'linebreak-style': 0,
+		'global-require': 0,
+		'eslint linebreak-style': [0, 'error', 'windows']
 	}
 }

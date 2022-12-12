@@ -31,10 +31,6 @@
         "error",
         "tab"
       ],
-      "linebreak-style": [
-        "error",
-        "unix"
-      ],
       "quotes": [
         "error",
         "single"
@@ -50,7 +46,10 @@
         {
           "ignoreComments": true
         }
-      ]
+      ],
+      "linebreak-style": 0,
+      "global-require": 0,
+      "eslint linebreak-style": 0
     }
   },
   "browserslist": {
