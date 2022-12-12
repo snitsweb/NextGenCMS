@@ -4,6 +4,7 @@ import SliderSection from '../sections/SliderSection/SliderSection'
 import GallerySection from '../sections/GallerySection/GallerySection'
 import JumbotronSection from '../sections/JumbotronSection/JumbotronSection'
 import TextFieldSection from '../sections/TextFieldSection/TextFieldSection'
+import SocialMediaSection from '../sections/SocialMediaSection/SocialMediaSection'
 import {getDatabase} from './database'
 import Page from '../components/organisms/Page/Page'
 import DefaultLayout from '../layouts/DefaultLayout/DefaultLayout'
@@ -54,6 +55,7 @@ class Application {
 		this.#sections.push(new Section('gallery_section', GallerySection))
 		this.#sections.push(new Section('jumbotron_section', JumbotronSection))
 		this.#sections.push(new Section('textfield_section', TextFieldSection))
+		this.#sections.push(new Section('social_media_section', SocialMediaSection))
 	}
 
 	readyToAddLayouts () {
