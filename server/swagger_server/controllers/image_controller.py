@@ -110,17 +110,21 @@ def post_image(file=None, alt=None, title=None):  # noqa: E501
     """
     if file is None or not allowed_file(file.filename):
         raise connexion.exceptions.BadRequestProblem()
-    file.save(BASE_DIR + "/images/" + str(const.DEFAULT_USER), file.filename)
+    file.save(BASE_DIR + "/images/" + str(const.DEFAULT_USER) +"/"+ file.filename)
 
     #zapis do bazy danych
-    curr = database.conn.cursor()
+    curr = database.conn.cursor(buffered=True)
     if alt is None:
         alt = ""
     if title is None:
         title = ""
     curr.execute("INSERT INTO Images (page, image, alt, title) VALUES (%s,%s,%s,%s)", 
         (str(const.DEFAULT_USER), f"swagger_server/images/{const.DEFAULT_USER}/{file.filename}", alt, title))
-    return 'do some magic!'
+    curr.execute("SELECT LAST_INSERT_ID()")
+    database.conn.commit()
+    a = curr.fetchone()
+    curr.close()
+    return get_image(a[0])
 
 
 def to_url(s : str) -> str:
@@ -128,12 +132,6 @@ def to_url(s : str) -> str:
     funkcja zmieniająca adres obrazu na serwerze na url obrazu
     """
     return s.replace('swagger_server/images','files')
-
-def check_image_in_page(id) -> bool:
-    """
-    funkcja sprawdzająca czy zdjęcie o danym id należy do strony
-    """
-    return True
 
 def allowed_file(filename):
     return '.' in filename and \
