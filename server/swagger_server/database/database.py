@@ -49,5 +49,5 @@ def connect():
        
 	# close the communication with the MySQL
         cur.close()
-    except (Exception, mysql.DatabaseError) as error:
+    except (Exception, mysql.connector.Error) as error:
         print(error)

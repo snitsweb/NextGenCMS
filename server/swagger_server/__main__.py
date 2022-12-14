@@ -4,6 +4,7 @@ import connexion
 
 from swagger_server import encoder
 from swagger_server.routes.router import configure_route
+from swagger_server.controllers.exceptions import add_excpetion_handler
 from swagger_server.database import database
 
 
@@ -21,6 +22,7 @@ def main():
 
     #Utworzenie przekierowań 
     configure_route(app)
+    add_excpetion_handler(app)
 
     app.run(port=8080)
 
