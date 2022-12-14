@@ -21,7 +21,15 @@ def create_section(id_subpage, body=None):  # noqa: E501
     """
     if connexion.request.is_json:
         body = IdSubpageSectionBody.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+
+
+    cur = database.conn.cursor(dictionary=True)
+    cur.execute(f'INSERT INTO Sections (subpage,alias,value) VALUES (%s,%s,%s)',(id_subpage,body.alias,body.value))
+    cur.execute(f'SELECT LAST_INSERT_ID()')
+    a = cur.fetchone()
+    cur.close()
+    database.conn.commit()
+    return get_section_by_id(id_subpage,a[0])
 
 
 def delete_image_from_section(id_subpage, id_section, id_image):  # noqa: E501
