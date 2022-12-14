@@ -6,7 +6,7 @@ from swagger_server.models.subpage_body import SubpageBody  # noqa: E501
 from swagger_server.models.meta_subpage import MetaSubpage  # noqa: E501
 from swagger_server.models.subpage_id_body import SubpageIdBody  # noqa: E501
 from swagger_server import util, const
-from swagger_server.database.database import conn
+from swagger_server.database import database
 import json
 from swagger_server.controllers.exceptions import ExceptionHandler
 from swagger_server.controllers.section_controller import *
@@ -26,7 +26,7 @@ def create_subpage(body=None):  # noqa: E501
         body = SubpageBody.from_dict(connexion.request.get_json())  # noqa: E501
 
     user = const.DEFAULT_USER
-    curr = conn.cursor()
+    curr = database.conn.cursor()
     curr.execute("INSERT INTO Subpages (page, value) VALUES (%s, %s, %s)", (user, "{}"))
     curr.execute("SELECT LAST_INSERT_ID()")
     id = curr.fetchone()
@@ -36,7 +36,7 @@ def create_subpage(body=None):  # noqa: E501
     body_no_none = {k: v if v is not None else '' for k, v in body_dict}
     curr.execute("INSERT INTO MetaSubpages (subpage, name, path, title, description) VALUES (%s, %s, %s)", 
         (id, body_no_none['name'], body_no_none['path'], body_no_none['title'], body_no_none['description']))
-    conn.commit()
+    database.conn.commit()
     curr.close()
     return get_subpage(id)
 
@@ -65,7 +65,7 @@ def get_subpage(id2):  # noqa: E501
     :rtype: Subpage
     """
     user = const.DEFAULT_USER
-    curr = conn.cursor()
+    curr = database.conn.cursor()
     curr.execute("SELECT * FROM Subpages WHERE page = %s AND id = %s", (user, id2))
     res = curr.fetchone()
     if res is None:
@@ -74,7 +74,7 @@ def get_subpage(id2):  # noqa: E501
     curr.close()
     
     #pobieramy MetaSubpage
-    curr = conn.cursor(dictionary=True)
+    curr = database.conn.cursor(dictionary=True)
     curr.execute("SELECT * FROM MetaSubpages WHERE id = %s", (id2,))
     res = curr.fetchone()
     curr.close()
@@ -94,7 +94,7 @@ def get_subpage_array():  # noqa: E501
     :rtype: List[Subpage]
     """
     user = const.DEFAULT_USER
-    curr = conn.cursor()
+    curr = database.conn.cursor()
     curr.execute("SELECT * FROM Subpages WHERE page = %s ", (user,))
     res_list = curr.fetchall()
     if res_list is None:
@@ -108,7 +108,7 @@ def get_subpage_array():  # noqa: E501
         curr.close()
         
         #pobieramy MetaSubpage
-        curr = conn.cursor(dictionary=True)
+        curr = database.conn.cursor(dictionary=True)
         curr.execute("SELECT * FROM MetaSubpages WHERE id = %s", (id,))
         res = curr.fetchone()
         curr.close()
