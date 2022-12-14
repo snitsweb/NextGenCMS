@@ -3,7 +3,9 @@ import six
 
 from swagger_server.models.image import Image  # noqa: E501
 from swagger_server.models.image_id_body import ImageIdBody  # noqa: E501
-from swagger_server import util, __main__
+from swagger_server import util, __main__, const
+
+from swagger_server.database import database
 
 
 def delete_image(id):  # noqa: E501
@@ -16,7 +18,11 @@ def delete_image(id):  # noqa: E501
 
     :rtype: None
     """
-    return 'do some magic!'
+    cur = database.conn.cursor()
+    cur.execute(f'DELETE FROM Images WHERE id = %s', (id,))
+    database.conn.commit()
+    cur.close()
+    return None
 
 
 def get_image(id):  # noqa: E501
@@ -29,6 +35,10 @@ def get_image(id):  # noqa: E501
 
     :rtype: Image
     """
+    cur = database.conn.cursor(dictionary=True)
+    cur.execute(f'SELECT * FROM Images WHERE id = %s', (id,))
+    print(cur)
+    print(Image.from_dict(cur))
     return 'do some magic!'
 
 
@@ -74,4 +84,10 @@ def post_image(file=None, alt=None, title=None):  # noqa: E501
 
     :rtype: Image
     """
+    return 'do some magic!'
+
+"""
+funkcja zmieniająca adres obrazu na serwerze na url obrazu
+"""
+def to_url(s : str) -> str:
     return 'do some magic!'
