@@ -3,9 +3,13 @@ import six
 
 from swagger_server.models.subpage import Subpage  # noqa: E501
 from swagger_server.models.subpage_body import SubpageBody  # noqa: E501
+from swagger_server.models.meta_subpage import MetaSubpage  # noqa: E501
 from swagger_server.models.subpage_id_body import SubpageIdBody  # noqa: E501
 from swagger_server import util, const
 from swagger_server.database.database import conn
+import json
+from swagger_server.controllers.exceptions import ExceptionHandler
+from swagger_server.controllers.section_controller import *
 
 
 def create_subpage(body=None):  # noqa: E501
@@ -62,9 +66,23 @@ def get_subpage(id):  # noqa: E501
     """
     user = const.DEFAULT_USER
     curr = conn.cursor()
-    Subpage()
-    curr.execute("SELECT * FROM Subpages WHERE page = %s AND id = %s", ())
-    return 'do some magic!'
+    curr.execute("SELECT * FROM Subpages WHERE page = %s AND id = %s", (user, id))
+    res = curr.fetchone()
+    if res is None:
+        raise ExceptionHandler.NotFoundException()
+    value = json.loads(res[2])
+    curr.close()
+    
+    #pobieramy MetaSubpage
+    curr = conn.cursor(dictionary=True)
+    curr.execute("SELECT * FROM MetaSubpages WHERE id = %s", (id,))
+    res = curr.fetchone()
+    curr.close()
+    meta_subpage = MetaSubpage.from_dict(res)
+
+    # pobieramy listę sekcji
+    sections = get_sections(id)
+    return Subpage(id=id, page=user, meta=meta_subpage, sections=sections, value=value)
 
 
 def get_subpage_array():  # noqa: E501
@@ -75,7 +93,32 @@ def get_subpage_array():  # noqa: E501
 
     :rtype: List[Subpage]
     """
-    return 'do some magic!'
+    user = const.DEFAULT_USER
+    curr = conn.cursor()
+    curr.execute("SELECT * FROM Subpages WHERE page = %s ", (user,))
+    res = curr.fetchall()
+    if res is None:
+        return []
+    subpage_list = []
+    for row in res:
+        if res is None:
+            raise ExceptionHandler.NotFoundException()
+        id = res[0]
+        value = json.loads(res[2])
+        curr.close()
+        
+        #pobieramy MetaSubpage
+        curr = conn.cursor(dictionary=True)
+        curr.execute("SELECT * FROM MetaSubpages WHERE id = %s", (id,))
+        res = curr.fetchone()
+        curr.close()
+        meta_subpage = MetaSubpage.from_dict(res)
+
+        # pobieramy listę sekcji
+        sections = get_sections(id)
+        subpage_list.append(Subpage(id=id, page=user, meta=meta_subpage, sections=sections, value=value))
+
+    return subpage_list
 
 
 def patch_subpage(id, body=None):  # noqa: E501
