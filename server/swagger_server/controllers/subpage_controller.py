@@ -81,7 +81,7 @@ def get_subpage(id2):  # noqa: E501
     meta_subpage = MetaSubpage.from_dict(res)
 
     # pobieramy listę sekcji
-    sections = get_sections(id)
+    sections = get_sections(id2)
     return Subpage(id=id2, page=user, meta=meta_subpage, sections=sections, value=value)
 
 
@@ -118,7 +118,7 @@ def get_subpage_array():  # noqa: E501
         sections = get_sections(id)
         subpage_list.append(Subpage(id=id, page=user, meta=meta_subpage, sections=sections, value=value))
 
-    return 'do some magic!'
+    return subpage_list
 
 
 def patch_subpage(id2, body=None):  # noqa: E501
