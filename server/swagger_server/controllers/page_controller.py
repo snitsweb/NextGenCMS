@@ -49,7 +49,7 @@ def get_page():  # noqa: E501
     meta = MetaPage.from_dict(meta_query)
     layout = layout_controller.get_layout()[0]
     socials = social_controller.get_socials()
-    subpages = subpage_controller.get_subpage_array
+    subpages = subpage_controller.get_subpage_array()
 
     return Page(id=const.DEFAULT_USER, meta=meta,layout=layout,socials=socials, subpages=subpages)
 
