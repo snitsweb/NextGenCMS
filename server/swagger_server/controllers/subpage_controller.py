@@ -51,6 +51,11 @@ def delete_subpage(id2):  # noqa: E501
 
     :rtype: None
     """
+    cur = database.conn.cursor()
+    cur.execute("DELETE FROM Subpages WHERE id = %s; ",(id))
+    cur.commit()
+    cur.close()
+
     return 'do some magic!'
 
 
@@ -135,7 +140,18 @@ def patch_subpage(id2, body=None):  # noqa: E501
     """
     if connexion.request.is_json:
         body = SubpageIdBody.from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    a = get_subpage(id)
+    if body is not None:
+        cur = database.conn.cursor()
+        new_val_str = json.dumps(a.value.to_dict() | body.value.to_dict())
+        cur.execute("UPDATE Subpages SET value = %s WHERE id = %s", (new_val_str,id))
+
+        database.conn.commit()
+        cur.close()
+        return get_subpage()
+
+    else: return a
+
 
 
 def patch_subpage_order(body):  # noqa: E501
