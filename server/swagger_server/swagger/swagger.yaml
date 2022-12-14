@@ -98,22 +98,13 @@ paths:
         "400":
           description: page (Login) already exists
       x-openapi-router-controller: swagger_server.controllers.page_controller
-  /page/{id}:
     get:
       tags:
       - page
       summary: returns the requested page
       description: returns page that user/admin sent request for
       operationId: get_page
-      parameters:
-      - name: id
-        in: path
-        description: id of page
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
+
       responses:
         "200":
           description: succesful operation
@@ -123,6 +114,10 @@ paths:
                 $ref: '#/components/schemas/Page'
         "404":
           description: Page not found
+          
+      security:
+      - bearerAuth:
+        - security
       x-openapi-router-controller: swagger_server.controllers.page_controller
   /page/meta:
     patch:
@@ -1251,6 +1246,7 @@ components:
       - layout
       - meta
       - subpages
+      - socials
       type: object
       properties:
         id:
@@ -1265,6 +1261,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Subpage'
+        socials:
+          type: array
+          items:
+            $ref: '#/components/schemas/Social'
       example:
         layout: ""
         meta:
