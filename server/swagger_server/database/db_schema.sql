@@ -31,50 +31,50 @@ CREATE TABLE Pages(
 
 CREATE TABLE MetaPages(
     id int NOT NULL AUTO_INCREMENT,
-    page_id int NOT NULL UNIQUE,
+    page int NOT NULL UNIQUE,
     domain text NOT NULL,
     name varchar(255) NOT NULL,
     author varchar(255),
     mail varchar(255),
     PRIMARY KEY(id),
-    FOREIGN KEY (page_id) REFERENCES Pages(id)
+    FOREIGN KEY (page) REFERENCES Pages(id)
 );
 
 CREATE TABLE Socials(
     id int NOT NULL AUTO_INCREMENT,
-    page_id int NOT NULL,
+    page int NOT NULL,
     alias varchar(255) NOT NULL,
     value JSON NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY (page_id) REFERENCES Pages(id)
+    FOREIGN KEY (page) REFERENCES Pages(id)
 );
 
 CREATE TABLE Images(
     id int NOT NULL AUTO_INCREMENT,
-    page_id int NOT NULL,
+    page int NOT NULL,
     image text NOT NULL,
     alt text NOT NULL,
     title text NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY (page_id) REFERENCES Pages(id)
+    FOREIGN KEY (page) REFERENCES Pages(id)
 );
 
 CREATE TABLE Subpages(
     id int NOT NULL AUTO_INCREMENT,
-    page_id int NOT NULL,
+    page int NOT NULL,
     value JSON NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY (page_id) REFERENCES Pages(id)
+    FOREIGN KEY (page) REFERENCES Pages(id)
 );
 
 CREATE TABLE Sections(
     id int NOT NULL AUTO_INCREMENT,
-    subpage_id int NOT NULL,
+    subpage int NOT NULL,
     alias varchar(255) NOT NULL,
     pos int NOT NULL,
     value JSON NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY (subpage_id) REFERENCES Subpages(id)
+    FOREIGN KEY (subpage) REFERENCES Subpages(id)
 );
 
 CREATE TABLE SectionImages(
@@ -87,13 +87,13 @@ CREATE TABLE SectionImages(
 
 CREATE TABLE MetaSubpages(
     id int NOT NULL AUTO_INCREMENT,
-    subpage_id int NOT NULL UNIQUE,
+    subpage int NOT NULL UNIQUE,
     name varchar(255) NOT NULL,
     path varchar(255) NOT NULL,
     title varchar(255) NOT NULL,
     description text NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY (subpage_id) REFERENCES Subpages(id)
+    FOREIGN KEY (subpage) REFERENCES Subpages(id)
 );
 
 -- trochę testowych danych
@@ -105,25 +105,25 @@ INSERT INTO Layouts(is_template, alias, value) VALUES
 INSERT INTO Pages (layout, value) VALUES
     (1, '{"key1": "value1", "key2": "value2"}');
 
-INSERT INTO MetaPages (page_id, domain, name) VALUES
+INSERT INTO MetaPages (page, domain, name) VALUES
     (1, 'test.com', 'test_page');
 
-INSERT INTO Images(page_id, image, alt, title) VALUES
+INSERT INTO Images(page, image, alt, title) VALUES
     (1, 'swagger_server/images/1/DSC_4551.jpg', 'some alt', 'some_title'),
     (1, 'swagger_server/images/1/DSC_4551.jpg', 'some alt', 'some_title');
 
-INSERT INTO Subpages (page_id, value) VALUES
+INSERT INTO Subpages (page, value) VALUES
     (1, '{"key1": "value1", "key2": "value2"}'),
     (1, '{"key1": "value2", "key2": "value3"}');
 
-INSERT INTO MetaSubpages (subpage_id, name, path, title, description) VALUES
+INSERT INTO MetaSubpages (subpage, name, path, title, description) VALUES
     (1,'test', '/test', 'test_title', 'test_description'),
     (2,'test2', '/test2', 'test_title2', 'test_description2');
 
-INSERT INTO Socials (page_id, alias, value) VALUES
+INSERT INTO Socials (page, alias, value) VALUES
     (1,'facebook', '{"key1": "value1", "key2": "value2"}');
 
-INSERT INTO Sections(subpage_id,alias,pos,value) VALUES
+INSERT INTO Sections(subpage,alias,pos,value) VALUES
     (1, 'section_2', 1, '{"key1": "value1", "key2": "value2"}'),
     (1, 'section_1', 2, '{"key1": "value1", "key2": "value2"}'),
     (2, 'section_1', 2, '{"key1": "value1", "key2": "value2"}'),
@@ -135,8 +135,6 @@ INSERT INTO SectionImages (image_id, section_id, pos) VALUES
     (2,2,2),
     (1,3,2),
     (2,3,1);
-
-
 
 
 
