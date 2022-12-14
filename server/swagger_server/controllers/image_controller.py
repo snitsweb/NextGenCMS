@@ -19,7 +19,7 @@ def delete_image(id):  # noqa: E501
     :rtype: None
     """
     cur = database.conn.cursor()
-    cur.execute(f'DELETE FROM Images WHERE id = %s', (id,))
+    cur.execute(f'DELETE FROM Images WHERE id = %s AND page = {const.DEFAULT_USER}', (id,))
     database.conn.commit()
     cur.close()
     return None
@@ -36,9 +36,12 @@ def get_image(id2):  # noqa: E501
     :rtype: Image
     """
     cur = database.conn.cursor(dictionary=True)
-    cur.execute(f'SELECT * FROM Images WHERE id = %s', (id2,))
+    cur.execute(f'SELECT * FROM Images WHERE id = %s AND page = {const.DEFAULT_USER}', (id2,))
     a = cur.fetchone()
-    return Image.from_dict(a)
+    res = Image.from_dict(a)
+    # zamiana adresu lokalnego na url, który może być dostępny przez klienta
+    res.image = to_url(res.image)
+    return res
 
 
 def get_image_array():  # noqa: E501
@@ -46,10 +49,16 @@ def get_image_array():  # noqa: E501
 
     returns array of images with specified position # noqa: E501
 
-
     :rtype: List[Image]
     """
-    return 'do some magic!'
+    cur = database.conn.cursor(dictionary=True)
+    cur.execute(f'SELECT * FROM Images WHERE page = {const.DEFAULT_USER}')
+    fetch = cur.fetchall()
+    image_list = list(map(lambda x : Image.from_dict(x),fetch))
+    # zamiana adresu lokalnego na url, który może być dostępny przez klienta
+    for img in image_list:
+        img.image = to_url(img.image)
+    return image_list
 
 
 def patch_image(id, body=None):  # noqa: E501
@@ -85,8 +94,15 @@ def post_image(file=None, alt=None, title=None):  # noqa: E501
     """
     return 'do some magic!'
 
-"""
-funkcja zmieniająca adres obrazu na serwerze na url obrazu
-"""
+
 def to_url(s : str) -> str:
+    """
+    funkcja zmieniająca adres obrazu na serwerze na url obrazu
+    """
     return 'do some magic!'
+
+def check_image_in_page(id) -> bool:
+    """
+    funkcja sprawdzająca czy zdjęcie o danym id należy do strony
+    """
+    return True
