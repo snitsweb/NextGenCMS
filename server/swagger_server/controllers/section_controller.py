@@ -19,6 +19,7 @@ def create_section(id_subpage, body=None):  # noqa: E501
 
     :rtype: Section
     """
+    
     if connexion.request.is_json:
         body = IdSubpageSectionBody.from_dict(connexion.request.get_json())  # noqa: E501
     return 'do some magic!'
@@ -150,3 +151,13 @@ def post_image_to_section(id_subpage, id_section, value):  # noqa: E501
     :rtype: List[Image]
     """
     return 'do some magic!'
+
+def check_subpage(is_subpage):
+    """
+    sprawdż, czy
+    """
+
+def check_section(id_subpage,id_section):
+    """
+    sprawdż, czy sekcja należy do
+    """

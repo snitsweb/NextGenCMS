@@ -9,6 +9,7 @@ from swagger_server.models.base_model_ import Model
 from swagger_server.models.layout import Layout  # noqa: F401,E501
 from swagger_server.models.meta_page import MetaPage  # noqa: F401,E501
 from swagger_server.models.subpage import Subpage  # noqa: F401,E501
+from swagger_server.models.social import Social
 from swagger_server import util
 
 
@@ -17,7 +18,7 @@ class Page(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: int=None, meta: MetaPage=None, layout: Layout=None, subpages: List[Subpage]=None):  # noqa: E501
+    def __init__(self, id: int=None, meta: MetaPage=None, layout: Layout=None, subpages: List[Subpage]=None, socials: List[Social] = None):  # noqa: E501
         """Page - a model defined in Swagger
 
         :param id: The id of this Page.  # noqa: E501
@@ -33,19 +34,22 @@ class Page(Model):
             'id': int,
             'meta': MetaPage,
             'layout': Layout,
-            'subpages': List[Subpage]
+            'subpages': List[Subpage],
+            'socials': List[Social]
         }
 
         self.attribute_map = {
             'id': 'id',
             'meta': 'meta',
             'layout': 'layout',
-            'subpages': 'subpages'
+            'subpages': 'subpages',
+            'socials': 'socials'
         }
         self._id = id
         self._meta = meta
         self._layout = layout
         self._subpages = subpages
+        self._socials = socials
 
     @classmethod
     def from_dict(cls, dikt) -> 'Page':
@@ -149,3 +153,26 @@ class Page(Model):
             raise ValueError("Invalid value for `subpages`, must not be `None`")  # noqa: E501
 
         self._subpages = subpages
+
+    @property
+    def socials(self) -> List[Social]:
+        """Gets the socials of this Page.
+
+
+        :return: The socials of this Page.
+        :rtype: List[Social]
+        """
+        return self._socials
+
+    @socials.setter
+    def socials(self, socials: List[Social]):
+        """Sets the socials of this Page.
+
+
+        :param socials: The socials of this Page.
+        :type socials: List[Social]
+        """
+        if socials is None:
+            raise ValueError("Invalid value for `socials`, must not be `None`")  # noqa: E501
+
+        self._socials = socials
