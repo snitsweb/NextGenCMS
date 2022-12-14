@@ -25,7 +25,7 @@ def delete_image(id):  # noqa: E501
     return None
 
 
-def get_image(id):  # noqa: E501
+def get_image(id2):  # noqa: E501
     """returns specific image
 
     returns image requested by admin/user # noqa: E501
@@ -36,10 +36,9 @@ def get_image(id):  # noqa: E501
     :rtype: Image
     """
     cur = database.conn.cursor(dictionary=True)
-    cur.execute(f'SELECT * FROM Images WHERE id = %s', (id,))
-    print(cur)
-    print(Image.from_dict(cur))
-    return 'do some magic!'
+    cur.execute(f'SELECT * FROM Images WHERE id = %s', (id2,))
+    a = cur.fetchone()
+    return Image.from_dict(a)
 
 
 def get_image_array():  # noqa: E501
