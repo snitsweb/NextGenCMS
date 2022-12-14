@@ -35,7 +35,7 @@ def get_page():  # noqa: E501
     :rtype: Page
     """
     id = const.DEFAULT_USER
-    curr = database.conn.cursor(dictionary=True)
+    curr = database.conn.cursor(dictionary=True, buffered=True)
     curr.execute(f"SELECT * FROM Pages WHERE id = {id}",)
     a = curr.fetchone()
     if a is None:
