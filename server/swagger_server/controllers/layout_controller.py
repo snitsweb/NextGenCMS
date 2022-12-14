@@ -92,7 +92,7 @@ def put_layout(body=None):  # noqa: E501
         old_id = cur.fetchone()
         cur.execute(f"UPDATE Pages SET layout = {id[0]} WHERE id = {const.DEFAULT_USER}")
         cur.execute(f"DELETE FROM Layouts WHERE id = {old_id[0]}")
-        cur.commit()
+        database.conn.commit()
         cur.close()
 
     return get_layout()
