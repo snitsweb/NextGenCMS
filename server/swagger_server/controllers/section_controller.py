@@ -84,7 +84,8 @@ def get_section_by_id(id_subpage, id_section):  # noqa: E501
     curr.close()
 
     curr = conn.cursor(dictionary=True)
-    curr.execute("SELECT Images.* FROM Images INNER JOIN SectionImages ON Images.subpage = %s", (id,))
+    curr.execute("SELECT Images.* FROM Images INNER JOIN SectionImages ON SectionImages.image_id = Images.id\
+             WHERE SectionImages.section_id = %s", (id,))
     img_fetch = curr.fetchall()
     if img_fetch is None:
         images = []
@@ -118,7 +119,8 @@ def get_sections(id_subpage):  # noqa: E501
         curr.close()
 
         curr = conn.cursor(dictionary=True)
-        curr.execute("SELECT Images.* FROM Images INNER JOIN SectionImages ON Images.subpage = %s", (id,))
+        curr.execute("SELECT Images.* FROM Images INNER JOIN SectionImages ON SectionImages.image_id = Images.id\
+             WHERE SectionImages.section_id = %s", (id,))
         img_fetch = curr.fetchall()
         if img_fetch is None:
             images = []
