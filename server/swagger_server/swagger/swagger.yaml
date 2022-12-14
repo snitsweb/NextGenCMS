@@ -493,14 +493,14 @@ paths:
       - bearerAuth:
         - security
       x-openapi-router-controller: swagger_server.controllers.social_controller
-  /social/{id}:
+  /social/{id2}:
     get:
       tags:
       - social
       summary: finds a social by ID
       operationId: get_social_by_id
       parameters:
-      - name: id
+      - name: id2
         in: path
         required: true
         style: simple
@@ -529,7 +529,7 @@ paths:
       summary: deletes a social by ID
       operationId: delete_social_by_id
       parameters:
-      - name: id
+      - name: id2
         in: path
         required: true
         style: simple

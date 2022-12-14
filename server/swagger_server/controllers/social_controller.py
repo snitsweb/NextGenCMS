@@ -29,7 +29,7 @@ def create_connection(alias, value):  # noqa: E501
     return get_social_by_id(id[0])
 
 
-def delete_social_by_id(id):  # noqa: E501
+def delete_social_by_id(id2):  # noqa: E501
     """deletes a social by ID
 
      # noqa: E501
@@ -41,13 +41,13 @@ def delete_social_by_id(id):  # noqa: E501
     """
     page = const.DEFAULT_USER
     curr = database.conn.cursor()
-    curr.execute("DELETE FROM Socials WHERE page = %s AND id = %s", (page, id))
+    curr.execute("DELETE FROM Socials WHERE page = %s AND id = %s", (page, id2))
     database.conn.commit()
     curr.close()
     return 'do some magic!'
 
 
-def get_social_by_id(id):  # noqa: E501
+def get_social_by_id(id2):  # noqa: E501
     """finds a social by ID
 
      # noqa: E501
@@ -59,7 +59,7 @@ def get_social_by_id(id):  # noqa: E501
     """
     page = const.DEFAULT_USER
     curr = database.conn.cursor()
-    curr.execute("SELECT * FROM Socials WHERE page = %s AND id = %s", (page, id))
+    curr.execute("SELECT * FROM Socials WHERE page = %s AND id = %s", (page, id2))
     res = curr.fetchone()
     if res is None:
         raise ExceptionHandler.NotFoundException
@@ -77,7 +77,7 @@ def get_socials():  # noqa: E501
     """
     page = const.DEFAULT_USER
     curr = database.conn.cursor()
-    curr.execute("SELECT * FROM Socials WHERE page = %s AND id = %s", (page, id))
+    curr.execute("SELECT * FROM Socials WHERE page = %s", (page,))
     res_arr = curr.fetchall()
     curr.close()
     if res_arr == None:
