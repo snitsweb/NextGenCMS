@@ -19,6 +19,7 @@ def create_subpage(body=None):  # noqa: E501
     """
     if connexion.request.is_json:
         body = SubpageBody.from_dict(connexion.request.get_json())  # noqa: E501
+    
     return 'do some magic!'
 
 
