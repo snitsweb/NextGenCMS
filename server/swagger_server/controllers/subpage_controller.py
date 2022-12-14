@@ -41,32 +41,32 @@ def create_subpage(body=None):  # noqa: E501
     return get_subpage(id)
 
 
-def delete_subpage(id):  # noqa: E501
+def delete_subpage(id2):  # noqa: E501
     """deletes a subpage
 
      # noqa: E501
 
-    :param id: id of subpage
-    :type id: int
+    :param id2: id of subpage
+    :type id2: int
 
     :rtype: None
     """
     return 'do some magic!'
 
 
-def get_subpage(id):  # noqa: E501
+def get_subpage(id2):  # noqa: E501
     """find subpage by ID
 
     returns a subpage based on ID # noqa: E501
 
-    :param id: id of subpage
-    :type id: int
+    :param id2: id of subpage
+    :type id2: int
 
     :rtype: Subpage
     """
     user = const.DEFAULT_USER
     curr = conn.cursor()
-    curr.execute("SELECT * FROM Subpages WHERE page = %s AND id = %s", (user, id))
+    curr.execute("SELECT * FROM Subpages WHERE page = %s AND id = %s", (user, id2))
     res = curr.fetchone()
     if res is None:
         raise ExceptionHandler.NotFoundException()
@@ -75,14 +75,14 @@ def get_subpage(id):  # noqa: E501
     
     #pobieramy MetaSubpage
     curr = conn.cursor(dictionary=True)
-    curr.execute("SELECT * FROM MetaSubpages WHERE id = %s", (id,))
+    curr.execute("SELECT * FROM MetaSubpages WHERE id = %s", (id2,))
     res = curr.fetchone()
     curr.close()
     meta_subpage = MetaSubpage.from_dict(res)
 
     # pobieramy listę sekcji
     sections = get_sections(id)
-    return Subpage(id=id, page=user, meta=meta_subpage, sections=sections, value=value)
+    return Subpage(id=id2, page=user, meta=meta_subpage, sections=sections, value=value)
 
 
 def get_subpage_array():  # noqa: E501
@@ -96,11 +96,11 @@ def get_subpage_array():  # noqa: E501
     user = const.DEFAULT_USER
     curr = conn.cursor()
     curr.execute("SELECT * FROM Subpages WHERE page = %s ", (user,))
-    res = curr.fetchall()
-    if res is None:
+    res_list = curr.fetchall()
+    if res_list is None:
         return []
     subpage_list = []
-    for row in res:
+    for res in res_list:
         if res is None:
             raise ExceptionHandler.NotFoundException()
         id = res[0]
@@ -118,16 +118,16 @@ def get_subpage_array():  # noqa: E501
         sections = get_sections(id)
         subpage_list.append(Subpage(id=id, page=user, meta=meta_subpage, sections=sections, value=value))
 
-    return subpage_list
+    return 'do some magic!'
 
 
-def patch_subpage(id, body=None):  # noqa: E501
+def patch_subpage(id2, body=None):  # noqa: E501
     """updates a subpage
 
      # noqa: E501
 
-    :param id: id of subpage
-    :type id: int
+    :param id2: id of subpage
+    :type id2: int
     :param body: 
     :type body: dict | bytes
 
