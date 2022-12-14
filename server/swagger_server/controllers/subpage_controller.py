@@ -56,7 +56,6 @@ def delete_subpage(id2):  # noqa: E501
     cur.commit()
     cur.close()
 
-    return 'do some magic!'
 
 
 def get_subpage(id2):  # noqa: E501
