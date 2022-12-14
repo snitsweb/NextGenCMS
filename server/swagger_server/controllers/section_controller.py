@@ -5,7 +5,7 @@ from swagger_server.models.id_subpage_section_body import IdSubpageSectionBody  
 from swagger_server.models.image import Image  # noqa: E501
 from swagger_server.models.section import Section  # noqa: E501
 from swagger_server import util
-from swagger_server.database.database import conn
+from swagger_server.database import database
 from swagger_server.controllers.exceptions import ExceptionHandler
 import json
 
@@ -71,7 +71,7 @@ def get_section_by_id(id_subpage, id_section):  # noqa: E501
 
     :rtype: Section
     """
-    curr = conn.cursor()
+    curr = database.conn.cursor()
     curr.execute("SELECT Sections.* FROM Sections INNER JOIN Subpages ON Sections.subpage = Subpages.id WHERE\
          Sections.subpage = %s AND Sections.id = %s", (id_subpage,id_section))
     res = curr.fetchone()
@@ -83,7 +83,7 @@ def get_section_by_id(id_subpage, id_section):  # noqa: E501
     value = json.loads(res[4])
     curr.close()
 
-    curr = conn.cursor(dictionary=True)
+    curr = database.conn.cursor(dictionary=True)
     curr.execute("SELECT Images.* FROM Images INNER JOIN SectionImages ON SectionImages.image_id = Images.id\
              WHERE SectionImages.section_id = %s", (id,))
     img_fetch = curr.fetchall()
@@ -104,7 +104,7 @@ def get_sections(id_subpage):  # noqa: E501
 
     :rtype: List[Section]
     """
-    curr = conn.cursor()
+    curr = database.conn.cursor()
     curr.execute("SELECT Sections.* FROM Sections INNER JOIN Subpages ON Sections.subpage = Subpages.id WHERE\
          Sections.subpage = %s ORDER BY Sections.pos ASC", (id_subpage,))
     res_list = curr.fetchall()
@@ -118,7 +118,7 @@ def get_sections(id_subpage):  # noqa: E501
         value = json.loads(res[4])
         curr.close()
 
-        curr = conn.cursor(dictionary=True)
+        curr = database.conn.cursor(dictionary=True)
         curr.execute("SELECT Images.* FROM Images INNER JOIN SectionImages ON SectionImages.image_id = Images.id\
              WHERE SectionImages.section_id = %s", (id,))
         img_fetch = curr.fetchall()
