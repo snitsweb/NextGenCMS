@@ -937,7 +937,7 @@ paths:
       - bearerAuth:
         - security
       x-openapi-router-controller: swagger_server.controllers.section_controller
-  /image/{id}:
+  /image/{id2}:
     get:
       tags:
       - image
@@ -945,7 +945,7 @@ paths:
       description: returns image requested by admin/user
       operationId: get_image
       parameters:
-      - name: id
+      - name: id2
         in: path
         description: id of requested image
         required: true
