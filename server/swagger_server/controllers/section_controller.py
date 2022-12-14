@@ -131,7 +131,7 @@ def patch_section_value(id_subpage, id_section, body=None):  # noqa: E501
     :rtype: Section
     """
     if connexion.request.is_json:
-        body = Dict.from_dict(connexion.request.get_json())  # noqa: E501
+        body = Section.from_dict(connexion.request.get_json())  # noqa: E501
     return 'do some magic!'
 
 

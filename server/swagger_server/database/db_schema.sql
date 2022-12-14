@@ -100,7 +100,9 @@ CREATE TABLE MetaSubpages(
 
 INSERT INTO Layouts(is_template, alias, value) VALUES 
     (False,'test','{"key1": "value1", "key2": "value2"}'),
-    (False,'test2','{"key1": "value1", "key2": "value2"}');
+    (False,'test2','{"key1": "value1", "key2": "value2"}'),
+    (True,'test3','{"key1": "value1", "key2": "value2"}'),
+    (True,'test4','{"key1": "value1", "key2": "value2"}');
 
 INSERT INTO Pages (layout, value) VALUES
     (1, '{"key1": "value1", "key2": "value2"}');

@@ -340,7 +340,7 @@ paths:
         \ a page (old template is removed)"
       operationId: put_template_based_layout
       parameters:
-      - name: id
+      - name: id2
         in: query
         description: ID of template layout
         required: true
@@ -348,6 +348,7 @@ paths:
         explode: true
         schema:
           type: integer
+        x-body-name: id2
       - name: alias
         in: query
         description: alias of a layout
@@ -356,6 +357,7 @@ paths:
         explode: true
         schema:
           type: string
+        x-body-name: alias
       responses:
         "200":
           description: succesful operation
