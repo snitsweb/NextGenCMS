@@ -214,7 +214,7 @@ paths:
       - bearerAuth:
         - security
       x-openapi-router-controller: swagger_server.controllers.subpage_controller
-  /subpage/{id}:
+  /subpage/{id2}:
     get:
       tags:
       - subpage
@@ -222,7 +222,7 @@ paths:
       description: returns a subpage based on ID
       operationId: get_subpage
       parameters:
-      - name: id
+      - name: id2
         in: path
         description: id of subpage
         required: true
@@ -251,7 +251,7 @@ paths:
       summary: deletes a subpage
       operationId: delete_subpage
       parameters:
-      - name: id
+      - name: id2
         in: path
         description: id of subpage
         required: true
@@ -276,7 +276,7 @@ paths:
       summary: updates a subpage
       operationId: patch_subpage
       parameters:
-      - name: id
+      - name: id2
         in: path
         description: id of subpage
         required: true
