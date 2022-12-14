@@ -52,7 +52,7 @@ def delete_subpage(id2):  # noqa: E501
     :rtype: None
     """
     cur = database.conn.cursor()
-    cur.execute("DELETE FROM Subpages WHERE id = %s; ",(id))
+    cur.execute("DELETE FROM Subpages WHERE id = %s; ",(id2))
     cur.commit()
     cur.close()
 
