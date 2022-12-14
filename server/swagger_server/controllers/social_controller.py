@@ -4,7 +4,7 @@ import six
 from swagger_server.models.social import Social  # noqa: E501
 from swagger_server import util, const
 import json
-from swagger_server.database.database import conn
+from swagger_server.database import database
 from swagger_server.controllers.exceptions import ExceptionHandler
 
 
@@ -20,11 +20,11 @@ def create_connection(alias, value):  # noqa: E501
 
     :rtype: Social
     """
-    curr = conn.cursor()
+    curr = database.conn.cursor()
     curr.execute("INSERT INTO Socials (page, alias, value) VALUES (%s, %s, %s)", (const.DEFAULT_USER, alias, json.dumps(value)))
     curr.execute("SELECT LAST_INSERT_ID()")
     id = curr.fetchone()
-    conn.commit()
+    database.conn.commit()
     curr.close()
     return get_social_by_id(id[0])
 
@@ -40,9 +40,9 @@ def delete_social_by_id(id):  # noqa: E501
     :rtype: None
     """
     page = const.DEFAULT_USER
-    curr = conn.cursor()
+    curr = database.conn.cursor()
     curr.execute("DELETE FROM Socials WHERE page = %s AND id = %s", (page, id))
-    conn.commit()
+    database.conn.commit()
     curr.close()
     return 'do some magic!'
 
@@ -58,7 +58,7 @@ def get_social_by_id(id):  # noqa: E501
     :rtype: Social
     """
     page = const.DEFAULT_USER
-    curr = conn.cursor()
+    curr = database.conn.cursor()
     curr.execute("SELECT * FROM Socials WHERE page = %s AND id = %s", (page, id))
     res = curr.fetchone()
     if res is None:
@@ -76,7 +76,7 @@ def get_socials():  # noqa: E501
     :rtype: List[Social]
     """
     page = const.DEFAULT_USER
-    curr = conn.cursor()
+    curr = database.conn.cursor()
     curr.execute("SELECT * FROM Socials WHERE page = %s AND id = %s", (page, id))
     res_arr = curr.fetchall()
     curr.close()
