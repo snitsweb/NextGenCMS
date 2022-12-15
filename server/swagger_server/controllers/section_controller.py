@@ -5,6 +5,9 @@ from swagger_server.models.id_subpage_section_body import IdSubpageSectionBody  
 from swagger_server.models.image import Image  # noqa: E501
 from swagger_server.models.section import Section  # noqa: E501
 from swagger_server import util
+from swagger_server.database import database
+from swagger_server.controllers.exceptions import ExceptionHandler
+import json
 
 
 def create_section(id_subpage, body=None):  # noqa: E501
@@ -89,13 +92,27 @@ def get_section_by_id(id_subpage, id_section):  # noqa: E501
 
     :rtype: Section
     """
+    curr = database.conn.cursor()
+    curr.execute("SELECT Sections.* FROM Sections INNER JOIN Subpages ON Sections.subpage = Subpages.id WHERE\
+         Sections.subpage = %s AND Sections.id = %s", (id_subpage,id_section))
+    res = curr.fetchone()
+    if res is None:
+        raise ExceptionHandler.NotFoundException()
+    id = res[0]
+    subpage = res[1]
+    alias = res[2]
+    value = json.loads(res[4])
+    curr.close()
 
-    cur = database.conn.cursor(dictionary=True)
-    cur.execute(f'SELECT * FROM Sections WHERE id=%s AND subpage=%s',(id_section,id_subpage))
-    a = cur.fetchall()
-    cur.close()
-
-    return a
+    curr = database.conn.cursor(dictionary=True)
+    curr.execute("SELECT Images.* FROM Images INNER JOIN SectionImages ON SectionImages.image_id = Images.id\
+             WHERE SectionImages.section_id = %s", (id,))
+    img_fetch = curr.fetchall()
+    if img_fetch is None:
+        images = []
+    else:
+        images = list(map(lambda x : Image.from_dict(x), img_fetch))
+    return Section(id=id,subpage=subpage,alias=alias,images=images,value=value)
 
 
 def get_sections(id_subpage):  # noqa: E501
@@ -108,14 +125,30 @@ def get_sections(id_subpage):  # noqa: E501
 
     :rtype: List[Section]
     """
+    curr = database.conn.cursor()
+    curr.execute("SELECT Sections.* FROM Sections INNER JOIN Subpages ON Sections.subpage = Subpages.id WHERE\
+         Sections.subpage = %s ORDER BY Sections.pos ASC", (id_subpage,))
+    res_list = curr.fetchall()
+    if res_list is None:
+        return []
+    section_list = []
+    for res in res_list:
+        id = res[0]
+        subpage = res[1]
+        alias = res[2]
+        value = json.loads(res[4])
+        curr.close()
 
-    cur = database.conn.cursor(dictionary=True)
-    cur.execute(f'SELECT * FROM Sections WHERE subpage=%s',(id_subpage))
-    a = cur.fetall()
-    a = list(map(lambda x : Sections(id=int(x[0]),subpage=int(x[1]), alias=str(x[2]), pos=int(x[3])) , a))
-    cur.close()
-
-    return a
+        curr = database.conn.cursor(dictionary=True)
+        curr.execute("SELECT Images.* FROM Images INNER JOIN SectionImages ON SectionImages.image_id = Images.id\
+             WHERE SectionImages.section_id = %s", (id,))
+        img_fetch = curr.fetchall()
+        if img_fetch is None:
+            images = []
+        else:
+            images = list(map(lambda x : Image.from_dict(x), img_fetch))
+        section_list.append(Section(id=id,subpage=subpage,alias=alias,images=images,value=value))
+    return section_list
 
 
 def patch_image_order(body, id_subpage, id_section):  # noqa: E501
