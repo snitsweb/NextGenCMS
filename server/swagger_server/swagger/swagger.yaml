@@ -98,22 +98,13 @@ paths:
         "400":
           description: page (Login) already exists
       x-openapi-router-controller: swagger_server.controllers.page_controller
-  /page/{id}:
     get:
       tags:
       - page
       summary: returns the requested page
       description: returns page that user/admin sent request for
       operationId: get_page
-      parameters:
-      - name: id
-        in: path
-        description: id of page
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: integer
+
       responses:
         "200":
           description: succesful operation
@@ -123,6 +114,10 @@ paths:
                 $ref: '#/components/schemas/Page'
         "404":
           description: Page not found
+          
+      security:
+      - bearerAuth:
+        - security
       x-openapi-router-controller: swagger_server.controllers.page_controller
   /page/meta:
     patch:
@@ -219,7 +214,7 @@ paths:
       - bearerAuth:
         - security
       x-openapi-router-controller: swagger_server.controllers.subpage_controller
-  /subpage/{id}:
+  /subpage/{id2}:
     get:
       tags:
       - subpage
@@ -227,7 +222,7 @@ paths:
       description: returns a subpage based on ID
       operationId: get_subpage
       parameters:
-      - name: id
+      - name: id2
         in: path
         description: id of subpage
         required: true
@@ -256,7 +251,7 @@ paths:
       summary: deletes a subpage
       operationId: delete_subpage
       parameters:
-      - name: id
+      - name: id2
         in: path
         description: id of subpage
         required: true
@@ -281,7 +276,7 @@ paths:
       summary: updates a subpage
       operationId: patch_subpage
       parameters:
-      - name: id
+      - name: id2
         in: path
         description: id of subpage
         required: true
@@ -498,14 +493,14 @@ paths:
       - bearerAuth:
         - security
       x-openapi-router-controller: swagger_server.controllers.social_controller
-  /social/{id}:
+  /social/{id2}:
     get:
       tags:
       - social
       summary: finds a social by ID
       operationId: get_social_by_id
       parameters:
-      - name: id
+      - name: id2
         in: path
         required: true
         style: simple
@@ -534,7 +529,7 @@ paths:
       summary: deletes a social by ID
       operationId: delete_social_by_id
       parameters:
-      - name: id
+      - name: id2
         in: path
         required: true
         style: simple
@@ -1251,6 +1246,7 @@ components:
       - layout
       - meta
       - subpages
+      - socials
       type: object
       properties:
         id:
@@ -1265,6 +1261,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Subpage'
+        socials:
+          type: array
+          items:
+            $ref: '#/components/schemas/Social'
       example:
         layout: ""
         meta:

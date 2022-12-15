@@ -23,6 +23,7 @@ def create_section(id_subpage, body=None):  # noqa: E501
 
     :rtype: Section
     """
+    
     if connexion.request.is_json:
         body = IdSubpageSectionBody.from_dict(connexion.request.get_json())  # noqa: E501
 

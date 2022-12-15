@@ -2,7 +2,10 @@ import connexion
 import six
 
 from swagger_server.models.social import Social  # noqa: E501
-from swagger_server import util
+from swagger_server import util, const
+import json
+from swagger_server.database import database
+from swagger_server.controllers.exceptions import ExceptionHandler
 
 
 def create_connection(alias, value):  # noqa: E501
@@ -17,10 +20,16 @@ def create_connection(alias, value):  # noqa: E501
 
     :rtype: Social
     """
-    return 'do some magic!'
+    curr = database.conn.cursor()
+    curr.execute("INSERT INTO Socials (page, alias, value) VALUES (%s, %s, %s)", (const.DEFAULT_USER, alias, json.dumps(value)))
+    curr.execute("SELECT LAST_INSERT_ID()")
+    id = curr.fetchone()
+    database.conn.commit()
+    curr.close()
+    return get_social_by_id(id[0])
 
 
-def delete_social_by_id(id):  # noqa: E501
+def delete_social_by_id(id2):  # noqa: E501
     """deletes a social by ID
 
      # noqa: E501
@@ -30,10 +39,15 @@ def delete_social_by_id(id):  # noqa: E501
 
     :rtype: None
     """
+    page = const.DEFAULT_USER
+    curr = database.conn.cursor()
+    curr.execute("DELETE FROM Socials WHERE page = %s AND id = %s", (page, id2))
+    database.conn.commit()
+    curr.close()
     return 'do some magic!'
 
 
-def get_social_by_id(id):  # noqa: E501
+def get_social_by_id(id2):  # noqa: E501
     """finds a social by ID
 
      # noqa: E501
@@ -43,7 +57,14 @@ def get_social_by_id(id):  # noqa: E501
 
     :rtype: Social
     """
-    return 'do some magic!'
+    page = const.DEFAULT_USER
+    curr = database.conn.cursor()
+    curr.execute("SELECT * FROM Socials WHERE page = %s AND id = %s", (page, id2))
+    res = curr.fetchone()
+    if res is None:
+        raise ExceptionHandler.NotFoundException
+    curr.close()
+    return Social(id=res[0],page=res[1],alias=res[2],value=json.loads(res[3]))
 
 
 def get_socials():  # noqa: E501
@@ -54,4 +75,14 @@ def get_socials():  # noqa: E501
 
     :rtype: List[Social]
     """
-    return 'do some magic!'
+    page = const.DEFAULT_USER
+    curr = database.conn.cursor()
+    curr.execute("SELECT * FROM Socials WHERE page = %s", (page,))
+    res_arr = curr.fetchall()
+    curr.close()
+    if res_arr == None:
+        arr = []
+    else:
+        arr = list(map(lambda res : Social(id=res[0],page=res[1],alias=res[2],value=json.loads(res[3])), res_arr) )
+    
+    return arr
