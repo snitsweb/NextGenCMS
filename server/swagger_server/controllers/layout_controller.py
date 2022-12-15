@@ -52,16 +52,18 @@ def patch_layout(body=None):  # noqa: E501
     :rtype: Layout
     """
     if connexion.request.is_json:
-        body = MetaLayout.from_dict(connexion.request.get_json())  # noqa: E501
+        body = connexion.request.get_json()  # noqa: E501
     
     a = get_layout()[0]
     
     if body is not None:
         cur = database.conn.cursor()
-        if body.alias is not None:
-            cur.execute("UPDATE Layouts SET alias = %s WHERE id = %s", (body.alias,a.id))
-        if body.value is not None:
-            new_val_str = json.dumps(a.value.to_dict() | body.value.to_dict())
+        if 'alias' in body:
+            cur.execute("UPDATE Layouts SET alias = %s WHERE id = %s", (body['alias'],a.id))
+        if 'value' in body:
+            print(a.value)
+            print(body['value'])
+            new_val_str = json.dumps(a.value | body['value'])
             cur.execute("UPDATE Layouts SET value = %s WHERE id = %s", (new_val_str,a.id))
         database.conn.commit()
         cur.close()
@@ -82,10 +84,10 @@ def put_layout(body=None):  # noqa: E501
     :rtype: Layout
     """
     if connexion.request.is_json:
-        body = MetaLayout.from_dict(connexion.request.get_json())  # noqa: E501
+        body = connexion.request.get_json()  # noqa: E501
     if body is not None:
         cur = database.conn.cursor()
-        cur.execute("INSERT INTO Layouts (alias, value, is_template) VALUES (%s, %s, False)", (body.alias, json.dumps(body.value)))
+        cur.execute("INSERT INTO Layouts (alias, value, is_template) VALUES (%s, %s, False)", (body['alias'], json.dumps(body['value'])))
         cur.execute("SELECT LAST_INSERT_ID()")
         id = cur.fetchone()
         cur.execute(f"SELECT layout FROM Pages WHERE Pages.id = {const.DEFAULT_USER}")

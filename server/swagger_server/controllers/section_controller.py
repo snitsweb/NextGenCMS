@@ -203,6 +203,7 @@ def patch_section_order(body, id_subpage):  # noqa: E501
 
     :rtype: List[Section]
     """
+    check_subpage_in_page(id_subpage)
     sections = get_sections(id_subpage)
     sections_id = list(map(lambda s : s.id, sections))
     if sections_id.sort() != body.sort():

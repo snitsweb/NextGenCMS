@@ -22,23 +22,28 @@ def create_subpage(body=None):  # noqa: E501
 
     :rtype: Subpage
     """
+    print("HELP")
     if connexion.request.is_json:
-        body = SubpageBody.from_dict(connexion.request.get_json())  # noqa: E501
-
+        res = (connexion.request.get_json())
+        body = SubpageBody(res['value'], MetaSubpage.from_dict(res['meta']))  # noqa: E501
+    if body is None:
+        raise Exception()
     user = const.DEFAULT_USER
     curr = database.conn.cursor()
-    curr.execute("INSERT INTO Subpages (page, value) VALUES (%s, %s, %s)", (user, "{}"))
+    curr.execute("INSERT INTO Subpages (page, value) VALUES (%s, %s)", (user, json.dumps(body.value)))
     curr.execute("SELECT LAST_INSERT_ID()")
     id = curr.fetchone()
-    if body is None:
-        body = SubpageBody()
-    body_dict = body.to_dict()
-    body_no_none = {k: v if v is not None else '' for k, v in body_dict}
-    curr.execute("INSERT INTO MetaSubpages (subpage, name, path, title, description) VALUES (%s, %s, %s)", 
-        (id, body_no_none['name'], body_no_none['path'], body_no_none['title'], body_no_none['description']))
+    if body.meta is None:
+        meta_body = MetaSubpage()
+    else:
+        meta_body = body.meta
+    body_dict = meta_body
+    body_no_none = { k: ('' if v is None else v) for k, v in body_dict.items() }
+    curr.execute("INSERT INTO MetaSubpages (subpage, name, path, title, description) VALUES (%s, %s, %s, %s, %s)", 
+        (id[0], body_no_none['name'], body_no_none['path'], body_no_none['title'], body_no_none['description']))
     database.conn.commit()
     curr.close()
-    return get_subpage(id)
+    return get_subpage(id[0])
 
 
 def delete_subpage(id2):  # noqa: E501
@@ -52,7 +57,7 @@ def delete_subpage(id2):  # noqa: E501
     :rtype: None
     """
     cur = database.conn.cursor()
-    cur.execute("DELETE FROM Subpages WHERE id = %s; ",(id2))
+    cur.execute("DELETE FROM Subpages WHERE id = %s; ",(id2,))
     database.conn.commit()
     cur.close()
 
@@ -79,8 +84,9 @@ def get_subpage(id2):  # noqa: E501
     
     #pobieramy MetaSubpage
     curr = database.conn.cursor(dictionary=True)
-    curr.execute("SELECT * FROM MetaSubpages WHERE id = %s", (id2,))
+    curr.execute("SELECT * FROM MetaSubpages WHERE subpage = %s", (id2,))
     res = curr.fetchone()
+    print(res)
     curr.close()
     meta_subpage = MetaSubpage.from_dict(res)
 
@@ -113,7 +119,7 @@ def get_subpage_array():  # noqa: E501
         
         #pobieramy MetaSubpage
         curr = database.conn.cursor(dictionary=True)
-        curr.execute("SELECT * FROM MetaSubpages WHERE id = %s", (id,))
+        curr.execute("SELECT * FROM MetaSubpages WHERE subpage = %s", (id,))
         res = curr.fetchone()
         curr.close()
         meta_subpage = MetaSubpage.from_dict(res)
@@ -138,18 +144,26 @@ def patch_subpage(id2, body=None):  # noqa: E501
     :rtype: Subpage
     """
     if connexion.request.is_json:
-        body = SubpageIdBody.from_dict(connexion.request.get_json())  # noqa: E501
+        a = connexion.request.get_json()
+        body = SubpageIdBody(a['value'], MetaSubpage.from_dict(a['meta']))  # noqa: E501
     a = get_subpage(id2)
     if body is not None:
         cur = database.conn.cursor()
+        print(body)
         new_val_str = json.dumps(a.value | body.value)
-        cur.execute("UPDATE Subpages SET value = %s WHERE id = %s", (new_val_str,id))
+        cur.execute("UPDATE Subpages SET value = %s WHERE id = %s", (new_val_str,id2))
+
+        new_meta = a.meta | body.meta
+        print(new_meta)
+        cur.execute("UPDATE MetaSubpages SET name = %s, path = %s, title = %s, description = %s WHERE id = %s",
+             (new_meta['name'],new_meta['path'],new_meta['title'],new_meta['description'],id2))
 
         database.conn.commit()
         cur.close()
         return get_subpage(id2)
 
-    else: return a
+    else: 
+        return a
 
 
 
