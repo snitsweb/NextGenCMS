@@ -46,7 +46,16 @@ def delete_image_from_section(id_subpage, id_section, id_image):  # noqa: E501
 
     :rtype: List[Image]
     """
-    return 'do some magic!'
+
+    cur = database.conn.cursor(dictionary=True)
+    cur.execute(f'DELETE FROM Sections WHERE id = %s AND subpage = %s AND id_image')
+    cur.execute(f'SELECT * FROM Sections')
+    a = cur.fetchall()
+    a = list(map(lambda x : Sections(id=int(x[0]),subpage=int(x[1]), alias=str(x[2]), pos=int(x[3])) , a))
+    cur.close()
+    database.conn.commit()
+
+    return a
 
 
 def delete_section_by_id(id_subpage, id_section):  # noqa: E501
@@ -61,7 +70,11 @@ def delete_section_by_id(id_subpage, id_section):  # noqa: E501
 
     :rtype: None
     """
-    return 'do some magic!'
+
+    cur = database.conn.cursor(dictionary=True)
+    cur.execute(f'DELETE FROM Sections WHERE id = %s AND subpage = %s',(id_section,id_subpage))
+    cur.close()
+    database.conn.commit()
 
 
 def get_section_by_id(id_subpage, id_section):  # noqa: E501
@@ -76,7 +89,13 @@ def get_section_by_id(id_subpage, id_section):  # noqa: E501
 
     :rtype: Section
     """
-    return 'do some magic!'
+
+    cur = database.conn.cursor(dictionary=True)
+    cur.execute(f'SELECT * FROM Sections WHERE id=%s AND subpage=%s',(id_section,id_subpage))
+    a = cur.fetchall()
+    cur.close()
+
+    return a
 
 
 def get_sections(id_subpage):  # noqa: E501
@@ -89,7 +108,14 @@ def get_sections(id_subpage):  # noqa: E501
 
     :rtype: List[Section]
     """
-    return 'do some magic!'
+
+    cur = database.conn.cursor(dictionary=True)
+    cur.execute(f'SELECT * FROM Sections WHERE subpage=%s',(id_subpage))
+    a = cur.fetall()
+    a = list(map(lambda x : Sections(id=int(x[0]),subpage=int(x[1]), alias=str(x[2]), pos=int(x[3])) , a))
+    cur.close()
+
+    return a
 
 
 def patch_image_order(body, id_subpage, id_section):  # noqa: E501
