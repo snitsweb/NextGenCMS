@@ -62,6 +62,7 @@ CREATE TABLE Images(
 CREATE TABLE Subpages(
     id int NOT NULL AUTO_INCREMENT,
     page int NOT NULL,
+    pos INT NOT NULL,
     value JSON NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY (page) REFERENCES Pages(id)
@@ -114,9 +115,9 @@ INSERT INTO Images(page, image, alt, title) VALUES
     (1, 'swagger_server/images/1/DSC_4551.jpg', 'some alt', 'some_title'),
     (1, 'swagger_server/images/1/DSC_4551.jpg', 'some alt', 'some_title');
 
-INSERT INTO Subpages (page, value) VALUES
-    (1, '{"key1": "value1", "key2": "value2"}'),
-    (1, '{"key1": "value2", "key2": "value3"}');
+INSERT INTO Subpages (page,pos, value) VALUES
+    (1,1, '{"key1": "value1", "key2": "value2"}'),
+    (1,2, '{"key1": "value2", "key2": "value3"}');
 
 INSERT INTO MetaSubpages (subpage, name, path, title, description) VALUES
     (1,'test', '/test', 'test_title', 'test_description'),
@@ -139,4 +140,47 @@ INSERT INTO SectionImages (image_id, section_id, pos) VALUES
     (2,3,1);
 
 
+DELIMITER //
+create trigger before_page_delete
+before delete
+	on Pages for each row
+    Begin
+    		DELETE FROM Subpages where Subpages.page = old.id;
+		DELETE FROM Socials where Socials.page = old.id;
+		DELETE FROM MetaPages where MetaPages.page = old.id;
+		DELETE FROM Images WHERE Images.page = old.id;
+	end; //
+Delimiter ;
+
+
+DELIMITER //
+create trigger before_image_delete
+before delete
+	on Images for each row
+    Begin
+		DELETE FROM SectionImages WHERE SectionImages.image_id = old.id;
+	end; //
+Delimiter ;
+
+
+DELIMITER //
+create trigger before_subpage_delete
+before delete
+	on Subpages for each row
+    Begin
+		DELETE FROM MetaSubpages WHERE MetaSubpages.subpage = old.id;
+        DELETE FROM Sections WHERE Sections.subpage = old.id;
+	end; //
+Delimiter ;
+
+
+DELIMITER //
+create trigger before_section_delete
+before delete
+	on Sections for each row
+    Begin
+		DELETE FROM SectionImages WHERE SectionImages.section_id = old.id;
+        
+	end; //
+Delimiter ;
 
