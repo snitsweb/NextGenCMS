@@ -14,7 +14,7 @@ class Image(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: int=None, page: int=None, image: str=None, alt: str=None, title: str=None):  # noqa: E501
+    def __init__(self, id: int=None, image: str=None, alt: str=None, title: str=None):  # noqa: E501
         """Image - a model defined in Swagger
 
         :param id: The id of this Image.  # noqa: E501
@@ -30,7 +30,6 @@ class Image(Model):
         """
         self.swagger_types = {
             'id': int,
-            'page': int,
             'image': str,
             'alt': str,
             'title': str
@@ -38,13 +37,11 @@ class Image(Model):
 
         self.attribute_map = {
             'id': 'id',
-            'page': 'page',
             'image': 'image',
             'alt': 'alt',
             'title': 'title'
         }
         self._id = id
-        self._page = page
         self._image = image
         self._alt = alt
         self._title = title
@@ -82,29 +79,6 @@ class Image(Model):
             raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
 
         self._id = id
-
-    @property
-    def page(self) -> int:
-        """Gets the page of this Image.
-
-
-        :return: The page of this Image.
-        :rtype: int
-        """
-        return self._page
-
-    @page.setter
-    def page(self, page: int):
-        """Sets the page of this Image.
-
-
-        :param page: The page of this Image.
-        :type page: int
-        """
-        if page is None:
-            raise ValueError("Invalid value for `page`, must not be `None`")  # noqa: E501
-
-        self._page = page
 
     @property
     def image(self) -> str:

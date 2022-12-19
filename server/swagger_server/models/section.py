@@ -15,7 +15,7 @@ class Section(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: int=None, subpage: int=None, alias: str=None, images: List[Image]=None, value: Dict=None):  # noqa: E501
+    def __init__(self, id: int=None, alias: str=None, images: List[Image]=None, value: Dict=None):  # noqa: E501
         """Section - a model defined in Swagger
 
         :param id: The id of this Section.  # noqa: E501
@@ -31,7 +31,6 @@ class Section(Model):
         """
         self.swagger_types = {
             'id': int,
-            'subpage': int,
             'alias': str,
             'images': List[Image],
             'value': Dict
@@ -39,13 +38,11 @@ class Section(Model):
 
         self.attribute_map = {
             'id': 'id',
-            'subpage': 'subpage',
             'alias': 'alias',
             'images': 'images',
             'value': 'value'
         }
         self._id = id
-        self._subpage = subpage
         self._alias = alias
         self._images = images
         self._value = value
@@ -83,29 +80,6 @@ class Section(Model):
             raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
 
         self._id = id
-
-    @property
-    def subpage(self) -> int:
-        """Gets the subpage of this Section.
-
-
-        :return: The subpage of this Section.
-        :rtype: int
-        """
-        return self._subpage
-
-    @subpage.setter
-    def subpage(self, subpage: int):
-        """Sets the subpage of this Section.
-
-
-        :param subpage: The subpage of this Section.
-        :type subpage: int
-        """
-        if subpage is None:
-            raise ValueError("Invalid value for `subpage`, must not be `None`")  # noqa: E501
-
-        self._subpage = subpage
 
     @property
     def alias(self) -> str:
