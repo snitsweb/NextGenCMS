@@ -16,7 +16,7 @@ class Subpage(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: int=None, page: int=None, meta: MetaSubpage=None, sections: List[Section]=None, value: Dict=None):  # noqa: E501
+    def __init__(self, id: int=None, meta: MetaSubpage=None, sections: List[Section]=None, value: Dict=None):  # noqa: E501
         """Subpage - a model defined in Swagger
 
         :param id: The id of this Subpage.  # noqa: E501
@@ -32,7 +32,6 @@ class Subpage(Model):
         """
         self.swagger_types = {
             'id': int,
-            'page': int,
             'meta': MetaSubpage,
             'sections': List[Section],
             'value': Dict
@@ -40,13 +39,11 @@ class Subpage(Model):
 
         self.attribute_map = {
             'id': 'id',
-            'page': 'page',
             'meta': 'meta',
             'sections': 'sections',
             'value': 'value'
         }
         self._id = id
-        self._page = page
         self._meta = meta
         self._sections = sections
         self._value = value
@@ -84,29 +81,6 @@ class Subpage(Model):
             raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
 
         self._id = id
-
-    @property
-    def page(self) -> int:
-        """Gets the page of this Subpage.
-
-
-        :return: The page of this Subpage.
-        :rtype: int
-        """
-        return self._page
-
-    @page.setter
-    def page(self, page: int):
-        """Sets the page of this Subpage.
-
-
-        :param page: The page of this Subpage.
-        :type page: int
-        """
-        if page is None:
-            raise ValueError("Invalid value for `page`, must not be `None`")  # noqa: E501
-
-        self._page = page
 
     @property
     def meta(self) -> MetaSubpage:
