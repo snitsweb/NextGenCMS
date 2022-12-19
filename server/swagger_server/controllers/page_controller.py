@@ -24,7 +24,7 @@ def create_page(login, pasword):  # noqa: E501
     return 'do some magic!'
 
 
-def get_page():  # noqa: E501
+def get_page(id_page):  # noqa: E501
     """returns the requested page
 
     returns page that user/admin sent request for # noqa: E501

@@ -98,7 +98,7 @@ def get_subpage(id2):  # noqa: E501
 
     # pobieramy listę sekcji
     sections = get_sections(id2)
-    return Subpage(id=id2, page=user, meta=meta_subpage, sections=sections, value=value)
+    return Subpage(id=id2, meta=meta_subpage, sections=sections, value=value)
 
 
 def get_subpage_array():  # noqa: E501
@@ -132,7 +132,7 @@ def get_subpage_array():  # noqa: E501
 
         # pobieramy listę sekcji
         sections = get_sections(id)
-        subpage_list.append(Subpage(id=id, page=user, meta=meta_subpage, sections=sections, value=value))
+        subpage_list.append(Subpage(id=id, meta=meta_subpage, sections=sections, value=value))
 
     return subpage_list
 

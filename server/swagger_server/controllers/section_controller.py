@@ -65,15 +65,10 @@ def delete_image_from_section(id_subpage, id_section, id_image):  # noqa: E501
     check_section_in_subpage(id_subpage,id_section)
     cur = database.conn.cursor()
     cur.execute('DELETE FROM SectionImages WHERE section_id = %s AND image_id = %s', (id_section,id_image))
-    cur.execute('SELECT image_id FROM SectionImages WHERE section_id = %s', (id_section,))
-    a = cur.fetchall()
-    if a is None:
-        raise Exception("Server problem at delete_image_from_section")
-    a = list(map(lambda x : get_image(x[0]), a))
     cur.close()
     database.conn.commit()
 
-    return a
+    return get_section_images(id_subpage,id_section)
 
 
 def delete_section_by_id(id_subpage, id_section):  # noqa: E501
@@ -120,15 +115,8 @@ def get_section_by_id(id_subpage, id_section):  # noqa: E501
     value = json.loads(res[4])
     curr.close()
 
-    curr = database.conn.cursor(dictionary=True)
-    curr.execute("SELECT Images.* FROM Images INNER JOIN SectionImages ON SectionImages.image_id = Images.id\
-             WHERE SectionImages.section_id = %s ORDER BY SectionImages.pos ASC", (id,))
-    img_fetch = curr.fetchall()
-    if img_fetch is None:
-        images = []
-    else:
-        images = list(map(lambda x : Image.from_dict(x), img_fetch))
-    return Section(id=id,subpage=subpage,alias=alias,images=images,value=value)
+    images = get_section_images(id_subpage,id_section)
+    return Section(id=id,alias=alias,images=images,value=value)
 
 
 def get_sections(id_subpage):  # noqa: E501
@@ -150,21 +138,12 @@ def get_sections(id_subpage):  # noqa: E501
         return []
     section_list : list[Section] = []
     for res in res_list:
-        id = res[0]
-        subpage = res[1]
+        id_section = res[0]
         alias = res[2]
         value = json.loads(res[4])
         curr.close()
-
-        curr = database.conn.cursor(dictionary=True)
-        curr.execute("SELECT Images.* FROM Images INNER JOIN SectionImages ON SectionImages.image_id = Images.id\
-             WHERE SectionImages.section_id = %s ORDER BY SectionImages.pos ASC", (id,))
-        img_fetch = curr.fetchall()
-        if img_fetch is None:
-            images = []
-        else:
-            images = list(map(lambda x : Image.from_dict(x), img_fetch))
-        section_list.append(Section(id=id,subpage=subpage,alias=alias,images=images,value=value))
+        images = get_section_images(id_subpage,id_section)
+        section_list.append(Section(id=id_section,alias=alias,images=images,value=value))
     return section_list
 
 
@@ -300,9 +279,12 @@ def get_section_images(id_subpage, id_section):
     if img_fetch is None:
         images = []
     else:
-        images = list(map(lambda x : Image.from_dict(x), img_fetch))
+        images = list(map(lambda x : Image(id=x['id'], image=x['image'],alt=x['alt'],title=x['title']), img_fetch))
     curr.close()
     database.conn.commit()
+    # zamiana adresu lokalnego na url, który może być dostępny przez klienta
+    for img in images:
+        img.image = to_url(img.image)
     return images
 
 def check_section_in_subpage(id_subpage,id_section):

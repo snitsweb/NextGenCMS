@@ -65,7 +65,7 @@ def get_social_by_id(id2):  # noqa: E501
     if res is None:
         raise ExceptionHandler.NotFoundException
     curr.close()
-    return Social(id=res[0],page=res[1],alias=res[2],value=json.loads(res[3]))
+    return Social(id=res[0],alias=res[2],value=json.loads(res[3]))
 
 
 def get_socials():  # noqa: E501
@@ -84,6 +84,6 @@ def get_socials():  # noqa: E501
     if res_arr == None:
         arr = []
     else:
-        arr = list(map(lambda res : Social(id=res[0],page=res[1],alias=res[2],value=json.loads(res[3])), res_arr) )
+        arr = list(map(lambda res : Social(id=res[0],alias=res[2],value=json.loads(res[3])), res_arr) )
     
     return arr

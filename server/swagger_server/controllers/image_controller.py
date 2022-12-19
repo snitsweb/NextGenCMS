@@ -40,10 +40,10 @@ def get_image(id2):  # noqa: E501
     """
     cur = database.conn.cursor(dictionary=True)
     cur.execute(f'SELECT * FROM Images WHERE id = %s AND page = {const.DEFAULT_USER}', (id2,))
-    a = cur.fetchone()
-    if a is None:
+    x = cur.fetchone()
+    if x is None:
         raise ExceptionHandler.NotFoundException
-    res = Image.from_dict(a)
+    res = Image(id=x['id'], image=x['image'],alt=x['alt'],title=x['title'])
     # zamiana adresu lokalnego na url, który może być dostępny przez klienta
     res.image = to_url(res.image)
     return res
@@ -59,7 +59,7 @@ def get_image_array():  # noqa: E501
     cur = database.conn.cursor(dictionary=True)
     cur.execute(f'SELECT * FROM Images WHERE page = {const.DEFAULT_USER}')
     fetch = cur.fetchall()
-    image_list = list(map(lambda x : Image.from_dict(x),fetch))
+    image_list = list(map(lambda x : Image(id=x['id'], image=x['image'],alt=x['alt'],title=x['title']),fetch))
     # zamiana adresu lokalnego na url, który może być dostępny przez klienta
     for img in image_list:
         img.image = to_url(img.image)
