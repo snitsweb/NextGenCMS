@@ -1,16 +1,17 @@
-import type { DropTargetMonitor } from 'react-dnd'
-import { useDrop } from 'react-dnd'
-import { NativeTypes } from 'react-dnd-html5-backend'
+import type {DropTargetMonitor} from 'react-dnd'
+import {useDrop} from 'react-dnd'
+import {NativeTypes} from 'react-dnd-html5-backend'
 import React from 'react'
 import s from './TargetBox.module.scss'
+import {BaseFont} from '@common/components/BaseFont/BaseFont'
 
 interface ITargetBox {
-    onDrop: (item: { files: any[]}) => void
+	onDrop: (item: { files: any[] }) => void
 }
 
 export const TargetBox: React.FC<ITargetBox> = ({onDrop}) => {
 
-	const [{ canDrop, isOver }, drop] = useDrop(
+	const [{canDrop, isOver}, drop] = useDrop(
 		() => ({
 			accept: [NativeTypes.FILE],
 			drop(item: { files: any[] }) {
@@ -33,18 +34,18 @@ export const TargetBox: React.FC<ITargetBox> = ({onDrop}) => {
 
 				return {
 					isOver: monitor.isOver(),
-					canDrop: monitor.canDrop(),
+					canDrop: monitor.canDrop()
 				}
-			},
+			}
 		}),
-		[onDrop],
+		[onDrop]
 	)
 
 	const isActive = canDrop && isOver
 
 	return (
 		<div ref={drop} className={s.target_box}>
-			{isActive ? 'Release to drop' : 'Drag file here'}
+			<BaseFont tag={'span'}>{isActive ? 'Release to drop' : 'Drag file here'}</BaseFont>
 		</div>
 	)
 }

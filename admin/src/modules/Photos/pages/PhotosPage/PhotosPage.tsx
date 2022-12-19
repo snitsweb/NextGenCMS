@@ -5,7 +5,7 @@ import {BaseContainer} from 'common/components/BaseContainer/BaseContainer'
 import {LoadedPhotos} from 'modules/Photos/pages/PhotosPage/components/LoadedPhotos/LoadedPhotos'
 import s from './PhotosPage.module.scss'
 import {NavLink} from 'react-router-dom'
-import {ReactComponent as AddIcon} from '../../assets/svg/add.svg'
+import {ReactComponent as AddIcon} from '../../../../assets/svg/add.svg'
 
 export const PhotosPage: React.FC = () => {
 	return (

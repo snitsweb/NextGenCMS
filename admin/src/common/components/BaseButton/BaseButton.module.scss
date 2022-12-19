@@ -16,11 +16,19 @@
 
 .text {
   white-space: nowrap;
+  font-weight: 700;
 }
 
 .primary {
   &:hover {
     background-color: var(--primary-hover)
+  }
+}
+
+.danger {
+  background-color: var(--red_light);
+  &:hover {
+    background-color: var(--red);
   }
 }
 
