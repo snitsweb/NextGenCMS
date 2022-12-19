@@ -1,0 +1,32 @@
+h1 {
+  text-align: center;
+}
+
+img {
+  border-radius: var(--base-radius);
+}
+
+.jumbotron_section {
+  padding-top: 6rem;
+}
+
+.jumbotron_section_inner {
+
+}
+
+.content_wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.content_wrapper_text_section {
+  min-height: 100%;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: flex-start;
+}
