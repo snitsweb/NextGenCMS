@@ -4,14 +4,14 @@ import {ReactComponent as Icon} from 'assets/svg/overview.svg'
 import {OverviewPage} from 'modules/Overview/pages/OverviewPage/OverviewPage'
 
 export class OverviewModule extends Module {
-	static defaultPath = '/'
+	static defaultPath = '/home'
 	static moduleName = 'Overview'
 	static icon = Icon
 
 	registerRoutes(): void {
 		this.routes.push(
 			{
-				path: '/',
+				path: '/home',
 				element: <OverviewPage />,
 				name: 'Overview Page',
 				description: 'Overview page description',

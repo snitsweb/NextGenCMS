@@ -1,5 +1,6 @@
 export interface IMenuItem {
     name: string,
     icon: any,
-    path: string
+    path: string,
+    isActive: boolean
 }

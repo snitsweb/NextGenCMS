@@ -6,14 +6,14 @@ import PageEdit from '../pages/PageEdit/PageEdit'
 import PageCreate from '@modules/Pages/pages/PageCreate/PageCreate'
 
 export class PagesModule extends Module {
-	static defaultPath = '/pages/'
+	static defaultPath = '/pages'
 	static moduleName = 'Pages'
 	static icon = Icon
 
 	registerRoutes(): void {
 		this.routes.push(
 			{
-				path: '/pages/',
+				path: '/pages',
 				element: <PageList/>,
 				name: 'Overview Page',
 				description: 'Overview page description',

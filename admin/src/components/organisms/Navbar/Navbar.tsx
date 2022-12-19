@@ -17,6 +17,7 @@ export const Navbar: React.FC<INavbar> = ({className}) => {
 					name={item.name}
 					icon={item.icon}
 					path={item.path}
+					isActive={item.isActive}
 					key={item.name}
 				/>) : ''
 			}
