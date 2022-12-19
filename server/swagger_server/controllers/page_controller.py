@@ -51,7 +51,7 @@ def get_page():  # noqa: E501
     socials = social_controller.get_socials()
     subpages = subpage_controller.get_subpage_array()
 
-    return Page(id=const.DEFAULT_USER, meta=meta,layout=layout,socials=socials, subpages=subpages)
+    return Page(id=id, meta=meta,layout=layout,socials=socials, subpages=subpages)
 
     
 
@@ -67,5 +67,5 @@ def patch_meta_page(body):  # noqa: E501
     :rtype: MetaPage
     """
     if connexion.request.is_json:
-        body = Dict.from_dict(connexion.request.get_json())  # noqa: E501
+        body = connexion.request.get_json()  # noqa: E501
     return 'do some magic!'

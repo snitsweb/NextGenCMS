@@ -467,15 +467,13 @@ paths:
         explode: true
         schema:
           type: string
-      - name: value
-        in: header
+      requestBody:
         description: value of a connection
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: object
-          additionalProperties: true
+        content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
       responses:
         "200":
           description: succesful operation

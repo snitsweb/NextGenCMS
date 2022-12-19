@@ -30,7 +30,13 @@ def create_subpage(body=None):  # noqa: E501
         raise Exception()
     user = const.DEFAULT_USER
     curr = database.conn.cursor()
-    curr.execute("INSERT INTO Subpages (page, value) VALUES (%s, %s)", (user, json.dumps(body.value)))
+    curr.execute("SELECT MAX(pos) FROM Subpages WHERE page = %s", (user,))
+    a = curr.fetchone()
+    if a is None:
+        max_pos = 0
+    else:
+        max_pos = a[0] + 1
+    curr.execute("INSERT INTO Subpages (page, pos, value) VALUES (%s, %s, %s)", (user, max_pos, json.dumps(body.value)))
     curr.execute("SELECT LAST_INSERT_ID()")
     id = curr.fetchone()
     if body.meta is None:
@@ -75,11 +81,11 @@ def get_subpage(id2):  # noqa: E501
     """
     user = const.DEFAULT_USER
     curr = database.conn.cursor()
-    curr.execute("SELECT * FROM Subpages WHERE page = %s AND id = %s", (user, id2))
+    curr.execute("SELECT value FROM Subpages WHERE page = %s AND id = %s", (user, id2))
     res = curr.fetchone()
     if res is None:
         raise ExceptionHandler.NotFoundException()
-    value = json.loads(res[2])
+    value = json.loads(res[0])
     curr.close()
     
     #pobieramy MetaSubpage
@@ -105,16 +111,16 @@ def get_subpage_array():  # noqa: E501
     """
     user = const.DEFAULT_USER
     curr = database.conn.cursor()
-    curr.execute("SELECT * FROM Subpages WHERE page = %s ", (user,))
+    curr.execute("SELECT id, value FROM Subpages WHERE page = %s ORDER BY pos", (user,))
     res_list = curr.fetchall()
     if res_list is None:
         return []
-    subpage_list = []
+    subpage_list : list[Subpage] = []
     for res in res_list:
         if res is None:
             raise ExceptionHandler.NotFoundException()
         id = res[0]
-        value = json.loads(res[2])
+        value = json.loads(res[1])
         curr.close()
         
         #pobieramy MetaSubpage
@@ -177,4 +183,17 @@ def patch_subpage_order(body):  # noqa: E501
 
     :rtype: List[Subpage]
     """
-    return 'do some magic!'
+    subpages = get_subpage_array()
+    subpages_id = list(map(lambda s : s.id, subpages))
+    body_copy = body.copy()
+    subpages_id.sort()
+    body_copy.sort()
+
+    if subpages_id != body_copy:
+        raise connexion.exceptions.BadRequestProblem("Podana lista nie jest permutacją")
+    curr = database.conn.cursor(dictionary=True)
+    zip_a = list(zip(range(0,len(body)),body))
+    curr.executemany("UPDATE Subpages SET pos = %s WHERE id = %s", zip_a)
+    curr.close()
+    database.conn.commit()
+    return get_subpage_array()

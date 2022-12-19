@@ -25,7 +25,10 @@ def create_section(id_subpage, body=None):  # noqa: E501
     """
     
     if connexion.request.is_json:
-        body = IdSubpageSectionBody.from_dict(connexion.request.get_json())  # noqa: E501
+        res = connexion.request.get_json()
+        if res is None:
+            raise connexion.exceptions.BadRequestProblem("Request is None")
+        body = IdSubpageSectionBody(alias=res['alias'], value=res['value']) # noqa: E501
 
     check_subpage_in_page(id_subpage)
     cur = database.conn.cursor()
@@ -37,7 +40,7 @@ def create_section(id_subpage, body=None):  # noqa: E501
         max_pos = 0
     else:
         max_pos = a[0] + 1
-    cur.execute('INSERT INTO Sections (subpage,alias,pos,value) VALUES (%s,%s,%s,%s)',(id_subpage,body.alias,max_pos,body.value))
+    cur.execute('INSERT INTO Sections (subpage,alias,pos,value) VALUES (%s,%s,%s,%s)',(id_subpage,body.alias,max_pos,json.dumps(body.value)))
     cur.execute(f'SELECT LAST_INSERT_ID()')
     a = cur.fetchone()
     cur.close()
@@ -206,11 +209,14 @@ def patch_section_order(body, id_subpage):  # noqa: E501
     check_subpage_in_page(id_subpage)
     sections = get_sections(id_subpage)
     sections_id = list(map(lambda s : s.id, sections))
-    if sections_id.sort() != body.sort():
+    body_copy = body.copy()
+    sections_id.sort()
+    body_copy.sort()
+    if sections_id != body_copy:
         raise connexion.exceptions.BadRequestProblem("Podana lista nie jest permutacją")
     curr = database.conn.cursor(dictionary=True)
     
-    zip_a = list(zip(range(0,len(body),body)))
+    zip_a = list(zip(range(0,len(body)),body))
     curr.executemany("UPDATE Sections SET pos = %s WHERE id = %s", zip_a)
     curr.close()
     database.conn.commit()
@@ -233,15 +239,16 @@ def patch_section_value(id_subpage, id_section, body=None):  # noqa: E501
     """
     check_section_in_subpage(id_subpage,id_section)
     if connexion.request.is_json:
-        body = Section.from_dict(connexion.request.get_json())  # noqa: E501
+        body = connexion.request.get_json()  # noqa: E501
     a = get_section_by_id(id_subpage,id_section)
     if body is not None:
-        a_dict = a.to_dict() | body.to_dict()
+        a_dict = a.value | body
         curr = database.conn.cursor()
-        curr.execute("UPDATE Sections SET value = %s WHERE id = %s", json.dumps(a_dict), id_section)
+        curr.execute("UPDATE Sections SET value = %s WHERE id = %s", (json.dumps(a_dict), id_section))
+        database.conn.commit()
         a = get_section_by_id(id_subpage,id_section)
         curr.close()
-        database.conn.commit()
+        
     return a
 
 
@@ -286,7 +293,7 @@ def get_section_images(id_subpage, id_section):
     :rtype: List[Image]
     """
     check_section_in_subpage(id_subpage,id_section)
-    curr = database.conn.cursor()
+    curr = database.conn.cursor(dictionary=True)
     curr.execute("SELECT Images.* FROM Images INNER JOIN SectionImages ON SectionImages.image_id = Images.id\
              WHERE SectionImages.section_id = %s ORDER BY SectionImages.pos ASC", (id_section,))
     img_fetch = curr.fetchall()

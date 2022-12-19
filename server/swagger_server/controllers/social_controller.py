@@ -8,7 +8,7 @@ from swagger_server.database import database
 from swagger_server.controllers.exceptions import ExceptionHandler
 
 
-def create_connection(alias, value):  # noqa: E501
+def create_connection(alias, body=None):  # noqa: E501
     """creates a new social media connection
 
      # noqa: E501
@@ -20,8 +20,10 @@ def create_connection(alias, value):  # noqa: E501
 
     :rtype: Social
     """
+    if connexion.request.is_json:
+        body = connexion.request.get_json()  # noqa: E501
     curr = database.conn.cursor()
-    curr.execute("INSERT INTO Socials (page, alias, value) VALUES (%s, %s, %s)", (const.DEFAULT_USER, alias, json.dumps(value)))
+    curr.execute("INSERT INTO Socials (page, alias, value) VALUES (%s, %s, %s)", (const.DEFAULT_USER, alias, json.dumps(body)))
     curr.execute("SELECT LAST_INSERT_ID()")
     id = curr.fetchone()
     database.conn.commit()
@@ -44,7 +46,6 @@ def delete_social_by_id(id2):  # noqa: E501
     curr.execute("DELETE FROM Socials WHERE page = %s AND id = %s", (page, id2))
     database.conn.commit()
     curr.close()
-    return 'do some magic!'
 
 
 def get_social_by_id(id2):  # noqa: E501
