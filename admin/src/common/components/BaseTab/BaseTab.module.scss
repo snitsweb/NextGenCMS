@@ -1,0 +1,10 @@
+.tab {
+  transition: var(--base-transition);
+  opacity: 0;
+  visibility: hidden;
+
+  &_active {
+    opacity: 1;
+    visibility: visible;
+  }
+}

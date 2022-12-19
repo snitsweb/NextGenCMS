@@ -5,12 +5,13 @@ import {IReactRoute} from 'core/IReactRoute'
 import {PhotosModule} from 'modules/Photos/core/PhotosModule'
 import {PagesModule} from '@modules/Pages/core/PagesModule'
 import {Layout} from 'components/organisms/Layout/Layout'
-import {IRoute} from 'core/IRoute'
+import {Route} from 'core/Route'
+import {SettingsModule} from '@modules/Settings/core/SettingsModule'
 
 export class Application {
 	private _modules: Module[] = []
 	private _reactRoutes: IReactRoute[] = []
-	private _routes: IRoute[] = []
+	private _routes: Route[] = []
 
 	constructor() {
 		this.init()
@@ -38,6 +39,7 @@ export class Application {
 		this.modules.push(new OverviewModule())
 		this.modules.push(new PhotosModule())
 		this.modules.push(new PagesModule())
+		this.modules.push(new SettingsModule())
 	}
 
 	createReactRoutes() {
@@ -53,11 +55,14 @@ export class Application {
 
 	createRoutes() {
 		this.modules.map(module => {
-			this._routes.push({
+			this._routes.push(new Route({
+				module: module,
 				path: Object.getPrototypeOf(module).constructor.defaultPath,
 				name: Object.getPrototypeOf(module).constructor.moduleName,
-				icon: Object.getPrototypeOf(module).constructor.icon
+				icon: Object.getPrototypeOf(module).constructor.icon,
 			})
+			)
 		})
+		console.log(this._reactRoutes)
 	}
 }

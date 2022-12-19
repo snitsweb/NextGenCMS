@@ -25,7 +25,7 @@ export class PhotosModule extends Module {
 	registerRoutes(): void {
 		this.routes.push(
 			{
-				path: '/photos/',
+				path: '/photos',
 				element: <PhotosPage />,
 				name: 'Photos page',
 				description: 'Photos page description',

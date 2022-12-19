@@ -6,7 +6,8 @@
   padding: 20px 40px;
   cursor: pointer;
 
-  &:hover{
+  &:hover,
+  &_active {
     background-color: var(--primary);
   }
 }
