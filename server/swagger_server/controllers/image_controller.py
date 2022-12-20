@@ -12,7 +12,7 @@ import os
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-def delete_image(id2):  # noqa: E501
+def delete_image(id2, token_info):  # noqa: E501
     """deletes image with specific id
 
     admin send request to server with intentions of deleting image with specific id # noqa: E501
@@ -28,7 +28,7 @@ def delete_image(id2):  # noqa: E501
     cur.close()
 
 
-def get_image(id2):  # noqa: E501
+def get_image(id2, token_info):  # noqa: E501
     """returns specific image
 
     returns image requested by admin/user # noqa: E501
@@ -49,7 +49,7 @@ def get_image(id2):  # noqa: E501
     return res
 
 
-def get_image_array():  # noqa: E501
+def get_image_array(token_info):  # noqa: E501
     """get array of images
 
     returns array of images with specified position # noqa: E501
@@ -66,7 +66,7 @@ def get_image_array():  # noqa: E501
     return image_list
 
 
-def patch_image(id2, body=None):  # noqa: E501
+def patch_image(id2, token_info, body=None):  # noqa: E501
     """modify metadata of image (alt and title)
 
      # noqa: E501
@@ -80,7 +80,7 @@ def patch_image(id2, body=None):  # noqa: E501
     """
     if connexion.request.is_json:
         body = ImageIdBody.from_dict(connexion.request.get_json())  # noqa: E501
-    a = get_image(id2)
+    a = get_image(id2, token_info)
 
     if body is not None:
         a = Image.from_dict(a.to_dict() | body.to_dict())
@@ -94,7 +94,7 @@ def patch_image(id2, body=None):  # noqa: E501
     return a
 
 
-def post_image(file=None, alt=None, title=None):  # noqa: E501
+def post_image(token_info, file=None, alt=None, title=None):  # noqa: E501
     """uploads an image
 
     user sends image in binary, which is stored on server. Returns Image object with address and metadata (Photo object) # noqa: E501
@@ -124,7 +124,7 @@ def post_image(file=None, alt=None, title=None):  # noqa: E501
     database.conn.commit()
     a = curr.fetchone()
     curr.close()
-    return get_image(a[0])
+    return get_image(a[0], token_info)
 
 
 def to_url(s : str) -> str:
