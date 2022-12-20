@@ -8,7 +8,7 @@ from swagger_server.database import database
 from swagger_server.controllers.exceptions import ExceptionHandler
 
 
-def create_connection(alias, body=None):  # noqa: E501
+def create_connection(alias, token_info, body=None):  # noqa: E501
     """creates a new social media connection
 
      # noqa: E501
@@ -28,10 +28,10 @@ def create_connection(alias, body=None):  # noqa: E501
     id = curr.fetchone()
     database.conn.commit()
     curr.close()
-    return get_social_by_id(id[0])
+    return get_social_by_id(id[0], token_info)
 
 
-def delete_social_by_id(id2):  # noqa: E501
+def delete_social_by_id(id2, token_info):  # noqa: E501
     """deletes a social by ID
 
      # noqa: E501
@@ -48,7 +48,7 @@ def delete_social_by_id(id2):  # noqa: E501
     curr.close()
 
 
-def get_social_by_id(id2):  # noqa: E501
+def get_social_by_id(id2, token_info):  # noqa: E501
     """finds a social by ID
 
      # noqa: E501
@@ -68,7 +68,7 @@ def get_social_by_id(id2):  # noqa: E501
     return Social(id=res[0],alias=res[2],value=json.loads(res[3]))
 
 
-def get_socials():  # noqa: E501
+def get_socials(token_info):  # noqa: E501
     """returns a array of social bindings
 
      # noqa: E501

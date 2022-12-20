@@ -34,7 +34,8 @@ def get_page(id_page):  # noqa: E501
 
     :rtype: Page
     """
-    id = const.DEFAULT_USER
+    id = id_page
+    token_info = {'sub': '1'}
     curr = database.conn.cursor(dictionary=True, buffered=True)
     curr.execute(f"SELECT * FROM Pages WHERE id = {id}",)
     a = curr.fetchone()
@@ -47,16 +48,16 @@ def get_page(id_page):  # noqa: E501
     if meta_query is None:
         raise connexion.exceptions.ConnexionException()
     meta = MetaPage.from_dict(meta_query)
-    layout = layout_controller.get_layout()[0]
-    socials = social_controller.get_socials()
-    subpages = subpage_controller.get_subpage_array()
+    layout = layout_controller.get_layout(token_info)[0]
+    socials = social_controller.get_socials(token_info)
+    subpages = subpage_controller.get_subpage_array(token_info)
 
-    return Page(id=id, meta=meta,layout=layout,socials=socials, subpages=subpages)
+    return Page(id=id, meta=meta, layout=layout, socials=socials, subpages=subpages)
 
     
 
 
-def patch_meta_page(body):  # noqa: E501
+def patch_meta_page(body, token_info):  # noqa: E501
     """modifies a metadata of a page
 
      # noqa: E501

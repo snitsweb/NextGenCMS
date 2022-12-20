@@ -10,7 +10,7 @@ from swagger_server import util, const
 """
 testowy przykład, jak to działa
 """
-def get_layout():  # noqa: E501
+def get_layout(token_info):  # noqa: E501
     """returns a layout assigned to a page
 
      # noqa: E501
@@ -25,7 +25,7 @@ def get_layout():  # noqa: E501
     return [Layout(alias=a[2],id=a[0],is_template=a[1],value=json.loads(a[3]))]
 
 
-def get_template_array():  # noqa: E501
+def get_template_array(token_info):  # noqa: E501
     """return array of template layouts
 
     admin can choose the best layout for page from the existing ones # noqa: E501
@@ -41,7 +41,7 @@ def get_template_array():  # noqa: E501
     return a
 
 
-def patch_layout(body=None):  # noqa: E501
+def patch_layout(token_info, body=None):  # noqa: E501
     """updates a layout
 
      # noqa: E501
@@ -54,7 +54,7 @@ def patch_layout(body=None):  # noqa: E501
     if connexion.request.is_json:
         body = connexion.request.get_json()  # noqa: E501
     
-    a = get_layout()[0]
+    a = get_layout(token_info)[0]
     
     if body is not None:
         cur = database.conn.cursor()
@@ -67,13 +67,13 @@ def patch_layout(body=None):  # noqa: E501
             cur.execute("UPDATE Layouts SET value = %s WHERE id = %s", (new_val_str,a.id))
         database.conn.commit()
         cur.close()
-        return get_layout()[0]
+        return get_layout(token_info)[0]
 
     else:  
         return a
 
 
-def put_layout(body=None):  # noqa: E501
+def put_layout(token_info, body=None):  # noqa: E501
     """creates a new layout
 
     creates a new layout based on alias and value (old layout is deleted) # noqa: E501
@@ -97,10 +97,10 @@ def put_layout(body=None):  # noqa: E501
         database.conn.commit()
         cur.close()
 
-    return get_layout()
+    return get_layout(token_info)
 
 
-def put_template_based_layout(id2, alias):  # noqa: E501
+def put_template_based_layout(id2, alias, token_info):  # noqa: E501
     """creates new layout based on template layout
 
     creates new layout based on template layout, and assign it to a page (old template is removed) # noqa: E501
@@ -126,4 +126,4 @@ def put_template_based_layout(id2, alias):  # noqa: E501
     database.conn.commit()
     cur.close()
     
-    return get_layout()
+    return get_layout(token_info)

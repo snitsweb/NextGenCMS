@@ -12,7 +12,7 @@ from swagger_server.controllers.exceptions import ExceptionHandler
 from swagger_server.controllers.section_controller import *
 
 
-def create_subpage(body=None):  # noqa: E501
+def create_subpage(token_info, body=None):  # noqa: E501
     """creates a new subpage
 
     creates a new subpage based on MetaPage # noqa: E501
@@ -49,10 +49,10 @@ def create_subpage(body=None):  # noqa: E501
         (id[0], body_no_none['name'], body_no_none['path'], body_no_none['title'], body_no_none['description']))
     database.conn.commit()
     curr.close()
-    return get_subpage(id[0])
+    return get_subpage(id[0], token_info)
 
 
-def delete_subpage(id2):  # noqa: E501
+def delete_subpage(id2, token_info):  # noqa: E501
     """deletes a subpage
 
      # noqa: E501
@@ -69,7 +69,7 @@ def delete_subpage(id2):  # noqa: E501
 
 
 
-def get_subpage(id2):  # noqa: E501
+def get_subpage(id2, token_info):  # noqa: E501
     """find subpage by ID
 
     returns a subpage based on ID # noqa: E501
@@ -97,11 +97,11 @@ def get_subpage(id2):  # noqa: E501
     meta_subpage = MetaSubpage.from_dict(res)
 
     # pobieramy listę sekcji
-    sections = get_sections(id2)
+    sections = get_sections(id2, token_info)
     return Subpage(id=id2, meta=meta_subpage, sections=sections, value=value)
 
 
-def get_subpage_array():  # noqa: E501
+def get_subpage_array(token_info):  # noqa: E501
     """returns array of subpages
 
      # noqa: E501
@@ -131,13 +131,13 @@ def get_subpage_array():  # noqa: E501
         meta_subpage = MetaSubpage.from_dict(res)
 
         # pobieramy listę sekcji
-        sections = get_sections(id)
+        sections = get_sections(id, token_info)
         subpage_list.append(Subpage(id=id, meta=meta_subpage, sections=sections, value=value))
 
     return subpage_list
 
 
-def patch_subpage(id2, body=None):  # noqa: E501
+def patch_subpage(id2, token_info, body=None):  # noqa: E501
     """updates a subpage
 
      # noqa: E501
@@ -152,7 +152,7 @@ def patch_subpage(id2, body=None):  # noqa: E501
     if connexion.request.is_json:
         a = connexion.request.get_json()
         body = SubpageIdBody(a['value'], MetaSubpage.from_dict(a['meta']))  # noqa: E501
-    a = get_subpage(id2)
+    a = get_subpage(id2, token_info)
     if body is not None:
         cur = database.conn.cursor()
         print(body)
@@ -166,14 +166,14 @@ def patch_subpage(id2, body=None):  # noqa: E501
 
         database.conn.commit()
         cur.close()
-        return get_subpage(id2)
+        return get_subpage(id2, token_info)
 
     else: 
         return a
 
 
 
-def patch_subpage_order(body):  # noqa: E501
+def patch_subpage_order(body, token_info):  # noqa: E501
     """modifies the order of subpages in array
 
      # noqa: E501
@@ -183,7 +183,7 @@ def patch_subpage_order(body):  # noqa: E501
 
     :rtype: List[Subpage]
     """
-    subpages = get_subpage_array()
+    subpages = get_subpage_array(token_info)
     subpages_id = list(map(lambda s : s.id, subpages))
     body_copy = body.copy()
     subpages_id.sort()
@@ -196,4 +196,4 @@ def patch_subpage_order(body):  # noqa: E501
     curr.executemany("UPDATE Subpages SET pos = %s WHERE id = %s", zip_a)
     curr.close()
     database.conn.commit()
-    return get_subpage_array()
+    return get_subpage_array(token_info)
