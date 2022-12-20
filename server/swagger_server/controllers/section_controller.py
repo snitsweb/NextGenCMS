@@ -9,6 +9,7 @@ from swagger_server.database import database
 from swagger_server.controllers.exceptions import ExceptionHandler
 from swagger_server.controllers.image_controller import *
 import json
+import mysql.connector
 
 
 def create_section(id_subpage, body=None):  # noqa: E501
@@ -164,9 +165,15 @@ def patch_image_order(body, id_subpage, id_section):  # noqa: E501
     check_section_in_subpage(id_subpage,id_section)
     curr = database.conn.cursor(dictionary=True)
     curr.execute('DELETE FROM SectionImages WHERE section_id = %s',(id_section,))
-    
-    zip_a = list(zip(body,[id_section]*len(body),range(0,len(body))))
-    curr.executemany("INSERT INTO SectionImages (image_id, section_id, pos) VALUES (%s,%s,%s)", zip_a)
+    print(body)
+    zip_a = [(s['id'], id_section, s['pos']) for s in body]
+    print(zip_a)
+    try:
+        curr.executemany("INSERT INTO SectionImages (image_id, section_id, pos) VALUES (%s,%s,%s)", zip_a)
+    except mysql.connector.errors.Error as e:
+        database.conn.rollback()
+        raise connexion.exceptions.BadRequestProblem(detail=str(e.msg))
+
     database.conn.commit()
     curr.close()
     
@@ -188,15 +195,12 @@ def patch_section_order(body, id_subpage):  # noqa: E501
     check_subpage_in_page(id_subpage)
     sections = get_sections(id_subpage)
     sections_id = list(map(lambda s : s.id, sections))
-    body_copy = body.copy()
-    sections_id.sort()
-    body_copy.sort()
-    if sections_id != body_copy:
-        raise connexion.exceptions.BadRequestProblem("Podana lista nie jest permutacją")
-    curr = database.conn.cursor(dictionary=True)
     
-    zip_a = list(zip(range(0,len(body)),body))
-    curr.executemany("UPDATE Sections SET pos = %s WHERE id = %s", zip_a)
+    if not set(map(lambda s : s['id'], body)).issubset(set(sections_id)):
+        raise connexion.exceptions.BadRequestProblem("Podana lista zawiera nieprawidłowe id")
+    curr = database.conn.cursor(dictionary=True)
+    zip_list = list(map(lambda s : (s['pos'],s['id']), body))
+    curr.executemany("UPDATE Sections SET pos = %s WHERE id = %s", zip_list)
     curr.close()
     database.conn.commit()
     return get_sections(id_subpage)

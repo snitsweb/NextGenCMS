@@ -185,15 +185,12 @@ def patch_subpage_order(body):  # noqa: E501
     """
     subpages = get_subpage_array()
     subpages_id = list(map(lambda s : s.id, subpages))
-    body_copy = body.copy()
-    subpages_id.sort()
-    body_copy.sort()
 
-    if subpages_id != body_copy:
-        raise connexion.exceptions.BadRequestProblem("Podana lista nie jest permutacją")
+    if not set(map(lambda s : s['id'], body)).issubset(set(subpages_id)):
+        raise connexion.exceptions.BadRequestProblem("Podana lista zawiera nieprawidłowe id")
     curr = database.conn.cursor(dictionary=True)
-    zip_a = list(zip(range(0,len(body)),body))
-    curr.executemany("UPDATE Subpages SET pos = %s WHERE id = %s", zip_a)
+    zip_list = list(map(lambda s : (s['pos'],s['id']), body))
+    curr.executemany("UPDATE Subpages SET pos = %s WHERE id = %s", zip_list)
     curr.close()
     database.conn.commit()
     return get_subpage_array()

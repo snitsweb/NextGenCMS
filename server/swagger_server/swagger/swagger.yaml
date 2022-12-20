@@ -1546,12 +1546,24 @@ components:
           schema:
             type: array
             items:
-              type: integer
-          example:
-          - 2
-          - 1
-          - 4
-          - 3
+              type: object
+              properties:
+                id:
+                  type: integer
+                alias:
+                  type: string
+                pos:
+                  type: integer
+            example:
+            - id: 5
+              alias: gallery-section
+              pos: 2
+            - id: 9
+              alias: photo-section
+              pos: 3
+            - id: 2
+              alias: social-section
+              pos: 1
       required: true
     MetaLayout:
       content:
