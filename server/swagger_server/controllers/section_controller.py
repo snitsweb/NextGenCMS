@@ -291,7 +291,7 @@ def check_section_in_subpage(id_subpage, id_section, token_info):
     curr = database.conn.cursor()
     curr.execute("SELECT COUNT(*) FROM Sections INNER JOIN Subpages ON Sections.subpage = Subpages.id \
         INNER JOIN Pages ON Subpages.page = Pages.id WHERE Sections.id = %s AND Subpages.id = %s AND Pages.id = %s",
-        (id_section,id_subpage,const.DEFAULT_USER))
+        (id_section,id_subpage,token_info['sub']))
     res = curr.fetchone()
     if res is None or res[0] == 0:
         raise connexion.exceptions.BadRequestProblem()
@@ -299,7 +299,7 @@ def check_section_in_subpage(id_subpage, id_section, token_info):
 def check_subpage_in_page(id_subpage, token_info):
     curr = database.conn.cursor()
     curr.execute("SELECT COUNT(*) FROM Subpages INNER JOIN Pages ON Subpages.page = Pages.id WHERE \
-        Subpages.id = %s AND Pages.id = %s", (id_subpage,const.DEFAULT_USER))
+        Subpages.id = %s AND Pages.id = %s", (id_subpage,token_info['sub']))
     res = curr.fetchone()
     if res is None or res[0] == 0:
         raise connexion.exceptions.BadRequestProblem()

@@ -23,7 +23,7 @@ def create_connection(alias, token_info, body=None):  # noqa: E501
     if connexion.request.is_json:
         body = connexion.request.get_json()  # noqa: E501
     curr = database.conn.cursor()
-    curr.execute("INSERT INTO Socials (page, alias, value) VALUES (%s, %s, %s)", (const.DEFAULT_USER, alias, json.dumps(body)))
+    curr.execute("INSERT INTO Socials (page, alias, value) VALUES (%s, %s, %s)", (token_info['sub'], alias, json.dumps(body)))
     curr.execute("SELECT LAST_INSERT_ID()")
     id = curr.fetchone()
     database.conn.commit()
@@ -41,7 +41,7 @@ def delete_social_by_id(id2, token_info):  # noqa: E501
 
     :rtype: None
     """
-    page = const.DEFAULT_USER
+    page = token_info['sub']
     curr = database.conn.cursor()
     curr.execute("DELETE FROM Socials WHERE page = %s AND id = %s", (page, id2))
     database.conn.commit()
@@ -58,7 +58,7 @@ def get_social_by_id(id2, token_info):  # noqa: E501
 
     :rtype: Social
     """
-    page = const.DEFAULT_USER
+    page = token_info['sub']
     curr = database.conn.cursor()
     curr.execute("SELECT * FROM Socials WHERE page = %s AND id = %s", (page, id2))
     res = curr.fetchone()
@@ -76,7 +76,7 @@ def get_socials(token_info):  # noqa: E501
 
     :rtype: List[Social]
     """
-    page = const.DEFAULT_USER
+    page = token_info['sub']
     curr = database.conn.cursor()
     curr.execute("SELECT * FROM Socials WHERE page = %s", (page,))
     res_arr = curr.fetchall()

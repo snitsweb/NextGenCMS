@@ -19,7 +19,7 @@ def get_layout(token_info):  # noqa: E501
     :rtype: List[Layout]
     """
     cur = database.conn.cursor()
-    cur.execute(f'SELECT * FROM Layouts WHERE id = (SELECT layout FROM Pages WHERE Pages.id = {const.DEFAULT_USER})')
+    cur.execute("SELECT * FROM Layouts WHERE id = (SELECT layout FROM Pages WHERE Pages.id = %s) ",(token_info['sub']))
     a = cur.fetchone()
     cur.close()
     return [Layout(alias=a[2],id=a[0],is_template=a[1],value=json.loads(a[3]))]
@@ -90,9 +90,9 @@ def put_layout(token_info, body=None):  # noqa: E501
         cur.execute("INSERT INTO Layouts (alias, value, is_template) VALUES (%s, %s, False)", (body['alias'], json.dumps(body['value'])))
         cur.execute("SELECT LAST_INSERT_ID()")
         id = cur.fetchone()
-        cur.execute(f"SELECT layout FROM Pages WHERE Pages.id = {const.DEFAULT_USER}")
+        cur.execute(f"SELECT layout FROM Pages WHERE Pages.id = {token_info['sub']}")
         old_id = cur.fetchone()
-        cur.execute(f"UPDATE Pages SET layout = {id[0]} WHERE id = {const.DEFAULT_USER}")
+        cur.execute(f"UPDATE Pages SET layout = {id[0]} WHERE id = {token_info['sub']}")
         cur.execute(f"DELETE FROM Layouts WHERE id = {old_id[0]}")
         database.conn.commit()
         cur.close()
@@ -119,9 +119,9 @@ def put_template_based_layout(id2, alias, token_info):  # noqa: E501
     cur.execute("INSERT INTO Layouts (alias, value, is_template) VALUES (%s, %s, False)", (alias, json.dumps(a_layout.value)))
     cur.execute("SELECT LAST_INSERT_ID()")
     last_id = cur.fetchone()
-    cur.execute(f"SELECT layout FROM Pages WHERE Pages.id = {const.DEFAULT_USER}")
+    cur.execute(f"SELECT layout FROM Pages WHERE Pages.id = {token_info['sub']}")
     old_id = cur.fetchone()
-    cur.execute(f"UPDATE Pages SET layout = {last_id[0]} WHERE id = {const.DEFAULT_USER}")
+    cur.execute(f"UPDATE Pages SET layout = {last_id[0]} WHERE id = {token_info['sub']}")
     cur.execute(f"DELETE FROM Layouts WHERE id = {old_id[0]}")
     database.conn.commit()
     cur.close()

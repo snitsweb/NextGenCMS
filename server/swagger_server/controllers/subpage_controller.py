@@ -28,7 +28,7 @@ def create_subpage(token_info, body=None):  # noqa: E501
         body = SubpageBody(res['value'], MetaSubpage.from_dict(res['meta']))  # noqa: E501
     if body is None:
         raise Exception()
-    user = const.DEFAULT_USER
+    user = token_info['sub']
     curr = database.conn.cursor()
     curr.execute("SELECT MAX(pos) FROM Subpages WHERE page = %s", (user,))
     a = curr.fetchone()
@@ -79,7 +79,7 @@ def get_subpage(id2, token_info):  # noqa: E501
 
     :rtype: Subpage
     """
-    user = const.DEFAULT_USER
+    user = token_info['sub']
     curr = database.conn.cursor()
     curr.execute("SELECT value FROM Subpages WHERE page = %s AND id = %s", (user, id2))
     res = curr.fetchone()
@@ -109,7 +109,7 @@ def get_subpage_array(token_info):  # noqa: E501
 
     :rtype: List[Subpage]
     """
-    user = const.DEFAULT_USER
+    user = token_info['sub']
     curr = database.conn.cursor()
     curr.execute("SELECT id, value FROM Subpages WHERE page = %s ORDER BY pos", (user,))
     res_list = curr.fetchall()

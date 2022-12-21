@@ -23,7 +23,17 @@ def delete_image(id2, token_info):  # noqa: E501
     :rtype: None
     """
     cur = database.conn.cursor()
-    cur.execute(f'DELETE FROM Images WHERE id = %s AND page = {const.DEFAULT_USER}', (id2,))
+    cur.execute(f'SELECT * FROM Images WHERE id = %s AND page = %s', (id2,),token_info['sub'])
+    x = cur.fetchone()
+    if x is None:
+        raise ExceptionHandler.NotFoundException
+    res = Image(id=x['id'], image=x['image'],alt=x['alt'],title=x['title'])
+    
+
+
+
+    cur.execute("DELETE FROM Images WHERE id = %s AND page = %s",(id2),token_info['sub'])
+    os.remove(res.image)
     database.conn.commit()
     cur.close()
 
@@ -39,7 +49,7 @@ def get_image(id2, token_info):  # noqa: E501
     :rtype: Image
     """
     cur = database.conn.cursor(dictionary=True)
-    cur.execute(f'SELECT * FROM Images WHERE id = %s AND page = {const.DEFAULT_USER}', (id2,))
+    cur.execute(f'SELECT * FROM Images WHERE id = %s AND page = %s', (id2),token_info['sub'])
     x = cur.fetchone()
     if x is None:
         raise ExceptionHandler.NotFoundException
@@ -57,7 +67,7 @@ def get_image_array(token_info):  # noqa: E501
     :rtype: List[Image]
     """
     cur = database.conn.cursor(dictionary=True)
-    cur.execute(f'SELECT * FROM Images WHERE page = {const.DEFAULT_USER}')
+    cur.execute(f"SELECT * FROM Images WHERE page = %s",token_info['sub'])
     fetch = cur.fetchall()
     image_list = list(map(lambda x : Image(id=x['id'], image=x['image'],alt=x['alt'],title=x['title']),fetch))
     # zamiana adresu lokalnego na url, który może być dostępny przez klienta
@@ -110,7 +120,7 @@ def post_image(token_info, file=None, alt=None, title=None):  # noqa: E501
     """
     if file is None or not allowed_file(file.filename):
         raise connexion.exceptions.BadRequestProblem()
-    file.save(BASE_DIR + "/images/" + str(const.DEFAULT_USER) +"/"+ file.filename)
+    file.save(BASE_DIR + "/images/" + str(token_info['sub']) +"/"+ file.filename)
 
     #zapis do bazy danych
     curr = database.conn.cursor(buffered=True)
@@ -119,7 +129,7 @@ def post_image(token_info, file=None, alt=None, title=None):  # noqa: E501
     if title is None:
         title = ""
     curr.execute("INSERT INTO Images (page, image, alt, title) VALUES (%s,%s,%s,%s)", 
-        (str(const.DEFAULT_USER), f"swagger_server/images/{const.DEFAULT_USER}/{file.filename}", alt, title))
+        (str(token_info['sub']), f"swagger_server/images/{token_info['sub']}/{file.filename}", alt, title))
     curr.execute("SELECT LAST_INSERT_ID()")
     database.conn.commit()
     a = curr.fetchone()
