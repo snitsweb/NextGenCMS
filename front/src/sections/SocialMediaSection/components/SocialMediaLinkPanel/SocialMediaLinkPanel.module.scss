@@ -1,0 +1,26 @@
+.social_media_link_panel {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1em;
+}
+
+.social_media_link_panel_text {
+  display: flex;
+  padding-bottom: 1em;
+  justify-content: center;
+}
+
+.social_media_link_panel_header {
+  align-self: center;
+  padding-left: 1em;
+}
+
+.social_media_link_panel_icon {
+  width: 80px;
+  justify-self: flex-start;
+}
+
+.social_media_link_panel_preview {
+  align-self: center;
+  width: 80%;
+}
