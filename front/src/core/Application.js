@@ -10,6 +10,8 @@ import DefaultLayout from '../layouts/DefaultLayout/DefaultLayout'
 import {Layout} from './Layout'
 import DarkLayout from '../layouts/DarkLayout/DarkLayout'
 
+import {NetworkController} from './NetworkController/NetworkController'
+
 class Application {
 	#db
 	#sections = []
@@ -62,7 +64,8 @@ class Application {
 	}
 
 	getData () {
-		this.#db = getDatabase()
+		const network = new NetworkController()
+		this.#db = network.getDatabase()
 	}
 
 	setRouter (router) {
