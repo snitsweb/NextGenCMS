@@ -14,7 +14,7 @@ export const PhotosPage: React.FC = () => {
 				<div className={s.photos_page_inner}>
 					<BaseFont tag={'h1'}>Photos</BaseFont>
 					<LoadedPhotos />
-					<div className={s.photos_page_buttons_wrapper}>
+					<div className="fixed-btn-wrapper">
 						<NavLink to={'/photos/add'}>
 							<BaseButton icon={AddIcon} iconFill={'white'}>Add photo</BaseButton>
 						</NavLink>

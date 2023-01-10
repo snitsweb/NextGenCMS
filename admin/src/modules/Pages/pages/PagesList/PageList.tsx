@@ -38,7 +38,7 @@ const PageList: React.FC<IPageList> = () => {
 					</div>
 				</div>
 			</BaseContainer>
-			<NavLink to={'/pages/create'} className={s.add_page_button}>
+			<NavLink to={'/pages/create'} className="fixed-btn-wrapper">
 				<BaseButton type={'primary'} iconFill={'white'} icon={AddIcon}>Add page</BaseButton>
 			</NavLink>
 		</section>

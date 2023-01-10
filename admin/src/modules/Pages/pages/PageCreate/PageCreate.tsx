@@ -4,6 +4,8 @@ import {BaseContainer} from '@common/components/BaseContainer/BaseContainer'
 import {BaseFont} from '@common/components/BaseFont/BaseFont'
 import BaseSelect from '@common/components/BaseSelect/BaseSelect'
 import BaseTextInput from '@common/components/BaseTextInput/BaseTextInput'
+import {BaseButton} from '@common/components/BaseButton/BaseButton'
+import {ReactComponent as SaveIcon} from '@assets/svg/save.svg'
 
 const PageCreate = () => {
 
@@ -57,8 +59,10 @@ const PageCreate = () => {
 						<BaseSelect input={status_input}/>
 					</div>
 				</div>
-
 			</BaseContainer>
+			<div className="fixed-btn-wrapper">
+				<BaseButton type={'primary'} icon={SaveIcon}>Save</BaseButton>
+			</div>
 		</div>
 	)
 }

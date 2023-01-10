@@ -16,7 +16,7 @@ export const BaseButton: React.FC<IBaseButton> = (
 ) => {
 	const extendedClassname = `${s.button} ${s[type]} ${className ? className : ''}`
 	return (
-		<div className={extendedClassname} onClick={onClick && onClick}>
+		<div className={extendedClassname} onClick={onClick ? onClick : undefined}>
 			{Icon ? <Icon className={s[`svg_${iconFill}`] + ' '+ s.svg} /> : ''}
 			<BaseFont className={s.text} tag={'span'} color={'white'}>{children}</BaseFont>
 		</div>

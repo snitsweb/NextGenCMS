@@ -4,6 +4,8 @@ import {BaseContainer} from '@common/components/BaseContainer/BaseContainer'
 import BaseTab from '@common/components/BaseTab/BaseTab'
 import BaseTabSection from '@common/components/BaseTabSection/BaseTabSection'
 import BaseSelect from '@common/components/BaseSelect/BaseSelect'
+import {BaseButton} from '@common/components/BaseButton/BaseButton'
+import {ReactComponent as SaveIcon} from '@assets/svg/save.svg'
 
 const SettingsPage = () => {
 
@@ -38,6 +40,9 @@ const SettingsPage = () => {
 					</BaseTab>
 				</BaseTabSection>
 			</BaseContainer>
+			<div className="fixed-btn-wrapper">
+				<BaseButton type={'primary'} icon={SaveIcon}>Save</BaseButton>
+			</div>
 		</section>
 	)
 }

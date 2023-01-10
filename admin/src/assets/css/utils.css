@@ -1,0 +1,11 @@
+.relative {
+    position: relative;
+}
+
+.fixed-btn-wrapper {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    gap: 10px;
+}
