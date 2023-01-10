@@ -38,14 +38,17 @@ def get_image(id2):  # noqa: E501
 
     :rtype: Image
     """
+    user = const.DEFAULT_USER
     cur = database.conn.cursor(dictionary=True)
-    cur.execute(f'SELECT * FROM Images WHERE id = %s AND page = {const.DEFAULT_USER}', (id2,))
+    cur.execute(f'SELECT * FROM Images WHERE id = %s AND page = {user}', (id2,))
     x = cur.fetchone()
     if x is None:
         raise ExceptionHandler.NotFoundException
     res = Image(id=x['id'], image=x['image'],alt=x['alt'],title=x['title'])
+    cur.close()
+    domain = get_domain()
     # zamiana adresu lokalnego na url, który może być dostępny przez klienta
-    res.image = to_url(res.image)
+    res.image = to_url(domain, res.image)
     return res
 
 
@@ -61,8 +64,10 @@ def get_image_array():  # noqa: E501
     fetch = cur.fetchall()
     image_list = list(map(lambda x : Image(id=x['id'], image=x['image'],alt=x['alt'],title=x['title']),fetch))
     # zamiana adresu lokalnego na url, który może być dostępny przez klienta
+    domain = get_domain()
+    cur.close()
     for img in image_list:
-        img.image = to_url(img.image)
+        img.image = to_url(domain, img.image)
     return image_list
 
 
@@ -83,13 +88,14 @@ def patch_image(id2, body=None):  # noqa: E501
     a = get_image(id2)
 
     if body is not None:
-        a = Image.from_dict(a.to_dict() | body.to_dict())
         curr = database.conn.cursor()
+        a = Image.from_dict(a.to_dict() | body.to_dict())
         curr.execute("UPDATE Images SET alt = %s, title = %s WHERE id = %s", (a.alt, a.title, id2))
         database.conn.commit()
         curr.close()
-
-    a.image = to_url(a.image)
+    
+    domain = get_domain()
+    a.image = to_url(domain, a.image)
 
     return a
 
@@ -127,12 +133,21 @@ def post_image(file=None, alt=None, title=None):  # noqa: E501
     return get_image(a[0])
 
 
-def to_url(s : str) -> str:
+def to_url(domain: str, s : str) -> str:
     """
     funkcja zmieniająca adres obrazu na serwerze na url obrazu
     """
-    return s.replace('swagger_server/images','files')
+    return f"{domain}/{s.replace('swagger_server/images','files')}"
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def get_domain() -> str:
+    cur = database.conn.cursor()
+    cur.execute('SELECT domain FROM MetaPages WHERE page = %s', (const.DEFAULT_USER, ))
+    domain = cur.fetchone()
+    cur.close()
+    if domain is None:
+        raise ExceptionHandler.NotFoundException
+    return domain[0]

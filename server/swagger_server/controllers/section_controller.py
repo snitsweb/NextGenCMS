@@ -4,10 +4,10 @@ import six
 from swagger_server.models.id_subpage_section_body import IdSubpageSectionBody  # noqa: E501
 from swagger_server.models.image import Image  # noqa: E501
 from swagger_server.models.section import Section  # noqa: E501
-from swagger_server import util
+from swagger_server import util, const
 from swagger_server.database import database
 from swagger_server.controllers.exceptions import ExceptionHandler
-from swagger_server.controllers.image_controller import *
+from swagger_server.controllers.image_controller import get_domain, to_url
 import json
 import mysql.connector
 
@@ -284,11 +284,12 @@ def get_section_images(id_subpage, id_section):
         images = []
     else:
         images = list(map(lambda x : Image(id=x['id'], image=x['image'],alt=x['alt'],title=x['title']), img_fetch))
-    curr.close()
     database.conn.commit()
+    curr.close()
     # zamiana adresu lokalnego na url, który może być dostępny przez klienta
+    domain = get_domain()
     for img in images:
-        img.image = to_url(img.image)
+        img.image = to_url(domain, img.image)
     return images
 
 def check_section_in_subpage(id_subpage,id_section):
