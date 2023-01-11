@@ -20,7 +20,7 @@ const JumbotronSection = ({value}) => {
 								text="Show more"
 							/>
 						</div>
-						<img src={value.image.path} alt={value.image.alt} title={value.image.title} />
+						<img src={value.image.image} alt={value.image.alt} title={value.image.title} />
 					</div>
 				</div>
 			</BaseContainer>
