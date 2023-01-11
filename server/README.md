@@ -30,6 +30,17 @@ cd swagger_server/database
 sudo mysql < db_schema.sql
 ```
 
+#### UWAGA
+Należy (prawdopodobnie) zmienić w pliku swagger_server/database/database.ini należy ustawić pole "host" na "localhost"
+```ini
+[mysql]
+host=localhost
+database=foto_portfolio
+user=prog_zesp
+password=prog_zesp
+port=3306
+```
+
 ## Usage
 To run the server, please execute the following from the root directory:
 
@@ -51,7 +62,7 @@ http://localhost:8080/swagger.json
 ```
 
 To launch the integration tests, use tox:
-```
+```bash
 sudo pip install tox
 tox
 ```
@@ -66,4 +77,14 @@ docker compose -f docker-compose.dev.yml build
 
 # starting up a container
 docker compose -f docker-compose.dev.yml up
+```
+#### UWAGA 
+Przy korzystaniu z docker-compose należy zmienić w pliku swagger_server/database/database.ini należy ustawić pole "host" na "mysqld"
+```ini
+[mysql]
+host=mysqldb
+database=foto_portfolio
+user=prog_zesp
+password=prog_zesp
+port=3306
 ```
