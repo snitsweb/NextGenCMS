@@ -155,7 +155,6 @@ def patch_subpage(id2, body=None):  # noqa: E501
     a = get_subpage(id2)
     if body is not None:
         cur = database.conn.cursor()
-        print(body)
         new_val_str = json.dumps(a.value | body.value)
         cur.execute("UPDATE Subpages SET value = %s WHERE id = %s", (new_val_str,id2))
 
