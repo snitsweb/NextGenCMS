@@ -58,12 +58,12 @@ tox
 
 ## Running with Docker
 
-To run the server on a Docker container, please execute the following from the root directory:
+Żeby uruchomić aplikację wraz z bazą danych w kontenerze, należy uruchomić docker-compose
 
 ```bash
 # building the image
-docker build -t swagger_server .
+docker compose -f docker-compose.dev.yml build
 
 # starting up a container
-docker run -p 8080:8080 swagger_server
+docker compose -f docker-compose.dev.yml up
 ```
