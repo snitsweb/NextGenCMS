@@ -1,9 +1,3 @@
-FROM mysql:latest as database
-
-ENV MYSQL_ROOT_PASSWORD=mypassword \
-        MYSQL_DATABASE=foto_portfolio \
-        MYSQL_HOST=localhost
-
 FROM python:3.8-alpine
 
 
