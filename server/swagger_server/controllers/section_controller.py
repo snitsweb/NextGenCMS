@@ -253,7 +253,7 @@ def post_image_to_section(id_subpage, id_section, value):  # noqa: E501
     curr = database.conn.cursor()
     curr.execute("SELECT MAX(pos) FROM SectionImages WHERE section_id = %s", (id_section,))
     a = curr.fetchone()
-    if a is None:
+    if a[0] is None:
         max_pos = 0
     else:
         max_pos = a[0] + 1
