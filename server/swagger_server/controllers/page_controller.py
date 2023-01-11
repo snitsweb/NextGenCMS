@@ -42,8 +42,9 @@ def get_page(id_page):  # noqa: E501
         raise ExceptionHandler.NotFoundException
 
     curr.execute(f"SELECT * FROM MetaPages WHERE page = {id}")
-    curr.close()
+
     meta_query= curr.fetchone()
+    curr.close()
     if meta_query is None:
         raise connexion.exceptions.ConnexionException()
     meta = MetaPage.from_dict(meta_query)
