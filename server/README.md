@@ -31,7 +31,11 @@ sudo mysql < db_schema.sql
 ```
 
 #### UWAGA
-Należy (prawdopodobnie) zmienić w pliku swagger_server/database/database.ini należy ustawić pole "host" na "localhost"
+Należy (prawdopodobnie) zmienić w pliku
+ ```
+swagger_server/database/database.ini
+```
+pole `host` na `localhost`
 ```ini
 [mysql]
 host=localhost
@@ -79,8 +83,12 @@ docker compose -f docker-compose.dev.yml build
 docker compose -f docker-compose.dev.yml up
 ```
 #### UWAGA 
-Przy korzystaniu z docker-compose należy zmienić w pliku swagger_server/database/database.ini należy ustawić pole "host" na "mysqld"
-```ini
+Przy korzystaniu z docker-compose należy zmienić w pliku 
+```
+swagger_server/database/database.ini
+```
+pole `host` na `mysqld`.
+```ini 
 [mysql]
 host=mysqldb
 database=foto_portfolio
