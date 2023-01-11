@@ -1,13 +1,13 @@
 -- Tworzenie nowego użytkownika
-CREATE USER IF NOT EXISTS 'prog_zesp'@'localhost' IDENTIFIED BY 'prog_zesp';
-ALTER USER 'prog_zesp'@'localhost' IDENTIFIED WITH mysql_native_password BY 'prog_zesp';
+CREATE USER IF NOT EXISTS 'prog_zesp'@'%' IDENTIFIED BY 'prog_zesp';
+ALTER USER 'prog_zesp'@'%' IDENTIFIED WITH mysql_native_password BY 'prog_zesp';
 
 -- Tworzenie bazy danych
 DROP DATABASE IF EXISTS foto_portfolio;
 CREATE DATABASE foto_portfolio;
 
 -- Przyznawanie uprawnień użytkownikowi
-GRANT ALL PRIVILEGES ON foto_portfolio.* TO 'prog_zesp'@'localhost';
+GRANT ALL PRIVILEGES ON foto_portfolio.* TO 'prog_zesp'@'%';
 
 -- Korzystanie z bazy danych
 USE foto_portfolio;
@@ -97,6 +97,50 @@ CREATE TABLE MetaSubpages(
     FOREIGN KEY (subpage) REFERENCES Subpages(id)
 );
 
+DELIMITER //
+CREATE TRIGGER before_page_delete
+BEFORE DELETE
+	ON Pages FOR EACH ROW
+    BEGIN
+    	DELETE FROM Subpages WHERE Subpages.page = old.id;
+		DELETE FROM Socials WHERE Socials.page = old.id;
+		DELETE FROM MetaPages WHERE MetaPages.page = old.id;
+		DELETE FROM Images WHERE Images.page = old.id;
+	END; //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER before_image_delete
+BEFORE DELETE
+	ON Images FOR EACH ROW
+    BEGIN
+		DELETE FROM SectionImages WHERE SectionImages.image_id = old.id;
+	END; //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER before_subpage_delete
+BEFORE DELETE
+	ON Subpages FOR EACH ROW
+    BEGIN
+		DELETE FROM MetaSubpages WHERE MetaSubpages.subpage = old.id;
+        DELETE FROM Sections WHERE Sections.subpage = old.id;
+	END; //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE TRIGGER before_section_delete
+BEFORE DELETE
+	ON Sections FOR EACH ROW
+    BEGIN
+		DELETE FROM SectionImages WHERE SectionImages.section_id = old.id;
+        
+	END; //
+DELIMITER ;
+
 -- trochę testowych danych
 
 INSERT INTO Layouts(is_template, alias, value) VALUES 
@@ -156,47 +200,5 @@ INSERT INTO SectionImages (image_id, section_id, pos) VALUES
     
 
 
-DELIMITER //
-create trigger before_page_delete
-before delete
-	on Pages for each row
-    Begin
-    		DELETE FROM Subpages where Subpages.page = old.id;
-		DELETE FROM Socials where Socials.page = old.id;
-		DELETE FROM MetaPages where MetaPages.page = old.id;
-		DELETE FROM Images WHERE Images.page = old.id;
-	end; //
-Delimiter ;
 
-
-DELIMITER //
-create trigger before_image_delete
-before delete
-	on Images for each row
-    Begin
-		DELETE FROM SectionImages WHERE SectionImages.image_id = old.id;
-	end; //
-Delimiter ;
-
-
-DELIMITER //
-create trigger before_subpage_delete
-before delete
-	on Subpages for each row
-    Begin
-		DELETE FROM MetaSubpages WHERE MetaSubpages.subpage = old.id;
-        DELETE FROM Sections WHERE Sections.subpage = old.id;
-	end; //
-Delimiter ;
-
-
-DELIMITER //
-create trigger before_section_delete
-before delete
-	on Sections for each row
-    Begin
-		DELETE FROM SectionImages WHERE SectionImages.section_id = old.id;
-        
-	end; //
-Delimiter ;
 

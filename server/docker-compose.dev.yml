@@ -4,20 +4,23 @@ services:
  
 
   mysqldb:
+    
     build:
       context: ./swagger_server/database/
       dockerfile: Dockerfile
-    image: mysql
     ports:
-    - 3306:3306
+    - 3308:3306
     environment:
     - MYSQL_ROOT_PASSWORD=PITERcziter1907
     - MYSQL_DATABASE=foto_portfolio 
     - MYSQL_HOST=localhost
-
     volumes:
-    - mysql:/var/lib/mysql
-    - mysql_config:/etc/mysql
+      - mysql:/var/lib/mysql
+      - mysql_config:/etc/mysql
+    networks:
+    - python-network 
+
+    
 
 
   web:
@@ -28,7 +31,16 @@ services:
     - 8080:8080
     volumes:
     - ./:/usr/src/app
+    networks:
+    - python-network 
+    depends_on:
+      - mysqldb
+        
 
 volumes:
   mysql:
   mysql_config:
+
+networks:
+  python-network:
+    driver: bridge
