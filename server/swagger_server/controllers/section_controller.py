@@ -37,7 +37,7 @@ def create_section(id_subpage, body=None):  # noqa: E501
         raise connexion.exceptions.BadRequestProblem()
     cur.execute("SELECT MAX(pos) FROM Sections WHERE subpage = %s", (id_subpage,))
     a = cur.fetchone()
-    if a is None:
+    if a[0] is None:
         max_pos = 0
     else:
         max_pos = a[0] + 1
