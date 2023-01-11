@@ -15,8 +15,6 @@ services:
     volumes:
       - mysql:/var/lib/mysql
       - mysql_config:/etc/mysql
-    networks:
-    - python-network 
 
   web:
     build:
@@ -26,8 +24,6 @@ services:
     - 8080:8080
     volumes:
     - ./:/usr/src/app
-    networks:
-    - python-network 
     depends_on:
       - mysqldb
 

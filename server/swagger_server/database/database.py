@@ -42,7 +42,7 @@ def connect(max_attempts = 60, attempt_num = 1):
             conn = mysql.connector.connect(
                 **params
             )
-            print("Database is up, starting the application...")
+            print("\nDatabase is up, starting the application...")
             cur = conn.cursor()
         
 	        # execute a statement
@@ -55,10 +55,10 @@ def connect(max_attempts = 60, attempt_num = 1):
             break
         except mysql.connector.Error as err:
             if attempt_num > max_attempts:
-                print(f"Error: Unable to connect to the database after {max_attempts} attempts")
+                print(f"\nError: Unable to connect to the database after {max_attempts} attempts")
                 exit(1)
             else:
-                print("a.", end="")
+                print(".", end="")
                 time.sleep(1)
                 attempt_num += 1
 
