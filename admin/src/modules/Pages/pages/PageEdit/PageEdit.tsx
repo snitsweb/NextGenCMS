@@ -6,6 +6,7 @@ import BaseSelect from '@common/components/BaseSelect/BaseSelect'
 import BaseTextInput from '@common/components/BaseTextInput/BaseTextInput'
 import {BaseButton} from '@common/components/BaseButton/BaseButton'
 import {ReactComponent as SaveIcon} from '@assets/svg/save.svg'
+import {useBaseSelect} from 'hooks/UseBaseSelect'
 
 const PageEdit = () => {
 
@@ -48,6 +49,8 @@ const PageEdit = () => {
 		defaultValue: 'Home'
 	}
 
+	const [statusInputValue, setStatusInputValue] = useBaseSelect(status_input)
+
 	return (
 		<div className={s.page_edit}>
 			<BaseContainer>
@@ -56,7 +59,7 @@ const PageEdit = () => {
 					<div className={s.page_edit_form}>
 						<BaseTextInput input={name_input}/>
 						<BaseTextInput input={path_input}/>
-						<BaseSelect input={status_input}/>
+						<BaseSelect input={status_input} value={statusInputValue} onChange={setStatusInputValue}/>
 					</div>
 				</div>
 			</BaseContainer>

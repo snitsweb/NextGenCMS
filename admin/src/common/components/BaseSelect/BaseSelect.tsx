@@ -18,17 +18,18 @@ export interface IBaseSelect {
 			value: string
 		}
 	},
+	value: IBaseSelectValue,
+	onChange: (variant: IBaseSelectValue) => void,
 	className?: string
 }
 
-interface IValue {
+export interface IBaseSelectValue {
 	name: string,
 	value: string
 }
 
-const BaseSelect: React.FC<IBaseSelect> = ({input, className}) => {
+const BaseSelect: React.FC<IBaseSelect> = ({input, value, onChange, className}) => {
 
-	const [value, setValue] = useState<IValue>(input.defaultValue ? input.defaultValue : {name: '', value: ''})
 	const [isActive, setIsActive] = useState<boolean>(false)
 
 	const selectRef = useRef(null)
@@ -37,8 +38,8 @@ const BaseSelect: React.FC<IBaseSelect> = ({input, className}) => {
 		setIsActive(prevState => !prevState)
 	}
 
-	const handleSelectedValue = (obj: IValue) => {
-		setValue(obj)
+	const handleSelectedValue = (obj: IBaseSelectValue) => {
+		onChange(obj)
 		handleToggle()
 	}
 
