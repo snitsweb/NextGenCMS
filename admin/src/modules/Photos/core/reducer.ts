@@ -1,21 +1,16 @@
-import {Controller} from 'common/core/Module/Controller'
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
-export interface IControllerLoadedPhoto {
+interface Image {
+	alt?: string,
+	title?: string,
 	path: string,
 	name: string
 }
 
-export class PhotosController extends Controller{
-	static controllerName = 'controller'
-
-	init() {
-		super.init()
-		window.photosController = this
-	}
-
-	getLoadedPhotos () :IControllerLoadedPhoto[] {
-		// this.axios.get()
-		const photos = [
+export const slice = createSlice({
+	name: 'photoStore',
+	initialState: {
+		photos: [
 			{
 				path: 'https://i.ibb.co/R3JhM0J/Group-1-min.jpg',
 				name: 'Group-1'
@@ -44,8 +39,14 @@ export class PhotosController extends Controller{
 				path: 'https://i.ibb.co/vJzpDGF/Group-6-min.jpg',
 				name: 'Group-7'
 			}
-		]
-
-		return photos
+		] as Image[]
+	},
+	reducers: {
+		setPhotos: (state, action: PayloadAction<Image[]>) => {
+			state.photos = action.payload
+		}
 	}
-}
+})
+
+export const {setPhotos} = slice.actions
+export default slice.reducer

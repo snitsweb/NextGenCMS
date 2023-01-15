@@ -2,13 +2,12 @@ import {INavbar} from './INavbar'
 import React from 'react'
 import s from './Navbar.module.scss'
 import {MenuItem} from '../../molecules/MenuItem/MenuItem'
-import {GetMenuRoutes} from 'hooks/GetMenuRoutes'
 
 export const Navbar: React.FC<INavbar> = ({className}) => {
 
 	const extendedClassname = `${className} ${s.navbar}`
 
-	const menuItems = GetMenuRoutes()
+	const menuItems = window.app.routes
 
 	return (
 		<menu className={extendedClassname}>

@@ -1,13 +1,11 @@
+import {useAppSelector} from 'hooks/redux/useAppSelector'
 import s from './LoadedPhotos.module.scss'
-import {useLoadedPhotos} from 'modules/Photos/hooks/useLoadedPhotos'
 import {LoadedPhotoSingle} from 'modules/Photos/pages/PhotosPage/components/LoadedPhotoSingle/LoadedPhotoSingle'
 import React from 'react'
 
 export const LoadedPhotos: React.FC = () => {
-	const {error, isLoading, loadedPhotos} = useLoadedPhotos()
 
-	if(error) return <p>Sorry, an error occurred</p>
-	if(isLoading) return <p>Loading...</p>
+	const loadedPhotos = useAppSelector(state => state.photosModule.photos)
 
 	return (
 		<>

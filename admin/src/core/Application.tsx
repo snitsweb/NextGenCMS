@@ -7,11 +7,12 @@ import {PagesModule} from '@modules/Pages/core/PagesModule'
 import {Layout} from 'components/organisms/Layout/Layout'
 import {Route} from 'core/Route'
 import {SettingsModule} from '@modules/Settings/core/SettingsModule'
-
+import {configureStore, Store} from '@reduxjs/toolkit'
 export class Application {
 	private _modules: Module[] = []
 	private _reactRoutes: IReactRoute[] = []
 	private _routes: Route[] = []
+	private _store: Store
 
 	constructor() {
 		this.init()
@@ -29,12 +30,15 @@ export class Application {
 		return this._routes
 	}
 
+	get store() {
+		return this._store
+	}
+
 	init(): void {
 		this.registerModules()
 		this.createReactRoutes()
 		this.createRoutes()
 	}
-
 	registerModules(): void {
 		this.modules.push(new OverviewModule())
 		this.modules.push(new PhotosModule())
@@ -63,6 +67,5 @@ export class Application {
 			})
 			)
 		})
-		console.log(this._reactRoutes)
 	}
 }
