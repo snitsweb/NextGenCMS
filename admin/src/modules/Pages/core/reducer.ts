@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 
-interface Page {
+export interface Page {
+	id: number
 	name: string,
 	status: string,
 	path: string,
@@ -12,18 +13,21 @@ export const slice = createSlice({
 	initialState: {
 		pages: [
 			{
+				id: 1,
 				name: 'Home',
 				status: 'active',
 				path: '/',
 				value: {}
 			},
 			{
+				id: 2,
 				name: 'About',
 				status: 'active',
 				path: '/about',
 				value: {}
 			},
 			{
+				id: 3,
 				name: 'Contact',
 				status: 'active',
 				path: '/contact',

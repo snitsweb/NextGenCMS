@@ -1,5 +1,5 @@
+import {Page} from '@modules/Pages/core/reducer'
 import React, {useState} from 'react'
-import {IPageListItem} from '@modules/Pages/hooks/useFetchPages'
 import s from './PageListItem.module.scss'
 import {BaseFont} from '@common/components/BaseFont/BaseFont'
 import {NavLink} from 'react-router-dom'
@@ -7,11 +7,10 @@ import {ReactComponent as EditIcon} from '../../../../../../assets/svg/edit.svg'
 import {ReactComponent as DeleteIcon} from '../../../../../../assets/svg/delete.svg'
 import {BaseButton} from '@common/components/BaseButton/BaseButton'
 
-interface IPageItem {
-	page: IPageListItem
+interface IPageListItem {
+	page: Page
 }
-
-const PageListItem: React.FC<IPageItem> = ({page}) => {
+const PageListItem: React.FC<IPageListItem> = ({page}) => {
 
 	const [isDeletePopupShown, setIsDeletePopupShown] = useState<boolean>(false)
 
@@ -36,7 +35,7 @@ const PageListItem: React.FC<IPageItem> = ({page}) => {
 				{page.path}
 			</div>
 			<div className={s.page_list_item_actions}>
-				<NavLink className={`${s.page_list_item_action} ${s.page_list_item_action_edit}`} to="/pages/edit">
+				<NavLink className={`${s.page_list_item_action} ${s.page_list_item_action_edit}`} to={`/pages/edit/${page.id}`}>
 					<EditIcon/>
 					<BaseFont tag={'span'} color={'white'} weight={700}>Edit</BaseFont>
 				</NavLink>

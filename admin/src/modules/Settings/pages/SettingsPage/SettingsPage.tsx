@@ -1,31 +1,26 @@
-import React, {useState} from 'react'
+import {config_themes_available} from '@modules/Settings/core/config'
+import {useAppSelector} from 'hooks/redux/useAppSelector'
+import React from 'react'
 import s from './SettingsPage.module.scss'
 import {BaseContainer} from '@common/components/BaseContainer/BaseContainer'
 import BaseTab from '@common/components/BaseTab/BaseTab'
 import BaseTabSection from '@common/components/BaseTabSection/BaseTabSection'
-import BaseSelect, {IBaseSelectValue} from '@common/components/BaseSelect/BaseSelect'
+import BaseSelect from '@common/components/BaseSelect/BaseSelect'
 import {BaseButton} from '@common/components/BaseButton/BaseButton'
 import {ReactComponent as SaveIcon} from '@assets/svg/save.svg'
 import {useBaseSelect} from 'hooks/UseBaseSelect'
 
 const SettingsPage = () => {
 
+	const settingsData = useAppSelector(state => state.settingsModule)
+
 	const themeInput = {
 		placeholder: 'Select your theme...',
 		label: 'Theme:',
-		variants: [
-			{
-				name: 'Default',
-				value: 'default'
-			},
-			{
-				name: 'Dark',
-				value: 'dark'
-			}
-		],
+		variants: config_themes_available,
 		defaultValue: {
-			name: 'Default',
-			value: 'default'
+			name: config_themes_available.find(theme => theme.value === settingsData.appearance.theme.alias)?.name || 'Default',
+			value: config_themes_available.find(theme => theme.value === settingsData.appearance.theme.alias)?.value || 'default'
 		}
 	}
 

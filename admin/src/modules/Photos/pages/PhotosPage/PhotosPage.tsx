@@ -1,4 +1,3 @@
-import {useAppSelector} from 'hooks/redux/useAppSelector'
 import React from 'react'
 import {BaseFont} from 'common/components/BaseFont/BaseFont'
 import {BaseButton} from 'common/components/BaseButton/BaseButton'
@@ -9,8 +8,6 @@ import {NavLink} from 'react-router-dom'
 import {ReactComponent as AddIcon} from '@assets/svg/add.svg'
 
 export const PhotosPage: React.FC = () => {
-	const photos = useAppSelector((state) => state.photosModule.photos)
-	console.log(photos)
 	return (
 		<div className={s.photos_page}>
 			<BaseContainer>

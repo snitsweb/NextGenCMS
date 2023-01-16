@@ -4,8 +4,6 @@ import React from 'react'
 import {PhotosPage} from 'modules/Photos/pages/PhotosPage/PhotosPage'
 import {AddPhotoPage} from 'modules/Photos/pages/AddPhotoPage/AddPhotoPage'
 import reducer from '@modules/Photos/core/reducer'
-import {setPhotos} from '@modules/Photos/core/reducer'
-import {useDispatch} from 'react-redux'
 
 export class PhotosModule extends Module {
 	static defaultPath = '/photos'

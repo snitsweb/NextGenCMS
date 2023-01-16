@@ -1,3 +1,4 @@
+import {Store} from '@reduxjs/toolkit'
 import React from 'react'
 import {Module} from 'common/core/Module/Module'
 import {OverviewModule} from 'modules/Overview/core/OverviewModule'
@@ -7,7 +8,6 @@ import {PagesModule} from '@modules/Pages/core/PagesModule'
 import {Layout} from 'components/organisms/Layout/Layout'
 import {Route} from 'core/Route'
 import {SettingsModule} from '@modules/Settings/core/SettingsModule'
-import {configureStore, Store} from '@reduxjs/toolkit'
 export class Application {
 	private _modules: Module[] = []
 	private _reactRoutes: IReactRoute[] = []

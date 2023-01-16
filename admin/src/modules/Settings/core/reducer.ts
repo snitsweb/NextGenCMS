@@ -5,16 +5,8 @@ export const slice = createSlice({
 	initialState: {
 		appearance: {
 			theme: {
-				current: {
-					name: 'Default',
-					alias: 'default'
-				},
-				available: [
-					{
-						name: 'Default',
-						alias: 'default'
-					}
-				]
+				name: 'Default',
+				alias: 'default'
 			}
 		}
 	},
@@ -31,10 +23,7 @@ export default slice.reducer
 
 interface Settings {
 	appearance: {
-		theme: {
-			current: Theme,
-			available: Theme[]
-		}
+		theme: Theme
 	}
 }
 

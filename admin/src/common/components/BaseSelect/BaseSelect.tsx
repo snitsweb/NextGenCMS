@@ -19,6 +19,7 @@ export interface IBaseSelect {
 		}
 	},
 	value: IBaseSelectValue,
+	// eslint-disable-next-line no-unused-vars
 	onChange: (variant: IBaseSelectValue) => void,
 	className?: string
 }

@@ -1,3 +1,4 @@
+import {config_page_statuses} from '@modules/Pages/core/config'
 import React from 'react'
 import s from './PageCreate.module.scss'
 import {BaseContainer} from '@common/components/BaseContainer/BaseContainer'
@@ -13,24 +14,7 @@ const PageCreate = () => {
 	const status_input = {
 		placeholder: 'Select your variant',
 		label: 'Status:',
-		variants: [
-			{
-				name: 'Published',
-				value: 'published'
-			},
-			{
-				name: 'Hidden',
-				value: 'hidden'
-			},
-			{
-				name: 'Unpublished',
-				value: 'unpublished'
-			},
-			{
-				name: 'Draft',
-				value: 'draft'
-			}
-		],
+		variants: config_page_statuses,
 		defaultValue: {
 			name: 'Published',
 			value: 'published'

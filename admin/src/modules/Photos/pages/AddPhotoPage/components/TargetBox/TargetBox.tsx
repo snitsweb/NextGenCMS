@@ -6,6 +6,7 @@ import s from './TargetBox.module.scss'
 import {BaseFont} from '@common/components/BaseFont/BaseFont'
 
 interface ITargetBox {
+	// eslint-disable-next-line no-unused-vars
 	onDrop: (item: { files: any[] }) => void
 }
 

@@ -10,7 +10,7 @@ export class PagesModule extends Module {
 	static moduleName = 'Pages'
 	static icon = Icon
 
-	registerRoutes(): void {
+	registerRoutes() {
 		this.routes.push(
 			{
 				path: '/pages',
@@ -22,7 +22,7 @@ export class PagesModule extends Module {
 		)
 		this.routes.push(
 			{
-				path: '/pages/edit',
+				path: '/pages/edit/:id',
 				element: <PageEdit/>,
 				name: 'Edit Page',
 				description: 'Edit page description',

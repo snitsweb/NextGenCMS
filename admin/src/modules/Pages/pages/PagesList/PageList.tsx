@@ -1,20 +1,15 @@
+import {useAppSelector} from 'hooks/redux/useAppSelector'
 import React from 'react'
 import s from './PageList.module.scss'
 import {BaseContainer} from '@common/components/BaseContainer/BaseContainer'
-import {useFetchPages} from '../../hooks/useFetchPages'
 import PageListItem from '../../../Overview/pages/OverviewPage/components/PageListItem/PageListItem'
 import {BaseFont} from '@common/components/BaseFont/BaseFont'
 import {BaseButton} from '@common/components/BaseButton/BaseButton'
 import {NavLink} from 'react-router-dom'
 import {ReactComponent as AddIcon} from '@assets/svg/add.svg'
 
-interface IPageList {
-    classname?: string,
-    children?: React.ReactNode
-}
-
-const PageList: React.FC<IPageList> = () => {
-	const pages = useFetchPages()
+const PageList = () => {
+	const pages = useAppSelector(state => state.pagesModule.pages)
 
 	return (
 		<section className={s.page_list}>
