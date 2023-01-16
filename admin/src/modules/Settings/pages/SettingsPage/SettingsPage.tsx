@@ -1,6 +1,8 @@
 import {config_themes_available} from '@modules/Settings/core/config'
+import {setTheme} from '@modules/Settings/core/reducer'
 import {useAppSelector} from 'hooks/redux/useAppSelector'
 import React from 'react'
+import {useDispatch} from 'react-redux'
 import s from './SettingsPage.module.scss'
 import {BaseContainer} from '@common/components/BaseContainer/BaseContainer'
 import BaseTab from '@common/components/BaseTab/BaseTab'
@@ -24,7 +26,14 @@ const SettingsPage = () => {
 		}
 	}
 
+	const dispatch = useDispatch()
 	const [value, setValue] = useBaseSelect(themeInput)
+	const handleUpdateSettings = () => {
+		dispatch(setTheme({
+			name: value.name,
+			alias: value.value
+		}))
+	}
 
 	return (
 		<section className={s.settings}>
@@ -39,7 +48,7 @@ const SettingsPage = () => {
 				</BaseTabSection>
 			</BaseContainer>
 			<div className="fixed-btn-wrapper">
-				<BaseButton type={'primary'} icon={SaveIcon}>Save</BaseButton>
+				<BaseButton type={'primary'} icon={SaveIcon} onClick={handleUpdateSettings}>Save</BaseButton>
 			</div>
 		</section>
 	)

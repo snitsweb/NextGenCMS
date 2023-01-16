@@ -13,13 +13,15 @@ export const slice = createSlice({
 	reducers: {
 		setSettings: (state, action: PayloadAction<Settings>) => {
 			state = action.payload
+		},
+		setTheme: (state, action: PayloadAction<Theme>) => {
+			state.appearance.theme = action.payload
 		}
 	}
 })
 
-export const {setSettings} = slice.actions
+export const {setSettings, setTheme} = slice.actions
 export default slice.reducer
-
 
 interface Settings {
 	appearance: {

@@ -1,5 +1,6 @@
-import {Page} from '@modules/Pages/core/reducer'
+import {deletePage, Page} from '@modules/Pages/core/reducer'
 import React, {useState} from 'react'
+import {useDispatch} from 'react-redux'
 import s from './PageListItem.module.scss'
 import {BaseFont} from '@common/components/BaseFont/BaseFont'
 import {NavLink} from 'react-router-dom'
@@ -13,12 +14,14 @@ interface IPageListItem {
 const PageListItem: React.FC<IPageListItem> = ({page}) => {
 
 	const [isDeletePopupShown, setIsDeletePopupShown] = useState<boolean>(false)
+	const dispatch = useDispatch()
 
 	const togglePopupHandler = () => {
 		setIsDeletePopupShown(prevState => !prevState)
 	}
 
 	const deleteHandler = () => {
+		dispatch(deletePage(page.id))
 		togglePopupHandler()
 		alert('Deleted!')
 	}

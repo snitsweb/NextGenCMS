@@ -38,9 +38,19 @@ export const slice = createSlice({
 	reducers: {
 		setPages: (state, action: PayloadAction<Page[]>) => {
 			state.pages = action.payload
+		},
+		updatePage: (state, action: PayloadAction<Page>) => {
+			const index = state.pages.findIndex((page) => action.payload.id === page.id)
+			state.pages[index] = action.payload
+		},
+		deletePage: (state, action: PayloadAction<number>) => {
+			state.pages = state.pages.filter((page) => page.id !== action.payload)
+		},
+		createPage: (state, action: PayloadAction<Page>) => {
+			state.pages.push(action.payload)
 		}
 	}
 })
 
-export const {setPages} = slice.actions
+export const {setPages, deletePage, updatePage, createPage} = slice.actions
 export default slice.reducer

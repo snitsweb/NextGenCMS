@@ -1,8 +1,10 @@
+import {useDispatch} from 'react-redux'
 import s from './LoadedPhotoSingle.module.scss'
 import {BaseButton} from 'common/components/BaseButton/BaseButton'
 import React, {useState} from 'react'
 import {BaseFont} from 'common/components/BaseFont/BaseFont'
-import {ReactComponent as DeleteIcon} from '../../../../../../assets/svg/delete.svg'
+import {ReactComponent as DeleteIcon} from '@assets/svg/delete.svg'
+import {deletePhoto} from '@modules/Photos/core/reducer'
 
 export interface ILoadedPhotoSingle {
 	imageUri: string
@@ -11,6 +13,7 @@ export interface ILoadedPhotoSingle {
 
 export const LoadedPhotoSingle: React.FC<ILoadedPhotoSingle> = ({imageUri, name}) => {
 	const [isPopupActive, setIsPopupActive] = useState(false)
+	const dispatch = useDispatch()
 
 	const handleClickDeleteButton = () => {
 		setIsPopupActive((prevState) => !prevState)
@@ -18,6 +21,7 @@ export const LoadedPhotoSingle: React.FC<ILoadedPhotoSingle> = ({imageUri, name}
 
 	const handleDeleteClick = () => {
 		alert('Deleted!')
+		dispatch(deletePhoto(name))
 		setIsPopupActive(false)
 	}
 

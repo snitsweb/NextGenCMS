@@ -44,9 +44,12 @@ export const slice = createSlice({
 	reducers: {
 		setPhotos: (state, action: PayloadAction<Image[]>) => {
 			state.photos = action.payload
+		},
+		deletePhoto: (state, action: PayloadAction<string>) => {
+			state.photos = state.photos.filter(photo => photo.name !== action.payload)
 		}
 	}
 })
 
-export const {setPhotos} = slice.actions
+export const {setPhotos, deletePhoto} = slice.actions
 export default slice.reducer

@@ -1,6 +1,9 @@
 import {config_page_statuses} from '@modules/Pages/core/config'
+import {updatePage} from '@modules/Pages/core/reducer'
 import {useAppSelector} from 'hooks/redux/useAppSelector'
+import {useBaseTextInput} from 'hooks/useBaseTextInput'
 import React from 'react'
+import {useDispatch} from 'react-redux'
 import {useParams} from 'react-router-dom'
 import s from './PageEdit.module.scss'
 import {BaseContainer} from '@common/components/BaseContainer/BaseContainer'
@@ -40,6 +43,19 @@ const PageEdit = () => {
 	}
 
 	const [statusInputValue, setStatusInputValue] = useBaseSelect(status_input)
+	const [nameInputValue, setNameInputValue] = useBaseTextInput(name_input)
+	const [pathInputValue, setPathInputValue] = useBaseTextInput(path_input)
+
+	const dispatch = useDispatch()
+	const handleUpdatePage = () => {
+		dispatch(updatePage({
+			id: page.id,
+			status: statusInputValue.value,
+			name: nameInputValue,
+			path: pathInputValue,
+			value: {}
+		}))
+	}
 
 	return (
 		<>
@@ -48,8 +64,16 @@ const PageEdit = () => {
 					<div className={s.page_edit_inner}>
 						<BaseFont tag={'h1'}>Edit page</BaseFont>
 						<div className={s.page_edit_form}>
-							<BaseTextInput input={name_input}/>
-							<BaseTextInput input={path_input}/>
+							<BaseTextInput
+								input={name_input}
+								value={nameInputValue}
+								onChange={(event) => setNameInputValue(event.target.value)}
+							/>
+							<BaseTextInput
+								input={path_input}
+								value={pathInputValue}
+								onChange={(event) => setPathInputValue(event.target.value)}
+							/>
 							<BaseSelect
 								input={status_input}
 								value={statusInputValue}
@@ -59,7 +83,7 @@ const PageEdit = () => {
 					</div>
 				</BaseContainer>
 				<div className="fixed-btn-wrapper">
-					<BaseButton type={'primary'} icon={SaveIcon}>Save</BaseButton>
+					<BaseButton type={'primary'} icon={SaveIcon} onClick={handleUpdatePage}>Save</BaseButton>
 				</div>
 			</div>
 		</>

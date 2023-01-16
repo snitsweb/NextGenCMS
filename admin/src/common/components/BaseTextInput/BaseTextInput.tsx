@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import s from './BaseTextInput.module.scss'
 import {BaseFont} from '@common/components/BaseFont/BaseFont'
 
@@ -8,14 +8,15 @@ export interface IBaseTextInput {
 		label: string,
 		defaultValue?: string
 	},
+	value: string,
+	// eslint-disable-next-line no-unused-vars
+	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const BaseTextInput: React.FC<IBaseTextInput> = ({input}) => {
-
-	const [value, setValue] = useState(input.defaultValue ? input.defaultValue : '')
+const BaseTextInput: React.FC<IBaseTextInput> = ({input, value, onChange}) => {
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setValue(event.target.value)
+		onChange(event)
 	}
 
 	return (
