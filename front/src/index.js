@@ -11,13 +11,15 @@ import Application from './core/Application'
 const app = new Application()
 window.app = app
 
-const router = createBrowserRouter(app.reactRouterRoutes)
-app.setRouter(router)
+setTimeout(() => {
+	const router = createBrowserRouter(app.reactRouterRoutes)
+	app.setRouter(router)
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(
-	<App>
-		<RouterProvider router={router} />
-	</App>
-)
+	const root = ReactDOM.createRoot(document.getElementById('root'))
+	root.render(
+		<App>
+			<RouterProvider router={router} />
+		</App>
+	)
+}, 200)
 

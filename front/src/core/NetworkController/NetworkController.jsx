@@ -9,7 +9,7 @@ export class NetworkController {
 
 	async getDatabase () {
 		return await this.axios.get('/page/1')
-			.then((res) => res)
+			.then((res) => res.data)
 			.catch((err) => err)
 	}
 }

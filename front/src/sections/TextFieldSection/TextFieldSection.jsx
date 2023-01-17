@@ -9,10 +9,10 @@ const TextFieldSection = ({value}) => {
 			<BaseContainer>
 				<div className={s.textfield_section_inner}>
 					<BaseFont tag={'h1'}>
-						{value.header}
+						{value.value.header}
 					</BaseFont>
 					<BaseFont tag={'p'}>
-						{value.description}
+						{value.value.description}
 					</BaseFont>
 				</div>
 			</BaseContainer>

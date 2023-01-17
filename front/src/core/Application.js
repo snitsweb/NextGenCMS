@@ -41,14 +41,15 @@ class Application {
 		return this.#routes.find(route => route.path === window.location.pathname)
 	}
 
-	init() {
+	async init() {
 		this.readyToAddSections()
 		this.readyToAddLayouts()
-		this.getData()
-		this.setLayout()
-		this.setReactRouterRoutes()
-		this.setRoutes()
-		this.setMeta()
+		this.getData().then(() => {
+			this.setLayout()
+			this.setReactRouterRoutes()
+			this.setRoutes()
+			this.setMeta()
+		})
 	}
 
 	readyToAddSections () {
@@ -65,9 +66,9 @@ class Application {
 		this.#layouts.push(new Layout('theme-dark', DarkLayout))
 	}
 
-	getData () {
+	async getData () {
 		const network = new NetworkController()
-		this.#db = network.getDatabase()
+		this.#db = await network.getDatabase()
 	}
 
 	setRouter (router) {
@@ -75,7 +76,7 @@ class Application {
 	}
 
 	setReactRouterRoutes () {
-		this.#reactRouterRoutes = this.#db.pages.map(page => {
+		this.#reactRouterRoutes = this.#db.subpages.map(page => {
 			const Layout = this.layout.component
 			return {
 				path: page.meta.path,
@@ -85,16 +86,16 @@ class Application {
 	}
 
 	getSections (pagePath) {
-		return this.#db.pages.find(page => page.meta.path === pagePath).value.sections.map(section => {
+		return this.#db.subpages.find(page => page.meta.path === pagePath).sections.map(section => {
 			return {
-				value: section.value,
+				value: section,
 				component: this.#sections.find(entitySection => entitySection.alias === section.alias)?.component
 			}
 		})
 	}
 
 	setRoutes () {
-		this.#routes = this.#db.pages.map(page => page.meta)
+		this.#routes = this.#db.subpages.map(page => page.meta)
 	}
 
 	setLayout () {

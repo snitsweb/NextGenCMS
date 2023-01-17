@@ -12,7 +12,7 @@ const SliderSection = ({value}) => {
 		gap: '2rem'
 	}
 
-
+	console.log(value)
 	return (
 		<section className={s.section}>
 			<BaseContainer>
@@ -21,8 +21,8 @@ const SliderSection = ({value}) => {
 					className={s.section__inner}
 				>
 					{
-						value.slides ?
-							value.slides.map(slide => {
+						value.images ?
+							value.images.map(slide => {
 								return <Slide slide={slide} key={slide.image} />
 							})
 							: ''
