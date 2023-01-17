@@ -21,9 +21,17 @@ const PageListItem: React.FC<IPageListItem> = ({page}) => {
 	}
 
 	const deleteHandler = () => {
-		dispatch(deletePage(page.id))
-		togglePopupHandler()
-		alert('Deleted!')
+		window.app.nc.http.delete(`/subpage/${page.id}`)
+			.catch(e => console.error(e))
+			.then(response => {
+				if(!response) {
+					alert('Something went wrong. Check console for more details')
+				} else {
+					dispatch(deletePage(page.id))
+					alert('Deleted!')
+				}
+				togglePopupHandler()
+			})
 	}
 
 	return (

@@ -4,7 +4,7 @@ import {useAppSelector} from 'hooks/redux/useAppSelector'
 import {useBaseTextInput} from 'hooks/useBaseTextInput'
 import React from 'react'
 import {useDispatch} from 'react-redux'
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import s from './PageEdit.module.scss'
 import {BaseContainer} from '@common/components/BaseContainer/BaseContainer'
 import {BaseFont} from '@common/components/BaseFont/BaseFont'
@@ -47,7 +47,42 @@ const PageEdit = () => {
 	const [pathInputValue, setPathInputValue] = useBaseTextInput(path_input)
 
 	const dispatch = useDispatch()
+
+	const navigate = useNavigate()
+	const redirectToPages = () => {
+		navigate('/pages')
+	}
+
 	const handleUpdatePage = () => {
+		window.app.nc.http.patch(`/subpage/${page.id}`, {
+			meta: {},
+			value: {
+				meta: {
+					description: '',
+					name: nameInputValue,
+					path: pathInputValue,
+					title: '',
+					status: statusInputValue.value
+				}
+			}
+		})
+			.catch(e => console.error(e))
+			.then(response => {
+				if(!response) {
+					alert('Something went wrong. Check console for more details')
+				} else {
+					dispatch(updatePage({
+						id: Math.round(Math.random()*100),
+						status: statusInputValue.value,
+						name: nameInputValue,
+						path: pathInputValue,
+						value: {}
+					}))
+					alert('Updated!')
+
+					redirectToPages()
+				}
+			})
 		dispatch(updatePage({
 			id: page.id,
 			status: statusInputValue.value,

@@ -16,6 +16,7 @@ export const LoadedPhotos: React.FC = () => {
 							imageUri={photo.path}
 							name={photo.name}
 							key={photo.path}
+							id={photo.id}
 						/>
 					})
 				}

@@ -7,22 +7,31 @@ import {ReactComponent as DeleteIcon} from '@assets/svg/delete.svg'
 import {deletePhoto} from '@modules/Photos/core/reducer'
 
 export interface ILoadedPhotoSingle {
+	id: number
 	imageUri: string
 	name: string
 }
 
-export const LoadedPhotoSingle: React.FC<ILoadedPhotoSingle> = ({imageUri, name}) => {
+export const LoadedPhotoSingle: React.FC<ILoadedPhotoSingle> = ({imageUri, name, id}) => {
 	const [isPopupActive, setIsPopupActive] = useState(false)
 	const dispatch = useDispatch()
 
 	const handleClickDeleteButton = () => {
-		setIsPopupActive((prevState) => !prevState)
+		setIsPopupActive(true)
 	}
 
 	const handleDeleteClick = () => {
-		alert('Deleted!')
-		dispatch(deletePhoto(name))
-		setIsPopupActive(false)
+		window.app.nc.http.delete(`/image/${id}`)
+			.catch(e => console.error(e))
+			.then(response => {
+				if(!response) {
+					alert('Something went wrong. Check console for more details')
+				} else {
+					dispatch(deletePhoto(id))
+					alert('Deleted!')
+				}
+			})
+			.finally(() => setIsPopupActive(false))
 	}
 
 	const handleCancelClick = () => {

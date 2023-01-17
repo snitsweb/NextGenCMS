@@ -83,7 +83,7 @@ CREATE TABLE `Layouts` (
 
 LOCK TABLES `Layouts` WRITE;
 /*!40000 ALTER TABLE `Layouts` DISABLE KEYS */;
-INSERT INTO `Layouts` VALUES (1,0,'test','{\"key1\": \"value1\", \"key2\": \"value2\"}'),(2,0,'test2','{\"key1\": \"value1\", \"key2\": \"value2\"}'),(3,1,'test3','{\"key1\": \"value1\", \"key2\": \"value2\"}'),(4,1,'test4','{\"key1\": \"value1\", \"key2\": \"value2\"}');
+INSERT INTO `Layouts` VALUES (1,0,'theme-default','{}'),(2,0,'theme-dark','{}');
 /*!40000 ALTER TABLE `Layouts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +218,6 @@ CREATE TABLE `SectionImages` (
 
 LOCK TABLES `SectionImages` WRITE;
 /*!40000 ALTER TABLE `SectionImages` DISABLE KEYS */;
-INSERT INTO `SectionImages` VALUES (1,2,1),(2,2,2),(1,3,2),(2,3,1);
 /*!40000 ALTER TABLE `SectionImages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,7 +237,7 @@ CREATE TABLE `Sections` (
   PRIMARY KEY (`id`),
   KEY `subpage` (`subpage`),
   CONSTRAINT `Sections_ibfk_1` FOREIGN KEY (`subpage`) REFERENCES `Subpages` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,7 +246,7 @@ CREATE TABLE `Sections` (
 
 LOCK TABLES `Sections` WRITE;
 /*!40000 ALTER TABLE `Sections` DISABLE KEYS */;
-INSERT INTO `Sections` VALUES (1,1,'section_2',1,'{\"key1\": \"value1\", \"key2\": \"value2\"}'),(2,1,'section_1',2,'{\"key1\": \"value1\", \"key2\": \"value2\"}'),(3,2,'section_1',2,'{\"key1\": \"value1\", \"key2\": \"value2\"}'),(4,2,'section_2',1,'{\"key1\": \"value1\", \"key2\": \"value2\"}'),(5,2,'section_2',3,'{\"key1\": \"value1\", \"key2\": \"value2\"}');
+INSERT INTO `Sections` VALUES (2,1,'slider_section',1,'{\"slides\": [{\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/R3JhM0J/Group-1-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/VDnKX0R/Group-3-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/zrQR45k/Group-8-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/9vqcJK3/Group-4-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/c6Kpn9Z/Group-5-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/vJzpDGF/Group-6-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/KL295kL/Group-7-min.jpg\", \"title\": \"Title of image\"}]}'),(3,1,'gallery_section',1,'{\"images\": [{\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/R3JhM0J/Group-1-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/VDnKX0R/Group-3-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/zrQR45k/Group-8-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/9vqcJK3/Group-4-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/c6Kpn9Z/Group-5-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/vJzpDGF/Group-6-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/KL295kL/Group-7-min.jpg\", \"title\": \"Title of image\"}]}'),(4,1,'jumbotron_section',1,'{\"image\": {\"alt\": \"Alternative text\", \"path\": \"https://i.ibb.co/R3JhM0J/Group-1-min.jpg\", \"title\": \"Title of image\"}, \"header\": \"Header\", \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"}'),(5,1,'textfield_section',1,'{\"header\": \"Header\", \"description\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"}'),(6,1,'social_media_section',1,'{\"links\": [{\"icon\": \"https://cdn-icons-png.flaticon.com/512/1077/1077042.png\", \"header\": \"/matis1\", \"preview\": \"https://picsum.photos/id/237/300/300\"}, {\"icon\": \"https://cdn-icons-png.flaticon.com/512/747/747374.png\", \"header\": \"/matis2\", \"preview\": \"https://picsum.photos/id/40/300/300\"}, {\"icon\": \"https://cdn-icons-png.flaticon.com/512/1077/1077046.png\", \"header\": \"/matis3\", \"preview\": \"https://picsum.photos/id/100/300/300\"}], \"header\": \"Social Media\"}'),(7,2,'gallery_section',1,'{\"images\": [{\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/R3JhM0J/Group-1-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/VDnKX0R/Group-3-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/zrQR45k/Group-8-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/9vqcJK3/Group-4-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/c6Kpn9Z/Group-5-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/vJzpDGF/Group-6-min.jpg\", \"title\": \"Title of image\"}, {\"alt\": \"Alternative text\", \"image\": \"https://i.ibb.co/KL295kL/Group-7-min.jpg\", \"title\": \"Title of image\"}]}');
 /*!40000 ALTER TABLE `Sections` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -312,7 +311,7 @@ CREATE TABLE `Subpages` (
   PRIMARY KEY (`id`),
   KEY `page` (`page`),
   CONSTRAINT `Subpages_ibfk_1` FOREIGN KEY (`page`) REFERENCES `Pages` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -321,7 +320,7 @@ CREATE TABLE `Subpages` (
 
 LOCK TABLES `Subpages` WRITE;
 /*!40000 ALTER TABLE `Subpages` DISABLE KEYS */;
-INSERT INTO `Subpages` VALUES (1,1,1,'{\"meta\": {\"name\": \"Home\", \"path\": \"/\", \"title\": \"It is a test title\", \"description\": \"It is a test description\"}}'),(2,1,2,'{\"meta\": {\"name\": \"About\", \"path\": \"/about\", \"title\": \"About\", \"description\": \"About description\"}}'),(3,1,3,'{\"meta\": {\"name\": \"Contact\", \"path\": \"/contact\", \"title\": \"It is a test title\", \"description\": \"It is a test description\"}}');
+INSERT INTO `Subpages` VALUES (1,1,1,'{\"meta\": {\"name\": \"Home\", \"path\": \"/\", \"title\": \"It is a test title\", \"description\": \"It is a test description\"}}'),(2,1,2,'{\"meta\": {\"name\": \"About\", \"path\": \"/about\", \"title\": \"About\", \"description\": \"About description\"}}'),(3,1,3,'{\"meta\": {\"name\": \"Contact\", \"path\": \"/contact\", \"title\": \"It is a test title\", \"description\": \"It is a test description\"}}'),(4,1,4,'{\"meta\": {\"name\": \"Test\", \"path\": \"/test\", \"title\": \"Test title\", \"description\": \"test description\"}}');
 /*!40000 ALTER TABLE `Subpages` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -356,4 +355,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-17 19:50:48
+-- Dump completed on 2023-01-18  0:07:38

@@ -11,8 +11,11 @@ import BaseTextInput from '@common/components/BaseTextInput/BaseTextInput'
 import {BaseButton} from '@common/components/BaseButton/BaseButton'
 import {ReactComponent as SaveIcon} from '@assets/svg/save.svg'
 import {useBaseSelect} from 'hooks/UseBaseSelect'
+import {useNavigate} from 'react-router-dom'
 
 const PageCreate = () => {
+
+	const navigate = useNavigate()
 
 	const status_input = {
 		placeholder: 'Select your variant',
@@ -41,14 +44,41 @@ const PageCreate = () => {
 	const [pathInputValue, setPathInputValue] = useBaseTextInput(path_input)
 
 	const dispatch = useDispatch()
+
+	const redirectToPages = () => {
+		navigate('/pages')
+	}
+
 	const handleCreatePage = () => {
-		dispatch(createPage({
-			id: Math.round(Math.random()*100),
-			status: statusInputValue.value,
-			name: nameInputValue,
-			path: pathInputValue,
-			value: {}
-		}))
+		window.app.nc.http.post('/subpage', {
+			meta: {},
+			value: {
+				meta: {
+					description: '',
+					name: nameInputValue,
+					path: pathInputValue,
+					title: '',
+					status: statusInputValue.value
+				}
+			}
+		})
+			.catch(e => console.error(e))
+			.then(response => {
+				if(!response) {
+					alert('Something went wrong. Check console for more details')
+				} else {
+					dispatch(createPage({
+						id: Math.round(Math.random()*100),
+						status: statusInputValue.value,
+						name: nameInputValue,
+						path: pathInputValue,
+						value: {}
+					}))
+					alert('Created!')
+
+					redirectToPages()
+				}
+			})
 	}
 
 	return (
