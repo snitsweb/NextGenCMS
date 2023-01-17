@@ -8,7 +8,7 @@ is an example of building a swagger-enabled Flask server.
 This example uses the [Connexion](https://github.com/zalando/connexion) library on top of Flask.
 
 ## Requirements
-Python 3.5.2+
+Python 3.9+
 MySQL Server 8.0+
 
 ## Baza danych
@@ -28,6 +28,21 @@ następnie należy zaimportować schemat bazy danych do serwera:
 ```bash
 cd swagger_server/database
 sudo mysql < db_schema.sql
+```
+
+#### UWAGA
+Należy (prawdopodobnie) zmienić w pliku
+ ```
+swagger_server/database/database.ini
+```
+pole `host` na `localhost`
+```ini
+[mysql]
+host=localhost
+database=foto_portfolio
+user=prog_zesp
+password=prog_zesp
+port=3306
 ```
 
 ## Usage
@@ -51,19 +66,33 @@ http://localhost:8080/swagger.json
 ```
 
 To launch the integration tests, use tox:
-```
+```bash
 sudo pip install tox
 tox
 ```
 
 ## Running with Docker
 
-To run the server on a Docker container, please execute the following from the root directory:
+Żeby uruchomić aplikację wraz z bazą danych w kontenerze, należy uruchomić docker-compose
 
 ```bash
 # building the image
-docker build -t swagger_server .
+docker-compose -f docker-compose.dev.yml build
 
 # starting up a container
-docker run -p 8080:8080 swagger_server
+docker-compose -f docker-compose.dev.yml up
+```
+#### UWAGA 
+Przy korzystaniu z docker-compose należy zmienić w pliku 
+```
+swagger_server/database/database.ini
+```
+pole `host` na `mysqld`.
+```ini 
+[mysql]
+host=mysqldb
+database=foto_portfolio
+user=prog_zesp
+password=prog_zesp
+port=3306
 ```
