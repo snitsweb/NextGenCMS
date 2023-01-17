@@ -77,10 +77,10 @@ tox
 
 ```bash
 # building the image
-docker compose -f docker-compose.dev.yml build
+docker-compose -f docker-compose.dev.yml build
 
 # starting up a container
-docker compose -f docker-compose.dev.yml up
+docker-compose -f docker-compose.dev.yml up
 ```
 #### UWAGA 
 Przy korzystaniu z docker-compose należy zmienić w pliku 

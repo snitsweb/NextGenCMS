@@ -163,9 +163,9 @@ paths:
                 x-content-type: application/json
         "403":
           description: unauthorized operation
-      security:
-      - bearerAuth:
-        - security
+      # security:
+      # - bearerAuth:
+      #   - security
       x-openapi-router-controller: swagger_server.controllers.subpage_controller
     post:
       tags:
@@ -246,9 +246,9 @@ paths:
           description: unauthorized operation
         "404":
           description: invalid id
-      security:
-      - bearerAuth:
-        - security
+      # security:
+      # - bearerAuth:
+      #   - security
       x-openapi-router-controller: swagger_server.controllers.subpage_controller
     delete:
       tags:
@@ -369,9 +369,9 @@ paths:
           description: unauthorised operation - not a template
         "404":
           description: wrong id
-      security:
-      - bearerAuth:
-        - security
+      # security:
+      # - bearerAuth:
+      #   - security
       x-openapi-router-controller: swagger_server.controllers.layout_controller
   /layout:
     get:
@@ -391,9 +391,9 @@ paths:
                 x-content-type: application/json
         "403":
           description: unauthorized operation
-      security:
-      - bearerAuth:
-        - security
+      # security:
+      # - bearerAuth:
+      #   - security
       x-openapi-router-controller: swagger_server.controllers.layout_controller
     put:
       tags:
@@ -454,9 +454,9 @@ paths:
                 x-content-type: application/json
         "403":
           description: unauthorized operation
-      security:
-      - bearerAuth:
-        - security
+      # security:
+      # - bearerAuth:
+      #   - security
       x-openapi-router-controller: swagger_server.controllers.social_controller
     post:
       tags:
@@ -522,9 +522,9 @@ paths:
           description: authorization error - social binding does not belong to page
         "404":
           description: wrong ID
-      security:
-      - bearerAuth:
-        - security
+      # security:
+      # - bearerAuth:
+      #   - security
       x-openapi-router-controller: swagger_server.controllers.social_controller
     delete:
       tags:
@@ -580,9 +580,9 @@ paths:
           description: authorization error - subpage does not belong to page
         "404":
           description: wrong ID of subpage
-      security:
-      - bearerAuth:
-        - security
+      # security:
+      # - bearerAuth:
+      #   - security
       x-openapi-router-controller: swagger_server.controllers.section_controller
     post:
       tags:
@@ -692,9 +692,9 @@ paths:
             does not belong to subpage
         "404":
           description: wrong ID
-      security:
-      - bearerAuth:
-        - security
+      # security:
+      # - bearerAuth:
+      #   - security
       x-openapi-router-controller: swagger_server.controllers.section_controller
     delete:
       tags:
@@ -1020,9 +1020,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Image'
-      security:
-      - bearerAuth:
-        - security
+      # security:
+      # - bearerAuth:
+      #   - security
       x-openapi-router-controller: swagger_server.controllers.image_controller
   /image:
     get:
@@ -1045,9 +1045,9 @@ paths:
           description: unauthorized operation
         "404":
           description: invalid ID
-      security:
-      - bearerAuth:
-        - security
+      # security:
+      # - bearerAuth:
+      #   - security
       x-openapi-router-controller: swagger_server.controllers.image_controller
     post:
       tags:
@@ -1070,9 +1070,9 @@ paths:
                 $ref: '#/components/schemas/Image'
         "403":
           description: unauthorized operation
-      security:
-      - bearerAuth:
-        - security
+      # security:
+      # - bearerAuth:
+      #   - security
       x-openapi-router-controller: swagger_server.controllers.image_controller
 components:
   schemas:
