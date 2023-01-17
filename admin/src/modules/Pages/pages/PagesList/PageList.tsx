@@ -1,5 +1,5 @@
 import {useAppSelector} from 'hooks/redux/useAppSelector'
-import React from 'react'
+import React, {useEffect} from 'react'
 import s from './PageList.module.scss'
 import {BaseContainer} from '@common/components/BaseContainer/BaseContainer'
 import PageListItem from '../../../Overview/pages/OverviewPage/components/PageListItem/PageListItem'
@@ -10,6 +10,15 @@ import {ReactComponent as AddIcon} from '@assets/svg/add.svg'
 
 const PageList = () => {
 	const pages = useAppSelector(state => state.pagesModule.pages)
+
+	useEffect(() => {
+		const fetchPage = async () => {
+			console.log(window.app.nc)
+			return await window.app.nc.http.get('/page/1')
+		}
+
+		fetchPage().then(data => console.log(data)).catch(e => console.error(e))
+	}, [])
 
 	return (
 		<section className={s.page_list}>

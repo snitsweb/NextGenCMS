@@ -1,11 +1,15 @@
-import axios, {AxiosInstance} from 'axios/index'
+import axios, {AxiosInstance} from 'axios'
 
 export class NetworkController {
-	private axios: AxiosInstance
+	private readonly _http: AxiosInstance
 
 	constructor() {
-		this.axios = axios.create({
-			baseURL: 'http://example.com'
+		this._http = axios.create({
+			baseURL: process.env.REACT_APP_BACKED_URI
 		})
+	}
+
+	get http () {
+		return this._http
 	}
 }

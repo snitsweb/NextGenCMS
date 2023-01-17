@@ -1,4 +1,5 @@
 import {Store} from '@reduxjs/toolkit'
+import {NetworkController} from 'core/NetworkController'
 import React from 'react'
 import {Module} from 'common/core/Module/Module'
 import {OverviewModule} from 'modules/Overview/core/OverviewModule'
@@ -13,6 +14,7 @@ export class Application {
 	private _reactRoutes: IReactRoute[] = []
 	private _routes: Route[] = []
 	private _store: Store
+	private _nc: NetworkController
 
 	constructor() {
 		this.init()
@@ -34,10 +36,15 @@ export class Application {
 		return this._store
 	}
 
+	get nc() {
+		return this._nc
+	}
+
 	init(): void {
 		this.registerModules()
 		this.createReactRoutes()
 		this.createRoutes()
+		this.initNetworkController()
 	}
 	registerModules(): void {
 		this.modules.push(new OverviewModule())
@@ -67,5 +74,9 @@ export class Application {
 			})
 			)
 		})
+	}
+
+	initNetworkController () {
+		this._nc = new NetworkController()
 	}
 }
