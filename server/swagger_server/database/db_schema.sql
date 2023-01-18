@@ -98,6 +98,28 @@ CREATE TABLE MetaSubpages(
 );
 
 DELIMITER //
+CREATE TRIGGER unique_subpage_path_insert
+BEFORE INSERT
+    ON MetaSubpages FOR EACH ROW
+    BEGIN
+        IF EXISTS (SELECT * FROM Pages INNER JOIN Subpages ON Pages.id = Subpages.page INNER JOIN MetaSubpages ON Subpages.id = MetaSubpages.subpage WHERE MetaSubpages.path = new.path) THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Subpage with this path already exists';
+        END IF;
+    END; //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER unique_subpage_path_update
+BEFORE UPDATE
+    ON MetaSubpages FOR EACH ROW
+    BEGIN
+        IF EXISTS (SELECT * FROM Pages INNER JOIN Subpages ON Pages.id = Subpages.page INNER JOIN MetaSubpages ON Subpages.id = MetaSubpages.subpage WHERE MetaSubpages.path = new.path) THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Subpage with this path already exists';
+        END IF;
+    END; //
+DELIMITER ;
+
+DELIMITER //
 CREATE TRIGGER before_page_delete
 BEFORE DELETE
 	ON Pages FOR EACH ROW
@@ -140,6 +162,10 @@ BEFORE DELETE
         
 	END; //
 DELIMITER ;
+
+
+
+
 
 -- trochę testowych danych
 

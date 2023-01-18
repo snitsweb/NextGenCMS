@@ -45,8 +45,11 @@ def create_subpage(body=None):  # noqa: E501
         meta_body = body.meta
     body_dict = meta_body
     body_no_none = { k: ('' if v is None else v) for k, v in body_dict.items() }
-    curr.execute("INSERT INTO MetaSubpages (subpage, name, path, title, description) VALUES (%s, %s, %s, %s, %s)", 
+    try:
+        curr.execute("INSERT INTO MetaSubpages (subpage, name, path, title, description) VALUES (%s, %s, %s, %s, %s)", 
         (id[0], body_no_none['name'], body_no_none['path'], body_no_none['title'], body_no_none['description']))
+    except mysql.connector.errors.DatabaseError as e:
+        raise ExceptionHandler.WrongInputException(e) from e
     database.conn.commit()
     curr.close()
     return get_subpage(id[0])
@@ -160,8 +163,11 @@ def patch_subpage(id2, body=None):  # noqa: E501
 
         new_meta = a.meta | body.meta
         print(new_meta)
-        cur.execute("UPDATE MetaSubpages SET name = %s, path = %s, title = %s, description = %s WHERE id = %s",
-             (new_meta['name'],new_meta['path'],new_meta['title'],new_meta['description'],id2))
+        try:
+            cur.execute("UPDATE MetaSubpages SET name = %s, path = %s, title = %s, description = %s WHERE id = %s",
+                (new_meta['name'],new_meta['path'],new_meta['title'],new_meta['description'],id2))
+        except mysql.connector.errors.DatabaseError as e:
+            raise ExceptionHandler.WrongInputException(e) from e
 
         database.conn.commit()
         cur.close()
