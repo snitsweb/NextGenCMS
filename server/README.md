@@ -96,3 +96,10 @@ user=prog_zesp
 password=prog_zesp
 port=3306
 ```
+
+Jeśli chcesz ponownie załadować plik `db_schema.sql` do bazy danych, należy usunąć kontener z bazą danych i pamięć, na przykład
+za pomocą tych komend:
+```bash
+docker rm -v $(docker ps -a -f "name=server_mysqldb*" --format "{{.Names}}")
+docker volume rm server_mysql server_mysql_config
+```
