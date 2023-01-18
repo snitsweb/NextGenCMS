@@ -11,7 +11,11 @@ import Application from './core/Application'
 const app = new Application()
 window.app = app
 
-setTimeout(() => {
+app.getData().then(response => {
+	app.setDatabase(response.data)
+
+	app.init()
+
 	const router = createBrowserRouter(app.reactRouterRoutes)
 	app.setRouter(router)
 
@@ -21,5 +25,8 @@ setTimeout(() => {
 			<RouterProvider router={router} />
 		</App>
 	)
-}, 200)
+})
+
+
+
 

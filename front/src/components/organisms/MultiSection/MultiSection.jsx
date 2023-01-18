@@ -5,7 +5,7 @@ const MultiSection = ({sections}) => {
 			{
 				sections.length ? sections.map((section, i) => {
 					const Section = section.component
-					return <Section value={section.value} key={`${section.alias}-${i}`} />
+					return <Section value={section.value.value} key={`${section.alias}-${i}`} />
 				}) : ''
 			}
 		</>

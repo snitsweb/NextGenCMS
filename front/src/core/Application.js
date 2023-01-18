@@ -21,38 +21,32 @@ class Application {
 	#layout
 	#reactRouterRoutes = []
 
-	constructor () {
-		this.init()
-	}
-
-	get reactRouterRoutes () {
+	get reactRouterRoutes() {
 		return this.#reactRouterRoutes
 	}
 
-	get routes () {
+	get routes() {
 		return this.#routes
 	}
 
-	get layout () {
+	get layout() {
 		return this.#layout
 	}
 
-	get currentRoute () {
+	get currentRoute() {
 		return this.#routes.find(route => route.path === window.location.pathname)
 	}
 
-	async init() {
+	init() {
 		this.readyToAddSections()
 		this.readyToAddLayouts()
-		this.getData().then(() => {
-			this.setLayout()
-			this.setReactRouterRoutes()
-			this.setRoutes()
-			this.setMeta()
-		})
+		this.setLayout()
+		this.setReactRouterRoutes()
+		this.setRoutes()
+		this.setMeta()
 	}
 
-	readyToAddSections () {
+	readyToAddSections() {
 		this.#sections.push(new Section('example_section', ExampleSection))
 		this.#sections.push(new Section('slider_section', SliderSection))
 		this.#sections.push(new Section('gallery_section', GallerySection))
@@ -61,32 +55,33 @@ class Application {
 		this.#sections.push(new Section('social_media_section', SocialMediaSection))
 	}
 
-	readyToAddLayouts () {
+	readyToAddLayouts() {
 		this.#layouts.push(new Layout('theme-default', DefaultLayout))
 		this.#layouts.push(new Layout('theme-dark', DarkLayout))
 	}
 
-	async getData () {
+	async getData() {
 		const network = new NetworkController()
 		this.#db = await network.getDatabase()
+		return this.#db
 	}
 
-	setRouter (router) {
+	setRouter(router) {
 		this.router = router
 	}
 
-	setReactRouterRoutes () {
+	setReactRouterRoutes() {
 		this.#reactRouterRoutes = this.#db.subpages.map(page => {
 			const Layout = this.layout.component
 			return {
-				path: page.meta.path,
-				element: <Layout><Page sections={this.getSections(page.meta.path)} /></Layout>
+				path: page.value.meta.path,
+				element: <Layout><Page sections={this.getSections(page.value.meta.path)}/></Layout>
 			}
 		})
 	}
 
-	getSections (pagePath) {
-		return this.#db.subpages.find(page => page.meta.path === pagePath).sections.map(section => {
+	getSections(pagePath) {
+		return this.#db.subpages.find(page => page.value.meta.path === pagePath).sections.map(section => {
 			return {
 				value: section,
 				component: this.#sections.find(entitySection => entitySection.alias === section.alias)?.component
@@ -94,13 +89,13 @@ class Application {
 		})
 	}
 
-	setRoutes () {
-		this.#routes = this.#db.subpages.map(page => page.meta)
+	setRoutes() {
+		this.#routes = this.#db.subpages.map(page => page.value.meta)
 	}
 
-	setLayout () {
+	setLayout() {
 		const layout = this.#layouts.find(layout => layout.alias === this.#db.layout?.alias) ||
-			this.#layouts.find(layout => layout.alias === 'theme-default')
+            this.#layouts.find(layout => layout.alias === 'theme-default')
 
 		if (!layout) throw new Error('Can not set layout!')
 
@@ -110,6 +105,10 @@ class Application {
 	setMeta() {
 		document.title = this.currentRoute.title
 		document.querySelector('meta[name="description"]').setAttribute('content', this.currentRoute.description)
+	}
+
+	setDatabase (data) {
+		this.#db = data
 	}
 }
 
