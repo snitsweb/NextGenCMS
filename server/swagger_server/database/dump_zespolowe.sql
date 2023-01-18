@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.5.62, for Win64 (AMD64)
+-- MySQL dump 10.13  Distrib 8.0.31, for Linux (x86_64)
 --
 -- Host: localhost    Database: foto_portfolio
 -- ------------------------------------------------------
@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -16,12 +16,22 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `foto_portfolio`
+--
+
+/*!40000 DROP DATABASE IF EXISTS `foto_portfolio`*/;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `foto_portfolio` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
+USE `foto_portfolio`;
+
+--
 -- Table structure for table `Images`
 --
 
 DROP TABLE IF EXISTS `Images`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Images` (
   `id` int NOT NULL AUTO_INCREMENT,
   `page` int NOT NULL,
@@ -67,7 +77,7 @@ DELIMITER ;
 
 DROP TABLE IF EXISTS `Layouts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Layouts` (
   `id` int NOT NULL AUTO_INCREMENT,
   `is_template` tinyint(1) NOT NULL,
@@ -93,7 +103,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `MetaPages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `MetaPages` (
   `id` int NOT NULL AUTO_INCREMENT,
   `page` int NOT NULL,
@@ -123,7 +133,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `MetaSubpages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `MetaSubpages` (
   `id` int NOT NULL AUTO_INCREMENT,
   `subpage` int NOT NULL,
@@ -153,7 +163,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Pages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Pages` (
   `id` int NOT NULL AUTO_INCREMENT,
   `layout` int NOT NULL,
@@ -200,7 +210,7 @@ DELIMITER ;
 
 DROP TABLE IF EXISTS `SectionImages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `SectionImages` (
   `image_id` int NOT NULL,
   `section_id` int NOT NULL,
@@ -227,7 +237,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Sections`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Sections` (
   `id` int NOT NULL AUTO_INCREMENT,
   `subpage` int NOT NULL,
@@ -274,7 +284,7 @@ DELIMITER ;
 
 DROP TABLE IF EXISTS `Socials`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Socials` (
   `id` int NOT NULL AUTO_INCREMENT,
   `page` int NOT NULL,
@@ -302,7 +312,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `Subpages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Subpages` (
   `id` int NOT NULL AUTO_INCREMENT,
   `page` int NOT NULL,
@@ -341,10 +351,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Dumping routines for database 'foto_portfolio'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -355,4 +361,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-18  0:07:38
+-- Dump completed on 2023-01-18 19:01:59
