@@ -299,7 +299,7 @@ def check_section_in_subpage(id_subpage,id_section):
         (id_section,id_subpage,const.DEFAULT_USER))
     res = curr.fetchone()
     if res is None or res[0] == 0:
-        raise connexion.exceptions.BadRequestProblem()
+        raise ExceptionHandler.ForbiddenException()
 
 def check_subpage_in_page(id_subpage):
     curr = database.conn.cursor()
@@ -307,5 +307,5 @@ def check_subpage_in_page(id_subpage):
         Subpages.id = %s AND Pages.id = %s", (id_subpage,const.DEFAULT_USER))
     res = curr.fetchone()
     if res is None or res[0] == 0:
-        raise connexion.exceptions.BadRequestProblem()
+        raise ExceptionHandler.ForbiddenException()
 
