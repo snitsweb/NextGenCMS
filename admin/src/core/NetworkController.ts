@@ -5,6 +5,9 @@ export class NetworkController {
 
 	constructor() {
 		this._http = axios.create({
+			headers: {
+				Authorization: 'Bearer random_key'
+			},
 			baseURL: process.env.REACT_APP_BACKED_URI
 		})
 	}

@@ -1,7 +1,7 @@
 import {config_themes_available} from '@modules/Settings/core/config'
-import {setTheme} from '@modules/Settings/core/reducer'
+import {setLayout} from '@modules/Settings/core/reducer'
 import {useAppSelector} from 'hooks/redux/useAppSelector'
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
 import s from './SettingsPage.module.scss'
 import {BaseContainer} from '@common/components/BaseContainer/BaseContainer'
@@ -21,26 +21,41 @@ const SettingsPage = () => {
 		label: 'Theme:',
 		variants: config_themes_available,
 		defaultValue: {
-			name: config_themes_available.find(theme => theme.value === settingsData.appearance.theme.alias)?.name || 'Default',
-			value: config_themes_available.find(theme => theme.value === settingsData.appearance.theme.alias)?.value || 'default'
+			name: config_themes_available.find(theme => theme.value === settingsData.layout.alias)?.name || 'Default',
+			value: config_themes_available.find(theme => theme.value === settingsData.layout.alias)?.value || 'default'
 		}
 	}
 
 	const dispatch = useDispatch()
-	const [value, setValue] = useBaseSelect(themeInput)
+	const [themeInputValue, setThemeInputValue] = useBaseSelect(themeInput)
 	const handleUpdateSettings = () => {
-		dispatch(setTheme({
-			name: value.name,
-			alias: value.value
+		window.app.nc.http.patch(`/page/${process.env.REACT_APP_PAGE_ID}`, {
+
+		})
+
+		dispatch(setLayout({
+			alias: themeInputValue.value,
+			id: settingsData.layout.id,
+			is_template: settingsData.layout.is_template
 		}))
 	}
+
+	useEffect(() => {
+		const fetchPage = async () => {
+			return await window.app.nc.http.get(`/page/${process.env.REACT_APP_PAGE_ID}`)
+		}
+
+		fetchPage().then((response) => {
+			console.log(response.data)
+		})
+	}, [])
 
 	return (
 		<section className={s.settings}>
 			<BaseContainer>
 				<BaseTabSection>
 					<BaseTab title={'appearance'} name={'Appearance'}>
-						<BaseSelect input={themeInput}  onChange={setValue} value={value}/>
+						<BaseSelect input={themeInput}  onChange={setThemeInputValue} value={themeInputValue}/>
 					</BaseTab>
 					<BaseTab title={'social'} name={'Social'}>
 						Social
