@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { OverviewModule } from './overview/overview.module';
 import { SettingsModule } from './settings/settings.module';
 import { PhotosModule } from './photos/photos.module';
 import { PagesModule } from './pages/pages.module';
