@@ -1,26 +1,36 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePageDto } from './dto/create-page.dto';
-import { UpdatePageDto } from './dto/update-page.dto';
+import { Inject, Injectable } from '@nestjs/common'
+import { CreatePageDto } from './dto/create-page.dto'
+import { UpdatePageDto } from './dto/update-page.dto'
+import { Page } from './entities/page.entity'
 
 @Injectable()
 export class PagesService {
-  create(createPageDto: CreatePageDto) {
-    return 'This action adds a new page';
-  }
+	constructor(
+		@Inject('PAGES_REPOSITORY')
+		private pagesRepository: typeof Page,
+	) {}
 
-  findAll() {
-    return `This action returns all pages`;
-  }
+	create(createPageDto: CreatePageDto) {
+		return 'This action adds a new page'
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} page`;
-  }
+	async findAll(): Promise<Page[]> {
+		return this.pagesRepository.findAll<Page>()
+	}
 
-  update(id: number, updatePageDto: UpdatePageDto) {
-    return `This action updates a #${id} page`;
-  }
+	async findOne(id: number): Promise<Page> {
+		return this.pagesRepository.findOne<Page>({
+			where: {
+				id: id,
+			},
+		})
+	}
 
-  remove(id: number) {
-    return `This action removes a #${id} page`;
-  }
+	update(id: number, updatePageDto: UpdatePageDto) {
+		return `This action updates a #${id} page`
+	}
+
+	remove(id: number) {
+		return `This action removes a #${id} page`
+	}
 }
