@@ -7,8 +7,8 @@ import {
 	Table,
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-import { Settings } from './settings.model'
-import { Photo } from '../../photos/models/photo.model'
+import { Settings } from '../../../models/settings.model'
+import { Photo } from '../../../../photos/models/photo.model'
 
 @Table
 export class Social extends Model {
@@ -33,5 +33,5 @@ export class Social extends Model {
 	settings: Settings
 
 	@HasOne(() => Photo)
-	photo: Photo
+	image: Photo
 }

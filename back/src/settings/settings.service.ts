@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { CreateSettingDto } from './dto/create-setting.dto'
 import { UpdateSettingDto } from './dto/update-setting.dto'
+import { Social } from './features/socials/models/social.model'
 import { InjectModel } from '@nestjs/sequelize'
-import { Social } from './models/social.model'
 import { Layout } from './features/layouts/models/layout.model'
 
 @Injectable()

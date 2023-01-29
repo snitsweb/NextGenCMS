@@ -6,7 +6,7 @@ import {
 	Table,
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-import { Social } from '../../settings/models/social.model'
+import { Social } from '../../settings/features/socials/models/social.model'
 
 @Table
 export class Photo extends Model {

@@ -7,9 +7,9 @@ import { OverviewModule } from './overview/overview.module'
 import config from './config'
 import { Page } from './pages/models/page.model'
 import { Layout } from './settings/features/layouts/models/layout.model'
-import { Social } from './settings/models/social.model'
 import { Settings } from './settings/models/settings.model'
 import { Photo } from './photos/models/photo.model'
+import { Social } from './settings/features/socials/models/social.model'
 
 const models = [Page, Layout, Social, Settings, Photo]
 
