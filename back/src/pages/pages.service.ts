@@ -1,36 +1,56 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { CreatePageDto } from './dto/create-page.dto'
 import { UpdatePageDto } from './dto/update-page.dto'
-import { Page } from './entities/page.entity'
+import { Page } from './models/page.model'
+import { InjectModel } from '@nestjs/sequelize'
 
 @Injectable()
 export class PagesService {
 	constructor(
-		@Inject('PAGES_REPOSITORY')
-		private pagesRepository: typeof Page,
+		@InjectModel(Page)
+		private pageModel: typeof Page,
 	) {}
 
 	create(createPageDto: CreatePageDto) {
-		return 'This action adds a new page'
+		return this.pageModel.create<Page>({
+			name: createPageDto.name,
+			path: createPageDto.path,
+			status: createPageDto.status,
+		})
 	}
 
 	async findAll(): Promise<Page[]> {
-		return this.pagesRepository.findAll<Page>()
+		return this.pageModel.findAll<Page>()
 	}
 
 	async findOne(id: number): Promise<Page> {
-		return this.pagesRepository.findOne<Page>({
+		return this.pageModel.findOne<Page>({
 			where: {
 				id: id,
 			},
 		})
 	}
 
-	update(id: number, updatePageDto: UpdatePageDto) {
-		return `This action updates a #${id} page`
+	async update(id: number, updatePageDto: UpdatePageDto) {
+		const page = await this.pageModel.findOne<Page>({
+			where: {
+				id: id,
+			},
+		})
+		page.set({
+			...page,
+			...updatePageDto,
+		})
+		await page.save()
 	}
 
-	remove(id: number) {
-		return `This action removes a #${id} page`
+	async remove(id: number) {
+		const page = await this.pageModel.findOne<Page>({
+			where: {
+				id: id,
+			},
+		})
+		await page.destroy()
+		return id
 	}
 }
