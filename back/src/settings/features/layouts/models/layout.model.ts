@@ -6,7 +6,7 @@ import {
 	Table,
 } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-import { Settings } from './settings.model'
+import { Settings } from '../../../models/settings.model'
 
 @Table
 export class Layout extends Model {

@@ -1,6 +1,6 @@
 import { Column, HasMany, HasOne, Model, Table } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
-import { Layout } from './layout.model'
+import { Layout } from '../features/layouts/models/layout.model'
 import { Social } from './social.model'
 
 @Table

@@ -1,15 +1,6 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Patch,
-	Post,
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { PhotosService } from './photos.service'
 import { CreatePhotoDto } from './dto/create-photo.dto'
-import { UpdatePhotoDto } from './dto/update-photo.dto'
 
 @Controller('photos')
 export class PhotosController {
@@ -27,16 +18,11 @@ export class PhotosController {
 
 	@Get(':id')
 	findOne(@Param('id') id: string) {
-		return this.photosService.findOne(+id)
-	}
-
-	@Patch(':id')
-	update(@Param('id') id: string, @Body() updatePhotoDto: UpdatePhotoDto) {
-		return this.photosService.update(+id, updatePhotoDto)
+		return this.photosService.findOne(id)
 	}
 
 	@Delete(':id')
 	remove(@Param('id') id: string) {
-		return this.photosService.remove(+id)
+		return this.photosService.remove(id)
 	}
 }
