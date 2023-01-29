@@ -1,15 +1,6 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Patch,
-	Post,
-} from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { SettingsService } from './settings.service'
 import { CreateSettingDto } from './dto/create-setting.dto'
-import { UpdateSettingDto } from './dto/update-setting.dto'
 
 @Controller('settings')
 export class SettingsController {
@@ -27,16 +18,16 @@ export class SettingsController {
 
 	@Get(':id')
 	findOne(@Param('id') id: string) {
-		return this.settingsService.findOne(+id)
+		return this.settingsService.findOne(id)
 	}
 
-	@Patch(':id')
-	update(@Param('id') id: string, @Body() updateSettingDto: UpdateSettingDto) {
-		return this.settingsService.update(+id, updateSettingDto)
-	}
+	// @Patch(':id')
+	// update(@Param('id') id: string, @Body() updateSettingDto: UpdateSettingDto) {
+	// 	return this.settingsService.update(id, updateSettingDto)
+	// }
 
 	@Delete(':id')
 	remove(@Param('id') id: string) {
-		return this.settingsService.remove(+id)
+		return this.settingsService.remove(id)
 	}
 }
