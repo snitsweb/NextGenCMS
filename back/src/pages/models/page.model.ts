@@ -11,11 +11,27 @@ export class Page extends Model {
 	id: string
 
 	@Column(DataTypes.STRING)
-	path: string
+	alias: string
 
 	@Column(DataTypes.STRING)
-	status: string
+	path: string
+
+	@Column(
+		DataTypes.ENUM({
+			values: ['active', 'inactive'],
+		}),
+	)
+	status: 'active' | 'inactive'
 
 	@Column(DataTypes.STRING)
 	name: string
+
+	@Column(DataTypes.STRING)
+	title: string
+
+	@Column(DataTypes.STRING)
+	description: string
+
+	@Column(DataTypes.JSON)
+	value: string
 }

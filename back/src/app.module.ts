@@ -6,6 +6,12 @@ import { PagesModule } from './pages/pages.module'
 import { OverviewModule } from './overview/overview.module'
 import config from './config'
 import { Page } from './pages/models/page.model'
+import { Layout } from './settings/models/layout.model'
+import { Social } from './settings/models/social.model'
+import { Settings } from './settings/models/settings.model'
+import { Photo } from './photos/models/photo.model'
+
+const models = [Page, Layout, Social, Settings, Photo]
 
 @Module({
 	imports: [
@@ -16,7 +22,7 @@ import { Page } from './pages/models/page.model'
 			username: config.db.user,
 			password: config.db.pass,
 			database: config.db.name,
-			models: [Page],
+			models: models,
 			autoLoadModels: true,
 			synchronize: true,
 		}),

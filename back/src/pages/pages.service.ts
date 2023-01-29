@@ -12,11 +12,7 @@ export class PagesService {
 	) {}
 
 	create(createPageDto: CreatePageDto) {
-		return this.pageModel.create<Page>({
-			name: createPageDto.name,
-			path: createPageDto.path,
-			status: createPageDto.status,
-		})
+		return this.pageModel.create<Page>({ ...createPageDto })
 	}
 
 	async findAll(): Promise<Page[]> {
@@ -44,7 +40,7 @@ export class PagesService {
 		await page.save()
 	}
 
-	async remove(id: number) {
+	async remove(id: string) {
 		const page = await this.pageModel.findOne<Page>({
 			where: {
 				id: id,
