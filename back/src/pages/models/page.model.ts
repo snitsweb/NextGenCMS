@@ -1,13 +1,21 @@
 import { Column, Model, Table } from 'sequelize-typescript'
+import { DataTypes } from 'sequelize'
 
 @Table
 export class Page extends Model {
-	@Column
+	@Column({
+		type: DataTypes.UUID,
+		defaultValue: DataTypes.UUIDV4,
+		primaryKey: true,
+	})
+	id: string
+
+	@Column(DataTypes.STRING)
 	path: string
 
-	@Column
+	@Column(DataTypes.STRING)
 	status: string
 
-	@Column
+	@Column(DataTypes.STRING)
 	name: string
 }

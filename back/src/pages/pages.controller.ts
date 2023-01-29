@@ -10,6 +10,8 @@ import {
 import { PagesService } from './pages.service'
 import { CreatePageDto } from './dto/create-page.dto'
 import { UpdatePageDto } from './dto/update-page.dto'
+import { ApiResponse } from '@nestjs/swagger'
+import { Page } from './models/page.model'
 
 @Controller('pages')
 export class PagesController {
@@ -26,6 +28,11 @@ export class PagesController {
 	}
 
 	@Get(':id')
+	@ApiResponse({
+		status: 200,
+		description: 'The founded page',
+		type: Page,
+	})
 	findOne(@Param('id') id: string) {
 		return this.pagesService.findOne(+id)
 	}
