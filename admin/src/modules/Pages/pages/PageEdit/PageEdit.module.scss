@@ -11,4 +11,11 @@
     flex-wrap: wrap;
     gap: 30px;
   }
+
+  &_json {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
 }

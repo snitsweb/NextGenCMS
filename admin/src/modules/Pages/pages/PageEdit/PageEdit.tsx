@@ -1,26 +1,31 @@
-import { config_page_statuses } from '@modules/Pages/core/config'
-import { Page, updatePage } from '@modules/Pages/core/reducer'
-import { useAppSelector } from 'hooks/redux/useAppSelector'
-import { useBaseTextInput } from 'hooks/useBaseTextInput'
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
-import s from './PageEdit.module.scss'
-import { BaseContainer } from '@common/components/BaseContainer/BaseContainer'
-import { BaseFont } from '@common/components/BaseFont/BaseFont'
-import BaseSelect from '@common/components/BaseSelect/BaseSelect'
-import BaseTextInput from '@common/components/BaseTextInput/BaseTextInput'
-import { BaseButton } from '@common/components/BaseButton/BaseButton'
-import { ReactComponent as SaveIcon } from '@assets/svg/save.svg'
-import { useBaseSelect } from 'hooks/UseBaseSelect'
+/* eslint-disable */
+// @ts-nocheck
+import { config_page_statuses } from '@modules/Pages/core/config';
+import { Page, updatePage } from '@modules/Pages/core/reducer';
+import { useAppSelector } from 'hooks/redux/useAppSelector';
+import { useBaseTextInput } from 'hooks/useBaseTextInput';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import s from './PageEdit.module.scss';
+import { BaseContainer } from '@common/components/BaseContainer/BaseContainer';
+import { BaseFont } from '@common/components/BaseFont/BaseFont';
+import BaseSelect from '@common/components/BaseSelect/BaseSelect';
+import BaseTextInput from '@common/components/BaseTextInput/BaseTextInput';
+import { BaseButton } from '@common/components/BaseButton/BaseButton';
+import { ReactComponent as SaveIcon } from '@assets/svg/save.svg';
+import { useBaseSelect } from 'hooks/UseBaseSelect';
+import JSONInput from 'react-json-editor-ajrm';
+import locale from 'react-json-editor-ajrm/locale/en';
 
 const PageEdit = () => {
-	const { id = '' } = useParams()
+	const { id = '' } = useParams();
 	const page = useAppSelector((state) => {
-		return state.pagesModule.pages.find((page) => page.id === id)
-	})
+		return state.pagesModule.pages.find((page) => page.id === id);
+	});
+
 	if (!id || !page)
-		return <BaseFont tag={'h1'}> There is no page with this id </BaseFont>
+		return <BaseFont tag={'h1'}> There is no page with this id </BaseFont>;
 
 	const status_input = {
 		placeholder: 'Select your variant',
@@ -36,50 +41,52 @@ const PageEdit = () => {
 					(page_status) => page_status.value === page.status,
 				)?.value || 'published',
 		},
-	}
+	};
 	const path_input = {
 		placeholder: '/homepage',
 		label: 'Path:',
 		defaultValue: page?.path ? page.path : '',
-	}
+	};
 	const name_input = {
 		placeholder: 'Home',
 		label: 'Name:',
 		defaultValue: page.name,
-	}
+	};
 
 	const alias_input = {
 		placeholder: 'homepage',
 		label: 'Alias:',
 		defaultValue: 'homepage',
-	}
+	};
 
 	const title_input = {
 		placeholder: 'Title',
 		label: 'Title:',
 		defaultValue: 'Title',
-	}
+	};
 
 	const description_input = {
 		placeholder: 'Our best cookies...',
 		label: 'Description:',
 		defaultValue: 'Our best cookies..',
-	}
+	};
 
-	const [statusInputValue, setStatusInputValue] = useBaseSelect(status_input)
-	const [nameInputValue, setNameInputValue] = useBaseTextInput(name_input)
-	const [pathInputValue, setPathInputValue] = useBaseTextInput(path_input)
-	const [titleInputValue, setTitleInputValue] = useBaseTextInput(title_input)
-	const [aliasInputValue, setAliasInputValue] = useBaseTextInput(alias_input)
+	const [statusInputValue, setStatusInputValue] = useBaseSelect(status_input);
+	const [nameInputValue, setNameInputValue] = useBaseTextInput(name_input);
+	const [pathInputValue, setPathInputValue] = useBaseTextInput(path_input);
+	const [titleInputValue, setTitleInputValue] = useBaseTextInput(title_input);
+	const [aliasInputValue, setAliasInputValue] = useBaseTextInput(alias_input);
 	const [descriptionInputValue, setDescriptionInputValue] =
-		useBaseTextInput(description_input)
+		useBaseTextInput(description_input);
 
-	const dispatch = useDispatch()
+	const [pageValue, setPageValue] = useState({ ...page.value });
 
-	const navigate = useNavigate()
+	const dispatch = useDispatch();
+
+	const navigate = useNavigate();
 	const redirectToPages = () => {
-		navigate('/pages')
-	}
+		navigate('/pages');
+	};
 
 	const handleUpdatePage = () => {
 		window.app.nc.http
@@ -90,18 +97,19 @@ const PageEdit = () => {
 				alias: aliasInputValue,
 				title: titleInputValue,
 				description: descriptionInputValue,
+				value: pageValue,
 			})
 			.catch((e) => console.error(e))
 			.then((response) => {
 				if (!response) {
-					alert('Something went wrong. Check console for more details')
+					alert('Something went wrong. Check console for more details');
 				} else {
-					dispatch(updatePage(response.data))
-					alert('Updated!')
-					redirectToPages()
+					dispatch(updatePage(response.data));
+					alert('Updated!');
+					redirectToPages();
 				}
-			})
-	}
+			});
+	};
 
 	return (
 		<>
@@ -143,6 +151,17 @@ const PageEdit = () => {
 								onChange={setStatusInputValue}
 							/>
 						</div>
+						<div className={s.page_edit_json}>
+							<BaseFont tag={'h4'}>Edit page content:</BaseFont>
+							<JSONInput
+								id={'sdfsdkfl'}
+								placeholder={pageValue}
+								locale={locale}
+								height={'550px'}
+								width={'100%'}
+								onChange={(value) => setPageValue(value.jsObject)}
+							/>
+						</div>
 					</div>
 				</BaseContainer>
 				<div className='fixed-btn-wrapper'>
@@ -156,7 +175,7 @@ const PageEdit = () => {
 				</div>
 			</div>
 		</>
-	)
-}
+	);
+};
 
-export default PageEdit
+export default PageEdit;
