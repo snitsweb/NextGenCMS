@@ -1,9 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import './index.scss'
-import {
-	createBrowserRouter,
-	RouterProvider,
-} from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App'
 import Application from './core/Application'
 
@@ -11,9 +8,7 @@ import Application from './core/Application'
 const app = new Application()
 window.app = app
 
-app.getData().then(response => {
-	app.setDatabase(response.data)
-
+app.getData().then(() => {
 	app.init()
 
 	const router = createBrowserRouter(app.reactRouterRoutes)
@@ -23,7 +18,7 @@ app.getData().then(response => {
 	root.render(
 		<App>
 			<RouterProvider router={router} />
-		</App>
+		</App>,
 	)
 })
 

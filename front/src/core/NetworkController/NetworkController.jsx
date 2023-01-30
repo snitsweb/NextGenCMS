@@ -3,11 +3,15 @@ import axios from 'axios'
 export class NetworkController {
 	constructor() {
 		this.axios = axios.create({
-			baseURL: 'http://localhost:8080/'
+			baseURL: 'http://localhost:5000/'
 		})
 	}
 
-	async getDatabase () {
-		return await this.axios.get('/page/1')
+	async getPages() {
+		return await this.axios.get('/pages')
+	}
+
+	async getSettings() {
+		return await this.axios.get('/settings')
 	}
 }

@@ -1,17 +1,16 @@
-import {Section} from './Section'
+import { Section } from './Section'
 import ExampleSection from '../sections/ExampleSection/ExampleSection'
 import SliderSection from '../sections/SliderSection/SliderSection'
 import GallerySection from '../sections/GallerySection/GallerySection'
 import JumbotronSection from '../sections/JumbotronSection/JumbotronSection'
 import TextFieldSection from '../sections/TextFieldSection/TextFieldSection'
 import SocialMediaSection from '../sections/SocialMediaSection/SocialMediaSection'
-import {getDatabase} from './database'
 import Page from '../components/organisms/Page/Page'
 import DefaultLayout from '../layouts/DefaultLayout/DefaultLayout'
-import {Layout} from './Layout'
+import { Layout } from './Layout'
 import DarkLayout from '../layouts/DarkLayout/DarkLayout'
 
-import {NetworkController} from './NetworkController/NetworkController'
+import { NetworkController } from './NetworkController/NetworkController'
 
 class Application {
 	#db
@@ -62,7 +61,26 @@ class Application {
 
 	async getData() {
 		const network = new NetworkController()
-		this.#db = await network.getDatabase()
+		const settings = await network.getSettings()
+		const pages = await network.getPages()
+		console.log(settings.data)
+		console.log(pages.data)
+		this.#db = {
+			layout: {
+				alias: settings.data[0].layout.theme,
+			},
+			subpages: pages.data.map(page => ({
+				meta: {
+					name: page.name,
+					path: page.path,
+					title: page.title,
+					description: page.description,
+				},
+				value: page.value,
+			})),
+		}
+		console.log(this.#db)
+		// this.#db = await network.getDatabase()
 		return this.#db
 	}
 
@@ -74,28 +92,30 @@ class Application {
 		this.#reactRouterRoutes = this.#db.subpages.map(page => {
 			const Layout = this.layout.component
 			return {
-				path: page.value.meta.path,
-				element: <Layout><Page sections={this.getSections(page.value.meta.path)}/></Layout>
+				path: page.meta.path,
+				element: <Layout><Page sections={this.getSections(page.meta.path)} /></Layout>,
 			}
 		})
 	}
 
 	getSections(pagePath) {
-		return this.#db.subpages.find(page => page.value.meta.path === pagePath).sections.map(section => {
+		return this.#db.subpages.find(page => page.meta.path === pagePath).value.sections.map(section => {
 			return {
 				value: section,
-				component: this.#sections.find(entitySection => entitySection.alias === section.alias)?.component
+				component: this.#sections.find(entitySection => entitySection.alias === section.alias)?.component,
 			}
 		})
 	}
 
 	setRoutes() {
-		this.#routes = this.#db.subpages.map(page => page.value.meta)
+		this.#routes = this.#db.subpages.map(page => page.meta)
 	}
 
 	setLayout() {
+		console.log(this.#db)
+		console.log('set')
 		const layout = this.#layouts.find(layout => layout.alias === this.#db.layout?.alias) ||
-            this.#layouts.find(layout => layout.alias === 'theme-default')
+			this.#layouts.find(layout => layout.alias === 'theme-default')
 
 		if (!layout) throw new Error('Can not set layout!')
 
@@ -105,10 +125,6 @@ class Application {
 	setMeta() {
 		document.title = this.currentRoute.title
 		document.querySelector('meta[name="description"]').setAttribute('content', this.currentRoute.description)
-	}
-
-	setDatabase (data) {
-		this.#db = data
 	}
 }
 
