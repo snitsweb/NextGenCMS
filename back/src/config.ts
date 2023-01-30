@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv'
+import * as process from 'process'
 
 dotenv.config()
 
@@ -9,5 +10,8 @@ export default {
 		port: parseInt(process.env.DB_PORT) || 3306,
 		pass: process.env.DB_PASS || 'qwerty',
 		name: process.env.DB_NAME || 'backend_snitsweb',
+	},
+	app: {
+		port: process.env.APP_PORT || 3000,
 	},
 }
