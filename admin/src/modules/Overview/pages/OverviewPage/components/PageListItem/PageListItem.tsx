@@ -1,17 +1,18 @@
-import {deletePage, Page} from '@modules/Pages/core/reducer'
-import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
+import { deletePage, Page } from '@modules/Pages/core/reducer'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import s from './PageListItem.module.scss'
-import {BaseFont} from '@common/components/BaseFont/BaseFont'
-import {NavLink} from 'react-router-dom'
-import {ReactComponent as EditIcon} from '../../../../../../assets/svg/edit.svg'
-import {ReactComponent as DeleteIcon} from '../../../../../../assets/svg/delete.svg'
-import {BaseButton} from '@common/components/BaseButton/BaseButton'
+import { BaseFont } from '@common/components/BaseFont/BaseFont'
+import { NavLink } from 'react-router-dom'
+import { ReactComponent as EditIcon } from '../../../../../../assets/svg/edit.svg'
+import { ReactComponent as DeleteIcon } from '../../../../../../assets/svg/delete.svg'
+import { BaseButton } from '@common/components/BaseButton/BaseButton'
 
 interface IPageListItem {
-	page: Page
+	page: Page;
 }
-const PageListItem: React.FC<IPageListItem> = ({page}) => {
+
+const PageListItem: React.FC<IPageListItem> = ({ page }) => {
 
 	const [isDeletePopupShown, setIsDeletePopupShown] = useState<boolean>(false)
 	const dispatch = useDispatch()
@@ -21,10 +22,10 @@ const PageListItem: React.FC<IPageListItem> = ({page}) => {
 	}
 
 	const deleteHandler = () => {
-		window.app.nc.http.delete(`/subpage/${page.id}`)
+		window.app.nc.http.delete(`/pages/${page.id}`)
 			.catch(e => console.error(e))
 			.then(response => {
-				if(!response) {
+				if (!response) {
 					alert('Something went wrong. Check console for more details')
 				} else {
 					dispatch(deletePage(page.id))
@@ -47,14 +48,14 @@ const PageListItem: React.FC<IPageListItem> = ({page}) => {
 			</div>
 			<div className={s.page_list_item_actions}>
 				<NavLink className={`${s.page_list_item_action} ${s.page_list_item_action_edit}`} to={`/pages/edit/${page.id}`}>
-					<EditIcon/>
+					<EditIcon />
 					<BaseFont tag={'span'} color={'white'} weight={700}>Edit</BaseFont>
 				</NavLink>
 				<div
 					className={`${s.page_list_item_action}  ${s.page_list_item_action_delete}`}
 					onClick={() => togglePopupHandler()}
 				>
-					<DeleteIcon/>
+					<DeleteIcon />
 					<BaseFont tag={'span'} color={'white'} weight={700}>Delete</BaseFont>
 				</div>
 			</div>

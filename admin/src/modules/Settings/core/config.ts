@@ -1,10 +1,10 @@
 export const config_themes_available = [
 	{
 		name: 'Default',
-		value: 'default'
+		value: 'theme-default',
 	},
 	{
 		name: 'Dark',
-		value: 'dark'
-	}
+		value: 'theme-dark',
+	},
 ]
