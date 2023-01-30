@@ -27,7 +27,8 @@ export class PagesService {
 		})
 	}
 
-	async update(id: number, updatePageDto: UpdatePageDto) {
+	async update(id: string, updatePageDto: UpdatePageDto) {
+		console.log(id)
 		const page = await this.pageModel.findOne<Page>({
 			where: {
 				id: id,
