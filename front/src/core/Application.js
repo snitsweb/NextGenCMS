@@ -75,6 +75,7 @@ class Application {
 					path: page.path,
 					title: page.title,
 					description: page.description,
+					status: page.status,
 				},
 				value: page.value,
 			})),
@@ -91,11 +92,12 @@ class Application {
 	setReactRouterRoutes() {
 		this.#reactRouterRoutes = this.#db.subpages.map(page => {
 			const Layout = this.layout.component
+			if (page.meta.status !== 'active') return
 			return {
 				path: page.meta.path,
 				element: <Layout><Page sections={this.getSections(page.meta.path)} /></Layout>,
 			}
-		})
+		}).filter(page => !!page)
 	}
 
 	getSections(pagePath) {
@@ -108,7 +110,10 @@ class Application {
 	}
 
 	setRoutes() {
-		this.#routes = this.#db.subpages.map(page => page.meta)
+		this.#routes = this.#db.subpages.map(page => {
+			if (page.meta.status !== 'active') return
+			return page.meta
+		}).filter(page => !!page)
 	}
 
 	setLayout() {
