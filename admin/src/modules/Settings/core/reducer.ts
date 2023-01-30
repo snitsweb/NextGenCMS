@@ -5,6 +5,7 @@ export const slice = createSlice({
 	initialState: {} as Settings,
 	reducers: {
 		setSettings: (state, action: PayloadAction<Settings>) => {
+			state.id = action.payload.id
 			state.layout = action.payload.layout
 			state.socials = action.payload.socials
 		},

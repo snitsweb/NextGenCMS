@@ -90,7 +90,6 @@ const PageEdit = () => {
 				alias: aliasInputValue,
 				title: titleInputValue,
 				description: descriptionInputValue,
-				value: {},
 			})
 			.catch((e) => console.error(e))
 			.then((response) => {
