@@ -99,7 +99,7 @@ class Application {
 	}
 
 	getSections(pagePath) {
-		return this.#db.subpages.find(page => page.meta.path === pagePath).value.sections.map(section => {
+		return this.#db.subpages.find(page => page.meta.path === pagePath).value.sections?.map(section => {
 			return {
 				value: section,
 				component: this.#sections.find(entitySection => entitySection.alias === section.alias)?.component,
@@ -112,8 +112,6 @@ class Application {
 	}
 
 	setLayout() {
-		console.log(this.#db)
-		console.log('set')
 		const layout = this.#layouts.find(layout => layout.alias === this.#db.layout?.alias) ||
 			this.#layouts.find(layout => layout.alias === 'theme-default')
 
