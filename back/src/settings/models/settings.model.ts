@@ -1,7 +1,6 @@
-import { Column, HasMany, HasOne, Model, Table } from 'sequelize-typescript'
+import { Column, HasOne, Model, Table } from 'sequelize-typescript'
 import { DataTypes } from 'sequelize'
 import { Layout } from '../features/layouts/models/layout.model'
-import { Social } from '../features/socials/models/social.model'
 
 @Table
 export class Settings extends Model {
@@ -14,7 +13,4 @@ export class Settings extends Model {
 
 	@HasOne(() => Layout)
 	layout: Layout
-
-	@HasMany(() => Social)
-	socials: Social[]
 }

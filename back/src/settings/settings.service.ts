@@ -1,54 +1,44 @@
-import { Injectable } from '@nestjs/common';
-import { CreateSettingDto } from './dto/create-setting.dto';
-import { Social } from './features/socials/models/social.model';
-import { InjectModel } from '@nestjs/sequelize';
-import { Layout } from './features/layouts/models/layout.model';
-import { Settings } from './models/settings.model';
-import { UpdateSettingDto } from './dto/update-setting.dto';
+import { Injectable } from '@nestjs/common'
+import { CreateSettingDto } from './dto/create-setting.dto'
+import { InjectModel } from '@nestjs/sequelize'
+import { Layout } from './features/layouts/models/layout.model'
+import { Settings } from './models/settings.model'
+import { UpdateSettingDto } from './dto/update-setting.dto'
 
 @Injectable()
 export class SettingsService {
 	constructor(
 		@InjectModel(Layout)
 		private layoutModel: typeof Layout,
-		@InjectModel(Social)
-		private socialModel: typeof Social,
 		@InjectModel(Settings)
 		private settingsModel: typeof Settings,
-	) {
-	}
+	) {}
 
 	async create(createSettingDto: CreateSettingDto) {
-		const settings = await this.settingsModel.create();
+		const settings = await this.settingsModel.create()
 
 		let layout = await Layout.findOne({
 			where: {
 				theme: createSettingDto.layout.theme,
 			},
-		});
+		})
 
 		if (!layout) {
 			layout = await Layout.create({
 				theme: createSettingDto.layout.theme,
-			});
+			})
 		}
 
-		layout.settings_id = settings.id;
-		await layout.save();
+		layout.settings_id = settings.id
+		await layout.save()
 
-		createSettingDto.socials.forEach(async (social) => {
-			const createdSocial = await this.socialModel.create(social);
-			createdSocial.settings_id = settings.id;
-			await createdSocial.save();
-		});
-
-		return settings;
+		return settings
 	}
 
 	async findAll() {
 		return await this.settingsModel.findAll({
-			include: [Layout, Social],
-		});
+			include: [{ all: true }],
+		})
 	}
 
 	findOne(id: string) {
@@ -56,8 +46,8 @@ export class SettingsService {
 			where: {
 				id: id,
 			},
-			include: [Layout, Social],
-		});
+			include: [{ all: true }],
+		})
 	}
 
 	async update(id: string, updateSettingDto: UpdateSettingDto) {
@@ -65,29 +55,16 @@ export class SettingsService {
 			where: {
 				settings_id: id,
 			},
-		});
-		layout.theme = updateSettingDto.layout.theme;
-		await layout.save();
-
-		if (updateSettingDto.socials) {
-			const socials = [];
-			updateSettingDto.socials.forEach(async (social) => {
-				const entitySocial = await this.socialModel.findOne({
-					where: {
-						id: social.id,
-					},
-				});
-				entitySocial.set({ ...social });
-				await entitySocial.save();
-			});
-		}
+		})
+		layout.theme = updateSettingDto.layout.theme
+		await layout.save()
 
 		return await this.settingsModel.findOne({
 			where: {
 				id: id,
 			},
 			include: [{ all: true }],
-		});
+		})
 	}
 
 	async remove(id: string) {
@@ -95,6 +72,6 @@ export class SettingsService {
 			where: {
 				id: id,
 			},
-		});
+		})
 	}
 }

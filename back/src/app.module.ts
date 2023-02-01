@@ -1,17 +1,14 @@
 import { Module } from '@nestjs/common'
 import { SequelizeModule } from '@nestjs/sequelize'
 import { SettingsModule } from './settings/settings.module'
-import { PhotosModule } from './photos/photos.module'
 import { PagesModule } from './pages/pages.module'
 import { OverviewModule } from './overview/overview.module'
 import config from './config'
 import { Page } from './pages/models/page.model'
 import { Layout } from './settings/features/layouts/models/layout.model'
 import { Settings } from './settings/models/settings.model'
-import { Photo } from './photos/models/photo.model'
-import { Social } from './settings/features/socials/models/social.model'
 
-const models = [Page, Layout, Social, Settings, Photo]
+const models = [Page, Layout, Settings]
 
 @Module({
 	imports: [
@@ -28,7 +25,6 @@ const models = [Page, Layout, Social, Settings, Photo]
 		}),
 		OverviewModule,
 		PagesModule,
-		PhotosModule,
 		SettingsModule,
 	],
 })
