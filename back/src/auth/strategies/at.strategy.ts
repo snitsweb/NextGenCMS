@@ -6,6 +6,7 @@ import { Injectable } from '@nestjs/common'
 @Injectable()
 export class AtStrategy extends PassportStrategy(Strategy, 'jwt-access') {
 	constructor() {
+		console.log(config.jwt.secretAccess)
 		super({
 			jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 			secretOrKey: config.jwt.secretAccess,

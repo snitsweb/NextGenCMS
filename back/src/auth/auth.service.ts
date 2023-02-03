@@ -1,15 +1,18 @@
-import { Injectable } from '@nestjs/common'
+import { ForbiddenException, Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma/prisma.service'
 import { AuthDto } from './dto'
 import * as bcrypt from 'bcrypt'
 import config from '../config'
 import { JwtService } from '@nestjs/jwt'
+import { Tokens } from './types'
+
+console.log(config)
 
 @Injectable()
 export class AuthService {
 	constructor(private prisma: PrismaService, private jwtService: JwtService) {}
 
-	async localSignUp(dto: AuthDto) {
+	async localSignUp(dto: AuthDto): Promise<Tokens> {
 		const newUser = await this.prisma.user.create({
 			data: {
 				email: dto.email,
@@ -22,14 +25,33 @@ export class AuthService {
 		return tokens
 	}
 
-	localSignIn() {}
+	async localSignIn(dto: AuthDto): Promise<Tokens> {
+		const user = await this.prisma.user.findUnique({
+			where: {
+				email: dto.email,
+			},
+		})
+
+		if (!user)
+			throw new ForbiddenException(
+				`Access Denied, no user with email ${dto.email}`,
+			)
+
+		const passwordMatches = await bcrypt.compare(dto.password, user.hash)
+		if (!passwordMatches)
+			throw new ForbiddenException('Access Denied, incorrect password')
+
+		const tokens = await this.getTokens(user.id, user.email)
+		await this.updateRtHash(user.id, tokens.refreshToken)
+		return tokens
+	}
 
 	logout() {}
 
 	refresh() {}
 
 	async hashData(data: string) {
-		return bcrypt.hash(data, config.app.bcrypt_salt)
+		return bcrypt.hash(data, 10)
 	}
 
 	async getTokens(userId: string, email: string) {

@@ -10,5 +10,3 @@ import { JwtModule } from '@nestjs/jwt'
 	providers: [AuthService, AtStrategy, RtStrategy],
 })
 export class AuthModule {}
-
-// 57:00
