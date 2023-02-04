@@ -6,8 +6,6 @@ import config from '../config'
 import { JwtService } from '@nestjs/jwt'
 import { Tokens } from './types'
 
-console.log(config)
-
 @Injectable()
 export class AuthService {
 	constructor(private prisma: PrismaService, private jwtService: JwtService) {}
@@ -46,9 +44,36 @@ export class AuthService {
 		return tokens
 	}
 
-	logout() {}
+	async logout(userId: string) {
+		await this.prisma.user.updateMany({
+			where: {
+				id: userId,
+				hashedRt: {
+					not: null,
+				},
+			},
+			data: {
+				hashedRt: null,
+			},
+		})
+	}
 
-	refresh() {}
+	async refresh(userId: string, refreshToken: string) {
+		const user = await this.prisma.user.findUnique({
+			where: {
+				id: userId,
+			},
+		})
+
+		if (!user || !user.hashedRt) throw new ForbiddenException('Access denied')
+
+		const rtMatches = await bcrypt.compare(refreshToken, user.hashedRt)
+		if (!rtMatches) throw new ForbiddenException('Access denied')
+
+		const tokens = await this.getTokens(user.id, user.email)
+		await this.updateRtHash(user.id, tokens.refreshToken)
+		return tokens
+	}
 
 	async hashData(data: string) {
 		return bcrypt.hash(data, 10)
