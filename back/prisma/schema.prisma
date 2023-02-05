@@ -22,3 +22,44 @@ model User {
 
   @@map("users")
 }
+
+model Page {
+  id          String     @id @default(uuid())
+  path        String     @unique
+  alias       String     @unique
+  name        String
+  status      PageStatus @default(DRAFT)
+  title       String?
+  description String?
+  schema      Json?
+  value       Json?
+  config      Json?
+
+  @@map("pages")
+}
+
+model Setting {
+  name  String @id
+  value String
+
+  @@map("settings")
+}
+
+model Layout {
+  id                       String @id @default(uuid())
+  alias                    String @unique
+  name                     String
+  primaryColor             String
+  secondaryColor           String
+  primaryLightColor        String
+  secondaryLightColor      String
+  primaryBackgroundColor   String
+  secondaryBackgroundColor String
+
+  @@map("layouts")
+}
+
+enum PageStatus {
+  PUBLISHED
+  DRAFT
+}

@@ -1,0 +1,25 @@
+@startuml
+class Section {
+    order: number
+    alias: string
+    schema: Object
+    value: Object
+}
+
+class SectionsController {
+    sections: Section[]
+    registerSection(): void
+}
+
+Section -> SectionsController
+
+class Page {
+    schema: Object
+    value: Object
+    config: Object
+    getValue(): Object
+    setValue(): Object
+}
+
+
+@enduml
