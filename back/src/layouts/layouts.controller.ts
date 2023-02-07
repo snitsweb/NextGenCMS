@@ -41,8 +41,8 @@ export class LayoutsController {
 		return this.layoutsService.update(alias, updateLayoutDto)
 	}
 
-	@Delete(':id')
-	remove(@Param('id') id: string) {
-		return this.layoutsService.remove(id)
+	@Delete(':alias')
+	remove(@Param('alias') alias: string) {
+		return this.layoutsService.remove(alias)
 	}
 }
