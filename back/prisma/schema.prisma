@@ -46,8 +46,8 @@ model Setting {
 }
 
 model Layout {
-  id                       String @id @default(uuid())
-  alias                    String @unique
+  id                       String  @id @default(uuid())
+  alias                    String  @unique
   name                     String
   primaryColor             String
   secondaryColor           String
@@ -55,6 +55,7 @@ model Layout {
   secondaryLightColor      String
   primaryBackgroundColor   String
   secondaryBackgroundColor String
+  isDefault                Boolean
 
   @@map("layouts")
 }
