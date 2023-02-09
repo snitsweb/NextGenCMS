@@ -1,6 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, PartialType } from '@nestjs/swagger'
+import { CreateLayoutDto } from './create-layout.dto'
 
-export class UpdateLayoutDto {
+export class UpdateLayoutDto extends PartialType(CreateLayoutDto) {
 	@ApiProperty()
 	alias?: string
 
