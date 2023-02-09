@@ -40,7 +40,7 @@ model Page {
 
 model Setting {
   name  String @id
-  value String
+  value Json
 
   @@map("settings")
 }
