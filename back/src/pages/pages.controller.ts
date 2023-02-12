@@ -10,6 +10,7 @@ import {
 import { PagesService } from './pages.service'
 import { CreatePageDto } from './dto/create-page.dto'
 import { UpdatePageDto } from './dto/update-page.dto'
+import { Public } from "../common/decorators";
 
 @Controller('pages')
 export class PagesController {
@@ -20,11 +21,13 @@ export class PagesController {
 		return this.pagesService.create(createPageDto)
 	}
 
+	@Public()
 	@Get()
 	findAll() {
 		return this.pagesService.findAll()
 	}
 
+	@Public()
 	@Get(':alias')
 	findOne(@Param('alias') alias: string) {
 		return this.pagesService.findOne(alias)

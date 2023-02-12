@@ -9,9 +9,9 @@ export interface IApp {
 }
 
 export const App: React.FC<IApp> = ({children}) => {
-	return (
-		<>
-			{children}
-		</>
-	)
+    return (
+        <>
+            {children}
+        </>
+    )
 }

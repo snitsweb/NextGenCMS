@@ -1,0 +1,9 @@
+.switcher {
+  display: flex;
+  padding: 20px 40px;
+  align-items: center;
+
+  svg, path {
+    fill: var(--text);
+  }
+}

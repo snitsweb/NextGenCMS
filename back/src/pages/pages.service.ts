@@ -11,12 +11,10 @@ export class PagesService {
 		return this.prisma.page.create({ data: createPageDto })
 	}
 
-	@Public()
 	async findAll() {
 		return this.prisma.page.findMany()
 	}
 
-	@Public()
 	async findOne(alias: string) {
 		const page = await this.prisma.page.findUnique({
 			where: { alias: alias },

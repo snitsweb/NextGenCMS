@@ -13,27 +13,27 @@ export interface Page extends BaseResponse {
 }
 
 export const slice = createSlice({
-	name: 'photoStore',
-	initialState: {
-		pages: [] as Page[],
-	},
-	reducers: {
-		setPages: (state, action: PayloadAction<Page[]>) => {
-			state.pages = action.payload
-		},
-		updatePage: (state, action: PayloadAction<Page>) => {
-			const index = state.pages.findIndex(
-				(page) => action.payload.id === page.id
-			)
-			state.pages[index] = action.payload
-		},
-		deletePage: (state, action: PayloadAction<string>) => {
-			state.pages = state.pages.filter((page) => page.id !== action.payload)
-		},
-		createPage: (state, action: PayloadAction<Page>) => {
-			state.pages.push(action.payload)
-		},
-	},
+    name: 'photoStore',
+    initialState: {
+        pages: [] as Page[],
+    },
+    reducers: {
+        setPages: (state, action: PayloadAction<Page[]>) => {
+            state.pages = action.payload
+        },
+        updatePage: (state, action: PayloadAction<Page>) => {
+            const index = state.pages.findIndex(
+                (page) => action.payload.id === page.id
+            )
+            state.pages[index] = action.payload
+        },
+        deletePage: (state, action: PayloadAction<string>) => {
+            state.pages = state.pages.filter((page) => page.id !== action.payload)
+        },
+        createPage: (state, action: PayloadAction<Page>) => {
+            state.pages.push(action.payload)
+        },
+    },
 })
 
 export const { setPages, deletePage, updatePage, createPage } = slice.actions

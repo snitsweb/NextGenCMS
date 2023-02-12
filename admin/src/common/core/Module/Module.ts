@@ -3,28 +3,28 @@ import {FunctionComponent} from 'react'
 import {Reducer} from '@reduxjs/toolkit'
 
 export abstract class Module {
-	static defaultPath = '/'
-	static moduleName: string
-	static icon: FunctionComponent
-	routes: IModuleRoute[] = []
-	reducer: Reducer | null
+    static defaultPath = '/'
+    static moduleName: string
+    static icon: FunctionComponent
+    routes: IModuleRoute[] = []
+    reducer: Reducer | null
 
-	constructor() {
-		this.init()
-	}
+    constructor() {
+        this.init()
+    }
 
-	init(): void {
-		this.registerRoutes()
-		this.setReducer()
-		this.getData()
-	}
+    init(): void {
+        this.registerRoutes()
+        this.setReducer()
+        this.getData()
+    }
 
-	registerRoutes(): void {
-	}
+    registerRoutes(): void {
+    }
 
-	setReducer(): void {
-		this.reducer = null
-	}
+    setReducer(): void {
+        this.reducer = null
+    }
 
-	getData() {}
+    getData() {}
 }

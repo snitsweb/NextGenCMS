@@ -3,7 +3,6 @@
 .container {
   width: 100%;
   padding: 0 1rem;
-  margin: auto;
 
   @include use-media(sm) {
     max-width: 540px;
@@ -21,7 +20,6 @@
   @include use-media(xl) {
     max-width: 1140px;
     padding: 0 30px;
-    margin: 0 auto;
   }
 
   @include use-media(xxl) {

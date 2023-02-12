@@ -4,15 +4,15 @@ interface IGeneralStore {
 	data: object
 }
 export const slice = createSlice({
-	name: 'generalStore',
-	initialState: {
-		data: {} as IGeneralStore
-	},
-	reducers: {
-		setData: (state, action: PayloadAction<IGeneralStore>) => {
-			state.data = action.payload
-		}
-	}
+    name: 'generalStore',
+    initialState: {
+        data: {} as IGeneralStore
+    },
+    reducers: {
+        setData: (state, action: PayloadAction<IGeneralStore>) => {
+            state.data = action.payload
+        }
+    }
 })
 
 export const {setData} = slice.actions

@@ -11,33 +11,8 @@
   }
 
   &_action {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    padding: 10px 20px;
-    transition: var(--base-transition);
-
-
     svg {
       width: 20px;
-      fill: #fff;
-    }
-
-    &_edit {
-      background-color: var(--grey_light);
-
-      &:hover {
-        background-color: var(--grey);
-      }
-    }
-
-    &_delete {
-      background-color: var(--red_light);
-
-      &:hover {
-        background-color: var(--red);
-      }
     }
   }
 }

@@ -1,12 +1,10 @@
-import { deletePage, Page } from '@modules/Pages/core/reducer'
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React from 'react'
 import s from './PageListItem.module.scss'
-import { BaseFont } from '@common/components/BaseFont/BaseFont'
 import { NavLink } from 'react-router-dom'
-import { ReactComponent as EditIcon } from '../../../../../../assets/svg/edit.svg'
-import { ReactComponent as DeleteIcon } from '../../../../../../assets/svg/delete.svg'
-import { BaseButton } from '@common/components/BaseButton/BaseButton'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
+import { Button, Typography } from '@mui/material'
+import { Page } from '@modules/Pages/core/reducer'
 
 interface IPageListItem {
 	page: Page;
@@ -14,72 +12,43 @@ interface IPageListItem {
 
 const PageListItem: React.FC<IPageListItem> = ({ page }) => {
 
-	const [isDeletePopupShown, setIsDeletePopupShown] = useState<boolean>(false)
-	const dispatch = useDispatch()
-
-	const togglePopupHandler = () => {
-		setIsDeletePopupShown(prevState => !prevState)
-	}
-
-	const deleteHandler = () => {
-		window.app.nc.http.delete(`/pages/${page.id}`)
-			.catch(e => console.error(e))
-			.then(response => {
-				if (!response) {
-					alert('Something went wrong. Check console for more details')
-				} else {
-					dispatch(deletePage(page.id))
-					alert('Deleted!')
-				}
-				togglePopupHandler()
-			})
-	}
-
-	return (
-		<div className={s.page_list_item}>
-			<div>
-				{page.name}
-			</div>
-			<div>
-				{page.status}
-			</div>
-			<div>
-				{page.path}
-			</div>
-			<div className={s.page_list_item_actions}>
-				<NavLink className={`${s.page_list_item_action} ${s.page_list_item_action_edit}`} to={`/pages/edit/${page.id}`}>
-					<EditIcon />
-					<BaseFont tag={'span'} color={'white'} weight={700}>Edit</BaseFont>
-				</NavLink>
-				<div
-					className={`${s.page_list_item_action}  ${s.page_list_item_action_delete}`}
-					onClick={() => togglePopupHandler()}
-				>
-					<DeleteIcon />
-					<BaseFont tag={'span'} color={'white'} weight={700}>Delete</BaseFont>
-				</div>
-			</div>
-			<div className={`${s.delete_popup} ${isDeletePopupShown ? s.delete_popup_active : ''}`}>
-				<BaseFont tag={'h2'}>Are you sure?</BaseFont>
-				<div className={s.delete_popup_buttons}>
-					<BaseButton
-						onClick={() => deleteHandler()}
-						icon={DeleteIcon}
-						iconFill={'white'}
-						type={'danger'}
-					>
-						Delete
-					</BaseButton>
-					<BaseButton
-						type={'bordered'}
-						onClick={() => togglePopupHandler()}
-					>
-						Cancel
-					</BaseButton>
-				</div>
-			</div>
-		</div>
-	)
+    return (
+        <div className={s.page_list_item}>
+            <div>
+                <Typography variant="body2" color="text.primary">{page.name}</Typography>
+            </div>
+            <div>
+                <Typography variant="body2" color="text.primary">{page.status}</Typography>
+            </div>
+            <div>
+                <Typography variant="body2" color="text.primary">{page.path}</Typography>
+            </div>
+            <div className={s.page_list_item_actions}>
+                <NavLink className={`${s.page_list_item_action} ${s.page_list_item_action_edit}`} to={`/pages/edit/${page.id}`}>
+                    <Button variant="outlined" startIcon={<EditOutlinedIcon color="primary" />} size="medium">
+                        <Typography variant="body2" color="text.primary">
+							Edit
+                        </Typography>
+                    </Button>
+                </NavLink>
+                <div
+                    className={`${s.page_list_item_action}  ${s.page_list_item_action_delete}`}
+                    onClick={() => console.log('delete clicked')}
+                >
+                    <Button
+                        variant="outlined"
+                        color="warning"
+                        startIcon={<DeleteOutlineOutlinedIcon color="error" />}
+                        size="medium"
+                    >
+                        <Typography variant="body2" color="text.primary">
+													Delete
+                        </Typography>
+                    </Button>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default PageListItem

@@ -1,11 +1,13 @@
 import React from 'react'
-import {BaseFont} from 'common/components/BaseFont/BaseFont'
 import {BaseContainer} from 'common/components/BaseContainer/BaseContainer'
+import { Typography } from '@mui/material'
 
 export const OverviewPage: React.FC = () => {
-	return (
-		<BaseContainer>
-			<BaseFont tag={'h1'}>Overview</BaseFont>
-		</BaseContainer>
-	)
+    return (
+        <BaseContainer>
+            <Typography variant="h2" color="text.primary" textTransform="uppercase" fontWeight="bold">
+				Overview
+            </Typography>
+        </BaseContainer>
+    )
 }
