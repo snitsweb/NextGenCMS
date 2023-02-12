@@ -1,10 +1,10 @@
 export const config_page_statuses = [
     {
-        name: 'Active',
-        value: 'active',
+        name: 'Draft',
+        value: 'DRAFT',
     },
     {
-        name: 'Inactive',
-        value: 'inactive',
+        name: 'Published',
+        value: 'PUBLISHED',
     },
 ]

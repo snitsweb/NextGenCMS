@@ -7,13 +7,16 @@ export interface ILayout {
 }
 export const Layout: React.FC<ILayout> = ({children}) => {
     return (
-        <div className={s.layout}>
-            <Navbar className={s.navbar}/>
-            <div className={s.content}>
-                <div className={s.page_content}>
-                    {children}
+        <>
+            <div className={s.layout}>
+                <Navbar className={s.navbar}/>
+                <div className={s.content}>
+                    <div className={s.page_content}>
+                        {children}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
+
     )
 }
