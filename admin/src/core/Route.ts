@@ -1,8 +1,9 @@
 import {Module} from '@common/core/Module/Module'
+import { SvgIconProps } from '@mui/material'
 
 interface IRoute {
 	path: string
-	icon: any
+	icon: (props: SvgIconProps) => JSX.Element
 	name: string
 	module: Module
 }
@@ -10,7 +11,7 @@ interface IRoute {
 export class Route {
     module: Module
     path: string
-    icon: any
+    icon: (props: SvgIconProps) => JSX.Element
     name: string
 
     constructor({path, icon, name, module}: IRoute) {

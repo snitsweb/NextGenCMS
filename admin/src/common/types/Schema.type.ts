@@ -1,6 +1,6 @@
 export type SchemaType = InputType[]
 
-export type InputType = SelectInputType | TextInputType
+export type InputType = SelectInputType | TextInputType | EditorInputType
 
 export type TextInputType = {
   type: 'text_input',
@@ -18,4 +18,11 @@ export type SelectInputType = {
     name: string,
     value: string
   }[]
+}
+
+export type EditorInputType = {
+  type: 'editor_input',
+  attribute: string,
+  label: string,
+  defaultValue?: object
 }

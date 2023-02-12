@@ -1,11 +1,11 @@
 import s from './MenuItem.module.scss'
 import React from 'react'
 import {NavLink} from 'react-router-dom'
-import { Typography } from '@mui/material'
+import { SvgIconProps, Typography } from '@mui/material'
 
 export interface IMenuItem {
   name: string,
-  icon: any,
+  icon: (props: SvgIconProps) => JSX.Element,
   path: string,
   isActive: boolean
 }

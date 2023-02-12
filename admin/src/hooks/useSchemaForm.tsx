@@ -3,13 +3,14 @@ import { Controller, useForm } from 'react-hook-form'
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
 import { FC, ReactNode } from 'react'
 
+
 type keyObject = {
     [key: string]: string
 }
 
 interface IUsePageForm {
     schema: SchemaType,
-    onSubmit: (data: any) => void,
+    onSubmit: (data: unknown) => void,
     button: {
         icon: ReactNode,
         text: string
@@ -26,8 +27,8 @@ export const useSchemaForm = ({schema, onSubmit, button }: IUsePageForm): FC  =>
         defaultValues: defaultValues
     })
 
-    const Form = () => <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+    const Form = () => <form onSubmit={handleSubmit(onSubmit)} className={'form'}>
+        <div className={'form-inner'}>
             {
                 schema.map(input => {
                     if(input.type === 'text_input') {
@@ -62,11 +63,16 @@ export const useSchemaForm = ({schema, onSubmit, button }: IUsePageForm): FC  =>
                                 </Select>
                             </FormControl>}
                         />
+                    } else if (input.type === 'editor_input') {
+                        return <div className="editor_input" key={input.attribute}>
+                            <Typography color="text.primary" variant="body1">{input.label}:</Typography>
+                            {/*//TODO: create an editor input*/}
+                        </div>
                     }
                 })
             }
         </div>
-        <div>
+        <div className={'form-submit-button'}>
             <Button type="submit" variant="outlined" startIcon={button.icon}>
                 <Typography variant="body1" textTransform="uppercase">{button.text}</Typography>
             </Button>

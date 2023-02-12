@@ -65,6 +65,7 @@ export class Application {
     createReactRoutes() {
         this.modules.map((module) => {
             module.routes.map((moduleRoute) => {
+                console.log(moduleRoute.element)
                 this._reactRoutes.push({
                     path: moduleRoute.path,
                     element: <Layout>{moduleRoute.element}</Layout>,

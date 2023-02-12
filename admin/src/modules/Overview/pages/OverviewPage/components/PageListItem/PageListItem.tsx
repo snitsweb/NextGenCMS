@@ -24,7 +24,7 @@ const PageListItem: React.FC<IPageListItem> = ({ page }) => {
                 <Typography variant="body2" color="text.primary">{page.path}</Typography>
             </div>
             <div className={s.page_list_item_actions}>
-                <NavLink className={`${s.page_list_item_action} ${s.page_list_item_action_edit}`} to={`/pages/edit/${page.id}`}>
+                <NavLink className={`${s.page_list_item_action} ${s.page_list_item_action_edit}`} to={`/pages/edit/${page.alias}`}>
                     <Button variant="outlined" startIcon={<EditOutlinedIcon color="primary" />} size="medium">
                         <Typography variant="body2" color="text.primary">
 							Edit

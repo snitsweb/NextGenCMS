@@ -22,7 +22,7 @@ export class PagesModule extends Module {
         )
         this.routes.push(
             {
-                path: '/pages/edit/:id',
+                path: '/pages/edit/:alias',
                 element: <PageEdit/>,
                 name: 'Edit Page',
                 description: 'Edit page description',

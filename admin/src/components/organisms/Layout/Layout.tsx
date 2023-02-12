@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
 import s from './Layout.module.scss'
 import {Navbar} from '../Navbar/Navbar'
 
 export interface ILayout {
-  children?: ReactNode[]
+  children?: JSX.Element
 }
 export const Layout: React.FC<ILayout> = ({children}) => {
     return (
