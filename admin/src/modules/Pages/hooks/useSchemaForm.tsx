@@ -1,6 +1,6 @@
 import { SchemaType } from '@common/types/Schema.type'
 import { Controller, useForm } from 'react-hook-form'
-import { Button, TextField, Typography } from '@mui/material'
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
 import { FC, ReactNode } from 'react'
 
 type keyObject = {
@@ -9,13 +9,13 @@ type keyObject = {
 
 interface IUsePageForm {
     schema: SchemaType,
-    onSubmit: (data) => void,
+    onSubmit: (data: any) => void,
     button: {
         icon: ReactNode,
         text: string
     }
 }
-export const usePageForm = ({schema, onSubmit, button }: IUsePageForm): FC  => {
+export const useSchemaForm = ({schema, onSubmit, button }: IUsePageForm): FC  => {
 
     const defaultValues: keyObject = {}
     schema.forEach(input => {
@@ -42,6 +42,25 @@ export const usePageForm = ({schema, onSubmit, button }: IUsePageForm): FC  => {
                                 variant="outlined"
                                 value={field.value || input.defaultValue}
                             />}
+                        />
+                    } else if (input.type === 'select_input') {
+                        return <Controller
+                            key={input.attribute}
+                            name={input.attribute}
+                            control={control}
+                            render={({field}) => <FormControl>
+                                <InputLabel id={input.attribute}>{input.label}</InputLabel>
+                                <Select
+                                    {...field}
+                                    labelId={input.attribute}
+                                    label={input.label}
+                                    value={field.value || input.defaultValue}
+                                >
+                                    {
+                                        input.options.map(option => <MenuItem key={option.value} value={option.value}>{option.name}</MenuItem>)
+                                    }
+                                </Select>
+                            </FormControl>}
                         />
                     }
                 })

@@ -2,7 +2,8 @@ import { Typography } from '@mui/material'
 import { BaseContainer } from '@common/components/BaseContainer/BaseContainer'
 import AddIcon from '@mui/icons-material/Add'
 import s from '@modules/Pages/pages/PagesList/PageList.module.scss'
-import { usePageForm } from '@modules/Pages/hooks/usePageForm'
+import { useSchemaForm } from '@modules/Pages/hooks/useSchemaForm'
+import { config_page_statuses } from '@modules/Pages/core/config'
 
 const PageCreate = () => {
 
@@ -24,12 +25,25 @@ const PageCreate = () => {
             attribute: 'alias',
             label: 'Alias',
             defaultValue: 'homepage'
+        },
+        {
+            type: 'text_input',
+            attribute: 'title',
+            label: 'Title',
+            defaultValue: 'Snitsweb - homepage'
+        },
+        {
+            type: 'select_input',
+            attribute: 'status',
+            label: 'Status',
+            options: config_page_statuses,
+            defaultValue: config_page_statuses[0].value
         }
     ]
 
     const onSubmit = data => console.log(data)
 
-    const TestForm = usePageForm({
+    const TestForm = useSchemaForm({
         schema: pageFormSchema,
         onSubmit: onSubmit,
         button: {
