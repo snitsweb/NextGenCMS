@@ -24,5 +24,5 @@ export type EditorInputType = {
   type: 'editor_input',
   attribute: string,
   label: string,
-  defaultValue?: object
+  defaultValue?: string
 }

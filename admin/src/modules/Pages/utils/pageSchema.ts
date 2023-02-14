@@ -1,4 +1,5 @@
 import { config_page_statuses } from '@modules/Pages/core/config'
+import { SchemaType } from '@common/types/Schema.type'
 
 export const pageSchema = [
     {
@@ -31,5 +32,11 @@ export const pageSchema = [
         label: 'Status',
         options: config_page_statuses,
         defaultValue: config_page_statuses[0].value
+    },
+    {
+        type: 'editor_input',
+        attribute: 'description',
+        label: 'Description',
+        defaultValue: '<p>Description of your page here...</p>'
     }
-]
+] as SchemaType

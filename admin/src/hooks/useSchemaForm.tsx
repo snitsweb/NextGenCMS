@@ -2,6 +2,10 @@ import { SchemaType } from '@common/types/Schema.type'
 import { Controller, useForm } from 'react-hook-form'
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
 import { FC, ReactNode } from 'react'
+import { Editor } from 'react-draft-wysiwyg'
+import { ContentState, convertFromHTML, convertToRaw, EditorState } from 'draft-js'
+import draftToHtml from 'draftjs-to-html'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 
 type keyObject = {
@@ -16,6 +20,21 @@ interface IUsePageForm {
         text: string
     }
 }
+
+const convertHTMLtoEditorState = (html: string) => {
+    const blocksFromHTML = convertFromHTML(html)
+    const state = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap,
+    )
+    return EditorState.createWithContent(state)
+}
+
+const convertEditorStateToHTML = (state: EditorState | string) => {
+    if(typeof state === 'string') return state
+    return draftToHtml(convertToRaw(state.getCurrentContent()))
+}
+
 export const useSchemaForm = ({schema, onSubmit, button }: IUsePageForm): FC  => {
 
     const defaultValues: keyObject = {}
@@ -27,7 +46,16 @@ export const useSchemaForm = ({schema, onSubmit, button }: IUsePageForm): FC  =>
         defaultValues: defaultValues
     })
 
-    const Form = () => <form onSubmit={handleSubmit(onSubmit)} className={'form'}>
+    const customFormHandler = (data: any) => {
+        for (const [key, value] of Object.entries(data)) {
+            if (schema.find(input => input.attribute === key && input.type === 'editor_input')) {
+                data[key] = convertEditorStateToHTML(value as EditorState)
+            }
+        }
+        onSubmit(data)
+    }
+
+    const Form = () => <form onSubmit={handleSubmit(customFormHandler)} className={'form'}>
         <div className={'form-inner'}>
             {
                 schema.map(input => {
@@ -66,7 +94,18 @@ export const useSchemaForm = ({schema, onSubmit, button }: IUsePageForm): FC  =>
                     } else if (input.type === 'editor_input') {
                         return <div className="editor_input" key={input.attribute}>
                             <Typography color="text.primary" variant="body1">{input.label}:</Typography>
-                            {/*//TODO: create an editor input*/}
+                            <Controller
+                                key={input.attribute}
+                                name={input.attribute}
+                                control={control}
+                                render={({field}) => <Editor
+
+                                    defaultEditorState={convertHTMLtoEditorState(input.defaultValue || '')}
+                                    onEditorStateChange={(value) => {
+                                        field.onChange(value)
+                                    }}
+                                /> }
+                            />
                         </div>
                     }
                 })
