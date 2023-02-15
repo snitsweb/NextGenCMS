@@ -1,0 +1,20 @@
+.auth_page {
+
+  > div {
+    margin: auto;
+  }
+
+  &_inner {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &_logo {
+    margin-bottom: 20px;
+  }
+
+}

@@ -1,6 +1,6 @@
 export type SchemaType = InputType[]
 
-export type InputType = SelectInputType | TextInputType | EditorInputType
+export type InputType = SelectInputType | TextInputType | EditorInputType | PasswordInputType
 
 export type TextInputType = {
   type: 'text_input',
@@ -25,4 +25,12 @@ export type EditorInputType = {
   attribute: string,
   label: string,
   defaultValue?: string
+}
+
+
+export type PasswordInputType = {
+  type: 'password_input',
+  attribute: string,
+  label: string
+  defaultValue?: string,
 }

@@ -11,6 +11,7 @@ import { Route } from 'core/Route'
 import { SettingsModule } from '@modules/Settings/core/SettingsModule'
 import { createTheme, Theme } from '@mui/material'
 import { blue } from '@mui/material/colors'
+import { AuthModule } from '@modules/Auth/core/AuthModule'
 export class Application {
     private _modules: Module[] = []
     private _reactRoutes: IReactRoute[] = []
@@ -60,12 +61,12 @@ export class Application {
         this.modules.push(new OverviewModule())
         this.modules.push(new PagesModule())
         this.modules.push(new SettingsModule())
+        this.modules.push(new AuthModule())
     }
 
     createReactRoutes() {
         this.modules.map((module) => {
             module.routes.map((moduleRoute) => {
-                console.log(moduleRoute.element)
                 this._reactRoutes.push({
                     path: moduleRoute.path,
                     element: <Layout>{moduleRoute.element}</Layout>,
@@ -76,6 +77,7 @@ export class Application {
 
     createRoutes() {
         this.modules.map((module) => {
+            if (!Object.getPrototypeOf(module).constructor.shouldShowInMenu) return null
             this._routes.push(
                 new Route({
                     module: module,
@@ -84,7 +86,7 @@ export class Application {
                     icon: Object.getPrototypeOf(module).constructor.icon,
                 })
             )
-        })
+        }).filter(route => !!route)
     }
 
     initNetworkController() {

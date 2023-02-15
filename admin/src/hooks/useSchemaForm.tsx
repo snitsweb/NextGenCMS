@@ -14,9 +14,9 @@ type keyObject = {
 
 interface IUsePageForm {
     schema: SchemaType,
-    onSubmit: (data: unknown) => void,
+    onSubmit: (data: any) => void,
     button: {
-        icon: ReactNode,
+        icon?: ReactNode,
         text: string
     }
 }
@@ -69,7 +69,7 @@ export const useSchemaForm = ({schema, onSubmit, button }: IUsePageForm): FC  =>
                                 id={input.attribute}
                                 label={input.label}
                                 variant="outlined"
-                                value={field.value || input.defaultValue}
+                                value={field.value}
                             />}
                         />
                     } else if (input.type === 'select_input') {
@@ -83,7 +83,7 @@ export const useSchemaForm = ({schema, onSubmit, button }: IUsePageForm): FC  =>
                                     {...field}
                                     labelId={input.attribute}
                                     label={input.label}
-                                    value={field.value || input.defaultValue}
+                                    value={field.value}
                                 >
                                     {
                                         input.options.map(option => <MenuItem key={option.value} value={option.value}>{option.name}</MenuItem>)
@@ -99,7 +99,7 @@ export const useSchemaForm = ({schema, onSubmit, button }: IUsePageForm): FC  =>
                                 name={input.attribute}
                                 control={control}
                                 render={({field}) => <Editor
-
+                                    toolbarClassName={window.app.theme.palette.mode}
                                     defaultEditorState={convertHTMLtoEditorState(input.defaultValue || '')}
                                     onEditorStateChange={(value) => {
                                         field.onChange(value)
@@ -107,6 +107,20 @@ export const useSchemaForm = ({schema, onSubmit, button }: IUsePageForm): FC  =>
                                 /> }
                             />
                         </div>
+                    } else if (input.type === 'password_input') {
+                        return <Controller
+                            key={input.attribute}
+                            name={input.attribute}
+                            control={control}
+                            render={({field}) => <TextField
+                                {...field}
+                                id={input.attribute}
+                                label={input.label}
+                                variant="outlined"
+                                value={field.value}
+                                type="password"
+                            />}
+                        />
                     }
                 })
             }

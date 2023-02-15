@@ -5,6 +5,7 @@ import {Reducer} from '@reduxjs/toolkit'
 export abstract class Module {
     static defaultPath = '/'
     static moduleName: string
+    static shouldShowInMenu = true
     static icon: FunctionComponent
     routes: IModuleRoute[] = []
     reducer: Reducer | null
