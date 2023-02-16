@@ -13,12 +13,12 @@ import Cookies from 'js-cookie'
 const authSchema: SchemaType = [
     {
         type: 'text_input',
-        defaultValue: 'example@gmail.com',
+        defaultValue: 'test1@gmail.com',
         attribute: 'email',
         label: 'Email'
     },
     {
-        type: 'text_input',
+        type: 'password_input',
         defaultValue: '',
         attribute: 'password',
         label: 'Password'
@@ -44,7 +44,10 @@ const AuthPage = () => {
 
     const onSubmit = (data: AuthData) => {
         window.app.nc.authorization(data, (data) => {
-            if(data.error) setError(true)
+            if(data.error) {
+                setError(true)
+                return
+            }
             handleLoggedIn()
         })
     }
@@ -81,9 +84,12 @@ const AuthPage = () => {
                             </clipPath>
                         </defs>
                     </svg>
-                    {
-                        error && <Typography variant={'body1'} color={'error'}>Invalid email or password</Typography>
-                    }
+                    <Typography
+                        className={`${s.auth_page_error} ${error ? s.auth_page_error_active : ''}`}
+                        variant={'body1'}
+                        color={'error'}>
+                        Invalid email or password
+                    </Typography>
                     <Form />
                 </div>
             </BaseContainer>

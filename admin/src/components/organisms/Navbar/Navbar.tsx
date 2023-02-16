@@ -1,7 +1,7 @@
 import React from 'react'
 import s from './Navbar.module.scss'
 import {MenuItem} from '../../molecules/MenuItem/MenuItem'
-import ThemeSwitcher from '../../molecules/ThemeSwitcher/ThemeSwitcher'
+import NavToolbar from '../NavToolbar/NavToolbar'
 
 export interface INavbar {
     className?: string
@@ -24,7 +24,7 @@ export const Navbar: React.FC<INavbar> = ({className}) => {
                     key={item.name}
                 />) : ''
             }
-            <ThemeSwitcher />
+            <NavToolbar />
         </menu>
     )
 }

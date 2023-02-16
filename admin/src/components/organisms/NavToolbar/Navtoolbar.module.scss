@@ -1,0 +1,10 @@
+.nav_toolbar {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+
+  &_bottom {
+    justify-self: end;
+    margin-top: auto;
+  }
+}
