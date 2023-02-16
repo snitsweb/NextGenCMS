@@ -8,4 +8,7 @@ module.exports = {
             '@modules': path.resolve(__dirname, 'src/modules')
         },
     },
+    devServer: {
+        port: 4000
+    }
 }

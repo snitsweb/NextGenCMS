@@ -1,18 +1,35 @@
 # docker-compose.yml
 version: "3.8"
 
+networks:
+  app_network:
+    driver: bridge
+  db_network:
+    driver: bridge
+
 services:
-  frontend:
+  proxy:
+    image: nginx
+    volumes:
+      - ./proxy/services/:/etc/nginx/services
+      - ./proxy/nginx.dev.conf:/etc/nginx/nginx.conf
+    networks:
+      - app_network
+    ports:
+      - "80:8080"
+
+  front:
     build:
       context: ./front
       dockerfile: Dockerfile
     volumes:
       - ./front/:/code/front
       - ./front/node_modules/:/code/front/node_modules
-    ports:
-      - "3000:3000"
     environment:
       - CHOKIDAR_USEPOLLING=true
+    networks:
+      - app_network
+
   admin:
     build:
       context: ./admin
@@ -20,18 +37,23 @@ services:
     volumes:
       - ./admin/:/code/admin
       - ./admin/node_modules/:/code/admin/node_modules
-    ports:
-      - "4000:3000"
+    links:
+      - "back:back"
     environment:
       - CHOKIDAR_USEPOLLING=true
+    networks:
+      - app_network
+
   back:
     build:
       context: ./back
       dockerfile: Dockerfile
     volumes:
       - ./back/:/code/back
-    ports:
-      - "5000:5000"
+    networks:
+      - db_network
+      - app_network
+
   db:
     image: mysql:8.0.32-debian
     restart: always
@@ -52,5 +74,5 @@ services:
       # Where our data will be persisted
     volumes:
       - ./db:/var/lib/mysql
-  # Names our volume
-
+    networks:
+      - db_network
