@@ -11,11 +11,11 @@ export const Layout: React.FC<ILayout> = ({children}) => {
 
     const navigate = useNavigate()
 
-    useEffect(() => {
-        navigate('/auth')
-    }, [])
-
     const isLoggedIn = useAppSelector((state) => state.authModule.isLoggedIn) && window.location.pathname !== '/auth'
+
+    useEffect(() => {
+        if(!isLoggedIn) navigate('/auth')
+    }, [])
 
     return (
         <>

@@ -6,17 +6,37 @@ import { useSchemaForm } from '../../../../hooks/useSchemaForm'
 import { pageSchema } from '@modules/Pages/utils/pageSchema'
 import AddIcon from '@mui/icons-material/Add'
 import { SchemaType } from '@common/types/Schema.type'
+import { PagesNetworkController } from '@modules/Pages/core/NetworkController'
+import { useEffect, useState } from 'react'
 
 const PageEdit = () => {
 
     const {alias} = useParams()
-    const onSubmit = (data: unknown) => console.log(data)
+    if(!alias) return <div>No pages found with alias: {alias}</div>
+
+    const [pageData, setPageData] = useState<SchemaType>(pageSchema)
+
+    //TODO: refactoring
+    useEffect(() => {
+        PagesNetworkController.getPage(alias).then(res => {
+            const newPageData = [...pageData]
+            for (const [key, value] of Object.entries(res.data)) {
+                const property = newPageData.find(el => el.attribute === key)
+                if(!property) continue
+                property.defaultValue = value as string
+            }
+            setPageData(newPageData)
+        })
+    }, [])
+    const onSubmit = (data: any) => {
+        PagesNetworkController.updatePage(alias, data).then(res => console.log(res))
+    }
 
     const PageForm = useSchemaForm({
-        schema: pageSchema as SchemaType,
+        schema: pageData,
         onSubmit: onSubmit,
         button: {
-            text: 'Create',
+            text: 'Save',
             icon: <AddIcon />
         }
     })
