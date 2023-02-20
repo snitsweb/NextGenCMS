@@ -2,7 +2,7 @@ import { Typography } from '@mui/material'
 import { BaseContainer } from '@common/components/BaseContainer/BaseContainer'
 import AddIcon from '@mui/icons-material/Add'
 import s from '@modules/Pages/pages/PagesList/PageList.module.scss'
-import { useSchemaForm } from '../../../../hooks/useSchemaForm'
+import { useSchemaForm } from '../../../../hooks/forms/useSchemaForm'
 import { pageSchema } from '@modules/Pages/utils/pageSchema'
 import { SchemaType } from '@common/types/Schema.type'
 
