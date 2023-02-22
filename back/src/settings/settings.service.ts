@@ -27,7 +27,7 @@ export class SettingsService {
 		return Promise.all(
 			settings.map(async (setting) => ({
 				name: setting.name,
-				value: JSON.parse(setting.value),
+				// value: JSON.parse(setting.value),
 			})),
 		)
 	}
