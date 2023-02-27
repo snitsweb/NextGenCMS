@@ -5,12 +5,15 @@ import s from '@modules/Pages/pages/PagesList/PageList.module.scss'
 import { useSchemaForm } from '../../../../hooks/forms/useSchemaForm'
 import { pageSchema } from '@modules/Pages/utils/pageSchema'
 import { SchemaType } from '@common/types/Schema.type'
+import {PagesNetworkController} from "@modules/Pages/core/NetworkController";
 
 const PageCreate = () => {
 
 
 
-    const onSubmit = (data: unknown) => console.log(data)
+    const onSubmit = (data: any) => {
+        PagesNetworkController.createPage( data).then(res => console.log(res))
+    }
 
     const PageForm = useSchemaForm({
         schema: pageSchema as SchemaType,

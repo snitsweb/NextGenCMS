@@ -3,6 +3,10 @@ export class PagesNetworkController {
         return window.app.nc.http.patch(`/pages/${alias}`, data)
     }
 
+    static createPage (data: PageData) {
+        return window.app.nc.http.post(`/pages`, data)
+    }
+
     static getPage (alias: string) {
         return window.app.nc.http.get(`/pages/${alias}`)
     }
