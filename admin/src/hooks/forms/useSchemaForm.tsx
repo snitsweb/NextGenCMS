@@ -1,11 +1,13 @@
 import { SchemaType } from '@common/types/Schema.type'
 import { Controller, useForm } from 'react-hook-form'
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
+import { Button, TextField, Typography } from '@mui/material'
 import { FC, ReactNode } from 'react'
-import { Editor } from 'react-draft-wysiwyg'
-import { ContentState, convertFromHTML, convertToRaw, EditorState } from 'draft-js'
+import { convertToRaw, EditorState } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+import { useTextField } from './useTextField'
+import { useSelectInput } from './useSelectInput'
+import { useEditorInput } from './useEditorInput'
 
 
 type keyObject = {
@@ -19,15 +21,6 @@ interface IUsePageForm {
         icon?: ReactNode,
         text: string
     }
-}
-
-const convertHTMLtoEditorState = (html: string) => {
-    const blocksFromHTML = convertFromHTML(html)
-    const state = ContentState.createFromBlockArray(
-        blocksFromHTML.contentBlocks,
-        blocksFromHTML.entityMap,
-    )
-    return EditorState.createWithContent(state)
 }
 
 const convertEditorStateToHTML = (state: EditorState | string) => {
@@ -60,67 +53,32 @@ export const useSchemaForm = ({schema, onSubmit, button }: IUsePageForm): FC  =>
             {
                 schema.map(input => {
                     if(input.type === 'text_input') {
-                        return <Controller
-                            key={input.attribute}
-                            name={input.attribute}
-                            control={control}
-                            render={({field}) => <TextField
-                                {...field}
-                                id={input.attribute}
-                                label={input.label}
-                                variant="outlined"
-                                value={field.value}
-                            />}
-                        />
+                        return useTextField({
+                            attribute: input.attribute,
+                            label: input.label,
+                            control
+                        })
                     } else if (input.type === 'select_input') {
-                        return <Controller
-                            key={input.attribute}
-                            name={input.attribute}
-                            control={control}
-                            render={({field}) => <FormControl>
-                                <InputLabel id={input.attribute}>{input.label}</InputLabel>
-                                <Select
-                                    {...field}
-                                    labelId={input.attribute}
-                                    label={input.label}
-                                    value={field.value}
-                                >
-                                    {
-                                        input.options.map(option => <MenuItem key={option.value} value={option.value}>{option.name}</MenuItem>)
-                                    }
-                                </Select>
-                            </FormControl>}
-                        />
+                        return useSelectInput({
+                            attribute: input.attribute,
+                            label: input.label,
+                            options: input.options,
+                            control
+                        })
                     } else if (input.type === 'editor_input') {
-                        return <div className="editor_input" key={input.attribute}>
-                            <Typography color="text.primary" variant="body1">{input.label}:</Typography>
-                            <Controller
-                                key={input.attribute}
-                                name={input.attribute}
-                                control={control}
-                                render={({field}) => <Editor
-                                    toolbarClassName={window.app.theme.palette.mode}
-                                    defaultEditorState={convertHTMLtoEditorState(input.defaultValue || '')}
-                                    onEditorStateChange={(value) => {
-                                        field.onChange(value)
-                                    }}
-                                /> }
-                            />
-                        </div>
+                        return useEditorInput({
+                            attribute: input.attribute,
+                            label: input.label,
+                            control,
+                            defaultValue: input.defaultValue
+                        })
                     } else if (input.type === 'password_input') {
-                        return <Controller
-                            key={input.attribute}
-                            name={input.attribute}
-                            control={control}
-                            render={({field}) => <TextField
-                                {...field}
-                                id={input.attribute}
-                                label={input.label}
-                                variant="outlined"
-                                value={field.value}
-                                type="password"
-                            />}
-                        />
+                        return useTextField({
+                            attribute: input.attribute,
+                            label: input.label,
+                            type: 'password',
+                            control
+                        })
                     }
                 })
             }
